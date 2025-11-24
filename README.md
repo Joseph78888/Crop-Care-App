@@ -53,46 +53,9 @@ lib/
 ## License
 MIT (see `LICENSE`)
 
-## Screenshots
-Below are medium-size screenshots of the app UI.
 
-<p align="center">
-  <img src="docs/screenshots/screenshot_1.png" alt="Home" width="480" />
-  <br/>
-  <em>Home</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_2.png" alt="Capture" width="480" />
-  <br/>
-  <em>Capture / Upload</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_3.png" alt="Result" width="480" />
-  <br/>
-  <em>Result</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_4.png" alt="Welcome" width="480" />
-  <br/>
-  <em>Welcome / Dashboard</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_5.png" alt="History" width="480" />
-  <br/>
-  <em>History</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_6.png" alt="Settings" width="480" />
-  <br/>
-  <em>Settings</em>
-</p>
-
-If you want me to add the actual image files into the repository (under `docs/screenshots/`), I can add them for you — confirm and I'll create the files from the attachments.
+# Screens
+<img width="270" height="600" alt="Screenshot_1757894690" src="https://github.com/user-attachments/assets/582cffc8-6ce4-4842-b21a-4e33ec640938" />  <img width="270" height="600" alt="Screenshot_1757894698" src="https://github.com/user-attachments/assets/d03f4ad4-f08a-4a80-b30c-d1091a0337be" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/fc70f4eb-e923-4ab2-a90b-06941aa7deba" />
 
 ## Changelog (selected)
 - 2025-10-30: Added aspect-preserving image rendering, Hero shared transition, and `InteractiveViewer` zoom/pan for image preview and result screens. Added `errorBuilder` fallbacks for asset rendering.
