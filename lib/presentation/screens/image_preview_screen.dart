@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:crop_care_app/presentation/screens/capture_tips_screen.dart';
-import 'package:crop_care_app/presentation/screens/result_screen.dart';
-import 'package:crop_care_app/presentation/widgets/capture_image.dart';
+import '/presentation/screens/capture_tips_screen.dart';
+import '/presentation/screens/result_screen.dart';
+import '/presentation/widgets/capture_image.dart';
 
 class ImagePreviewScreen extends StatelessWidget {
   const ImagePreviewScreen({super.key});

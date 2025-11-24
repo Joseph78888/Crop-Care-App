@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../data/datasources/local/notification_local_data_source.dart';
+import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/widgets/about_app.dart';
 import '/core/theme/app_colors.dart';
 import '/presentation/widgets/settings_section.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
-
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -26,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _loadSwitchState();
   }
 
-  // Load the initial state when the widget is created
+  // Load the initial notification state when the widget is created
   Future<void> _loadSwitchState() async {
     final isEnabled = await loadNotificationPreference();
     setState(() {
@@ -46,6 +46,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
     } else {
       await disableNotifications(); // Call the unsubscribe function
     }
+  }
+
+  void _clearHistory() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Clear History'),
+        content: const Text(
+          'Are you sure you want to clear all analysis history? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              _loadPrefs();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('History cleared successfully')),
+              );
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Clear'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('analysis_history');
   }
 
   @override
@@ -158,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: 'data & Privacy',
                   tiles: [
                     ListTile(
-                      onTap: () {},
+                      onTap: _clearHistory,
                       leading: Icon(Icons.restore_from_trash_rounded),
                       title: Text('Clear History'),
                       subtitle: Text('Remove all analysis history'),

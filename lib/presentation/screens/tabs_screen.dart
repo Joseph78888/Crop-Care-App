@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:crop_care_app/presentation/screens/history_screen.dart';
-import 'package:crop_care_app/presentation/screens/home_screen.dart';
-import 'package:crop_care_app/presentation/screens/settings_screen.dart';
-import 'package:crop_care_app/presentation/widgets/gradient_scaffold.dart';
+import '/presentation/screens/history_screen.dart';
+import '/presentation/screens/home_screen.dart';
+import '/presentation/screens/settings_screen.dart';
+import '/presentation/widgets/gradient_scaffold.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
