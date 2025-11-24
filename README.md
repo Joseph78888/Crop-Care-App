@@ -53,46 +53,8 @@ lib/
 ## License
 MIT (see `LICENSE`)
 
-## Screenshots
-Below are medium-size screenshots of the app UI.
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_1.png" alt="Home" width="480" />
-  <br/>
-  <em>Home</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_2.png" alt="Capture" width="480" />
-  <br/>
-  <em>Capture / Upload</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_3.png" alt="Result" width="480" />
-  <br/>
-  <em>Result</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_4.png" alt="Welcome" width="480" />
-  <br/>
-  <em>Welcome / Dashboard</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_5.png" alt="History" width="480" />
-  <br/>
-  <em>History</em>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/screenshot_6.png" alt="Settings" width="480" />
-  <br/>
-  <em>Settings</em>
-</p>
-
-If you want me to add the actual image files into the repository (under `docs/screenshots/`), I can add them for you — confirm and I'll create the files from the attachments.
+# Screens
+<img width="270" height="600" alt="Screenshot_1757894690" src="https://github.com/user-attachments/assets/c107eb85-f5d6-4df0-897f-47fc648f02f4" />  <img width="270" height="600" alt="Screenshot_1757894698" src="https://github.com/user-attachments/assets/5604b8fa-e454-4da5-983b-0685fcdfae4c" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/0fac85a0-52d1-49c1-98ed-c0daaa386635" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/a1280f84-ac9f-459f-b93f-2fe2ebf045dd" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/0e1871bb-2a03-462f-a33d-1028c556ffc2" />
 
 ## Changelog (selected)
 - 2025-10-30: Added aspect-preserving image rendering, Hero shared transition, and `InteractiveViewer` zoom/pan for image preview and result screens. Added `errorBuilder` fallbacks for asset rendering.
