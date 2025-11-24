@@ -53,9 +53,8 @@ lib/
 ## License
 MIT (see `LICENSE`)
 
-
 # Screens
-<img width="270" height="600" alt="Screenshot_1757894690" src="https://github.com/user-attachments/assets/582cffc8-6ce4-4842-b21a-4e33ec640938" />  <img width="270" height="600" alt="Screenshot_1757894698" src="https://github.com/user-attachments/assets/d03f4ad4-f08a-4a80-b30c-d1091a0337be" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/fc70f4eb-e923-4ab2-a90b-06941aa7deba" />
+<img width="270" height="600" alt="Screenshot_1757894690" src="https://github.com/user-attachments/assets/c107eb85-f5d6-4df0-897f-47fc648f02f4" />  <img width="270" height="600" alt="Screenshot_1757894698" src="https://github.com/user-attachments/assets/5604b8fa-e454-4da5-983b-0685fcdfae4c" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/0fac85a0-52d1-49c1-98ed-c0daaa386635" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/a1280f84-ac9f-459f-b93f-2fe2ebf045dd" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/0e1871bb-2a03-462f-a33d-1028c556ffc2" />
 
 ## Changelog (selected)
 - 2025-10-30: Added aspect-preserving image rendering, Hero shared transition, and `InteractiveViewer` zoom/pan for image preview and result screens. Added `errorBuilder` fallbacks for asset rendering.
