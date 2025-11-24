@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:crop_care_app/presentation/screens/image_preview_screen.dart';
-import 'package:crop_care_app/presentation/widgets/capture_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '/presentation/screens/image_preview_screen.dart';
+import '/presentation/widgets/capture_image.dart';
 
 class UploadeContainer extends StatefulWidget {
   const UploadeContainer({super.key});

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:crop_care_app/presentation/widgets/history_searh_bar.dart';
-import 'package:crop_care_app/presentation/widgets/total_healthy_deasise_filter.dart';
-import 'package:crop_care_app/presentation/widgets/gradient_scaffold.dart';
+// import '/presentation/widgets/history_card.dart';
+import '/presentation/widgets/history_searh_bar.dart';
+import '/presentation/widgets/total_healthy_deasise_filter.dart';
+import '/presentation/widgets/gradient_scaffold.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -70,6 +71,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
                 const SizedBox(height: 20),
                 _buildEmptyHistoryState(),
+                // HistoryCard(),
               ],
             ),
           ),
@@ -123,4 +125,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
     );
   }
+
+
 }

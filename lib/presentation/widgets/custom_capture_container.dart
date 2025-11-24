@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:crop_care_app/presentation/screens/capture_tips_screen.dart';
+import '/presentation/screens/capture_tips_screen.dart';
 
 class CustomCaptureContainer extends StatelessWidget {
   const CustomCaptureContainer.upload({

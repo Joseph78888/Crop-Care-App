@@ -1,9 +1,9 @@
-import 'package:crop_care_app/data/datasources/local/notification_local_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/firebase_options.dart';
 
+import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/core/theme/app_theme.dart';
 

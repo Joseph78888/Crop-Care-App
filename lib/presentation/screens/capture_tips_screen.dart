@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:crop_care_app/presentation/widgets/capture_image.dart';
-import 'package:crop_care_app/presentation/widgets/gradient_scaffold.dart';
-import 'package:crop_care_app/presentation/widgets/uploade_image.dart';
+import '/presentation/widgets/capture_image.dart';
+import '/presentation/widgets/gradient_scaffold.dart';
+import '/presentation/widgets/uploade_image.dart';
 
 class CaptureTipsScreen extends StatelessWidget {
   const CaptureTipsScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:crop_care_app/core/theme/app_colors.dart';
+import '/core/theme/app_colors.dart';
 
 class AboutApp extends StatelessWidget {
   const AboutApp({super.key});
