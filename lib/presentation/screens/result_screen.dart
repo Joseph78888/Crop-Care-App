@@ -8,6 +8,8 @@ import '/presentation/screens/tabs_screen.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/providers/history_provider.dart';
 import '/data/models/detection_result.dart';
+import '/data/datasources/disease_database.dart';
+import '/data/models/disease_info_model.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
@@ -84,85 +86,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _deseaseNameAndConfidence(current),
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(15, 24, 121, 0),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Analysis Details',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-
-                      Text(
-                        'Early blight is a fungal disease that causes dark spots on leaves.',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 48, 48, 48),
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildAnalysisDetails(current),
                 const SizedBox(height: 20),
 
-                Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(15, 24, 121, 0),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.lightbulb_outline_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 25,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Recommendations',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-
-                      _recomendatons(
-                        context,
-                        'Remove affected leaves immediatly',
-                      ),
-                      const SizedBox(height: 10),
-                      _recomendatons(context, 'Apply fungicide spray'),
-                      const SizedBox(height: 10),
-                      _recomendatons(
-                        context,
-                        'Immprove air circulation around plants',
-                      ),
-                      const SizedBox(height: 10),
-                      _recomendatons(context, 'Avoide overhead watering'),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
-                ),
+                _buildRecommendations(context, current),
                 const SizedBox(height: 20),
 
                 // Analyze Another Crop Button
@@ -250,53 +177,178 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   }
 
   Container _deseaseNameAndConfidence(DetectionResult? current) {
+    // Get disease info to determine if healthy
+    DiseaseInfo? diseaseInfo;
+    if (current != null) {
+      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(current.diseaseName);
+    }
+    
+    final isHealthy = diseaseInfo?.isHealthy ?? false;
+    final statusColor = isHealthy ? Colors.green : Colors.red;
+    final backgroundColor = isHealthy 
+        ? const Color.fromARGB(193, 218, 255, 221)
+        : const Color.fromARGB(193, 255, 221, 218);
+    
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: double.infinity,
       height: 120,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(193, 255, 221, 218),
+        color: backgroundColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
             children: [
-              Icon(Icons.warning_rounded, size: 60, color: Colors.red),
+              Icon(
+                isHealthy ? Icons.check_circle_rounded : Icons.warning_rounded,
+                size: 60,
+                color: statusColor,
+              ),
               const SizedBox(width: 6),
 
-              Column(
-                children: [
-                  Text(
-                    current?.diseaseName ?? 'Unknown',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      current?.diseaseName ?? 'Unknown',
+                      style: TextStyle(
+                        color: statusColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    current?.confidence != null
-                        ? 'Confidence: ${((current!.confidence ?? 0) * 100).toStringAsFixed(0)}%'
-                        : 'Confidence: N/A',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 95, 95, 95),
-                      fontSize: 14,
+                    Text(
+                      current?.confidence != null
+                          ? 'Confidence: ${((current!.confidence ?? 0) * 100).toStringAsFixed(0)}%'
+                          : 'Confidence: N/A',
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 95, 95, 95),
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
           // const SizedBox(height: 8),
           LinearProgressIndicator(
-            value: .87,
+            value: current?.confidence ?? 0.0,
             backgroundColor: Colors.grey,
-            color: Colors.red,
+            color: statusColor,
             borderRadius: BorderRadius.circular(6),
             minHeight: 8,
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAnalysisDetails(DetectionResult? current) {
+    DiseaseInfo? diseaseInfo;
+    if (current != null) {
+      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(current.diseaseName);
+    }
+
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(15, 24, 121, 0),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Analysis Details',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            diseaseInfo?.description ?? 'No description available.',
+            style: TextStyle(
+              color: const Color.fromARGB(255, 48, 48, 48),
+              fontSize: 16,
+            ),
+          ),
+          if (diseaseInfo != null && diseaseInfo.symptoms.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              'Symptoms:',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ...diseaseInfo.symptoms.map((symptom) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: _recomendatons(context, symptom),
+            )),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecommendations(BuildContext context, DetectionResult? current) {
+    DiseaseInfo? diseaseInfo;
+    if (current != null) {
+      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(current.diseaseName);
+    }
+
+    final recommendations = diseaseInfo?.recommendations ?? [];
+
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(15, 24, 121, 0),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.lightbulb_outline_rounded,
+                color: Theme.of(context).colorScheme.primary,
+                size: 25,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Recommendations',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          if (recommendations.isEmpty)
+            Text(
+              'No recommendations available.',
+              style: TextStyle(
+                color: const Color.fromARGB(255, 48, 48, 48),
+                fontSize: 16,
+              ),
+            )
+          else
+            ...recommendations.map((rec) => Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _recomendatons(context, rec),
+            )),
         ],
       ),
     );

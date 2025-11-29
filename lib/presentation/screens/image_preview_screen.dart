@@ -5,6 +5,8 @@ import '/presentation/screens/capture_tips_screen.dart';
 import '/presentation/screens/result_screen.dart';
 import '/presentation/widgets/capture_image.dart';
 import '/presentation/providers/history_provider.dart';
+import '/presentation/providers/disease_provider.dart';
+import '/data/models/detection_result.dart';
 
 class ImagePreviewScreen extends ConsumerWidget {
   const ImagePreviewScreen({super.key});
@@ -73,24 +75,87 @@ class ImagePreviewScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  // TODO: replace this simulated prediction with real model inference
-                  const predictedLabel = 'Early Blight';
-                  const confidence = 0.87;
-                  final status = statusFromModel(predictedLabel: predictedLabel, confidence: confidence);
-
-                  // Add to history and set current result
-                  await ref.read(historyProvider.notifier).add(
-                    imagePath: image!.path,
-                    diseaseName: predictedLabel,
-                    status: status,
-                    confidence: confidence,
+                  // Show loading dialog
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (ctx) => const Center(
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(height: 16),
+                              Text(
+                                'Analyzing image...',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   );
 
-                  // set current result for ResultScreen
-                  final latest = ref.read(historyProvider).first;
-                  ref.read(currentResultProvider.notifier).state = latest;
+                  try {
+                    // Get the disease repository
+                    final repository = ref.read(cropDiseaseRepositoryProvider);
 
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => const ResultScreen()));
+                    // Run model inference
+                    final result = await repository.analyzeImage(image!);
+
+                    // Extract results
+                    final String diseaseName = result['diseaseName'];
+                    final double confidence = result['confidence'];
+                    final bool isHealthy = result['isHealthy'];
+                    final status = isHealthy ? HealthStatus.healthy : HealthStatus.diseased;
+
+                    // Add to history and set current result
+                    await ref.read(historyProvider.notifier).add(
+                      imagePath: image!.path,
+                      diseaseName: diseaseName,
+                      status: status,
+                      confidence: confidence,
+                    );
+
+                    // Set current result for ResultScreen
+                    final latest = ref.read(historyProvider).first;
+                    ref.read(currentResultProvider.notifier).state = latest;
+
+                    // Close loading dialog
+                    if (context.mounted) Navigator.of(context).pop();
+
+                    // Navigate to result screen
+                    if (context.mounted) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (ctx) => const ResultScreen()),
+                      );
+                    }
+                  } catch (e) {
+                    // Close loading dialog
+                    if (context.mounted) Navigator.of(context).pop();
+
+                    // Show error dialog
+                    if (context.mounted) {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Analysis Failed'),
+                          content: Text(
+                            'Failed to analyze the image. Please try again.\n\nError: $e',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
