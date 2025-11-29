@@ -1,4 +1,6 @@
+import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '/data/datasources/local/notification_local_data_source.dart';
@@ -7,16 +9,15 @@ import '/core/theme/app_colors.dart';
 import '/presentation/widgets/settings_section.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _notificationsEnabled = true; // Default state
-  bool _isLoading = true;
   bool darkModeToggle = false;
   String _selectedLanguage = 'English';
 
@@ -31,7 +32,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final isEnabled = await loadNotificationPreference();
     setState(() {
       _notificationsEnabled = isEnabled;
-      _isLoading = false;
     });
   }
 
@@ -63,6 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           TextButton(
             onPressed: () {
+              ref.read(historyProvider.notifier).clear();
               _loadPrefs();
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
