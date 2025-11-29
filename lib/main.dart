@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/firebase_options.dart';
@@ -11,8 +12,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadNotificationPreference();
-  runApp(
-    MaterialApp(
+  runApp(ProviderScope(child: MyApp()));
+}
+
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(
       title: 'Crop Care',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -42,6 +50,6 @@ void main() async {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
       home: const TabsScreen(),
-    ),
-  );
+    );
+  }
 }

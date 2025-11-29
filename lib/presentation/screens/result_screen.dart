@@ -1,19 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/presentation/widgets/capture_image.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
+import '/presentation/providers/history_provider.dart';
+import '/data/models/detection_result.dart';
 
-class ResultScreen extends StatefulWidget {
+class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
 
   @override
-  State<ResultScreen> createState() => _ResultScreenState();
+  ConsumerState<ResultScreen> createState() => _ResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class _ResultScreenState extends ConsumerState<ResultScreen> {
   @override
   Widget build(BuildContext context) {
+    final DetectionResult? current = ref.watch(currentResultProvider);
+
     return GradientScaffold(
       appBar: AppBar(
         title: Text('Analyze Result'),
@@ -33,42 +40,51 @@ class _ResultScreenState extends State<ResultScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(8),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Hero(
-                        tag: 'preview-image',
-                        child: Image.file(
-                          image!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                          alignment: Alignment.center,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                                color: Colors.grey[200],
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.broken_image,
-                                      size: 48,
-                                      color: Colors.grey[600],
+                          borderRadius: BorderRadius.circular(16),
+                          child: Hero(
+                            tag: 'preview-image',
+                            child: current != null
+                                ? Image.file(
+                                    File(current.imagePath),
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    alignment: Alignment.center,
+                                    errorBuilder: (context, error, stackTrace) => Container(
+                                      color: Colors.grey[200],
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.broken_image,
+                                            size: 48,
+                                            color: Colors.grey[600],
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            'Image not available',
+                                            style: TextStyle(color: Colors.grey[700]),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Image not available',
-                                      style: TextStyle(color: Colors.grey[700]),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                  )
+                                : (image != null
+                                    ? Image.file(
+                                        image!,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        alignment: Alignment.center,
+                                      )
+                                    : Container(color: Colors.grey[200])),
+                          ),
                         ),
-                      ),
-                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                _deseaseNameAndConfidence(),
+                _deseaseNameAndConfidence(current),
                 const SizedBox(height: 20),
                 Container(
                   padding: EdgeInsets.all(16),
@@ -233,7 +249,7 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  Container _deseaseNameAndConfidence() {
+  Container _deseaseNameAndConfidence(DetectionResult? current) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: double.infinity,
@@ -253,7 +269,7 @@ class _ResultScreenState extends State<ResultScreen> {
               Column(
                 children: [
                   Text(
-                    'Early Blight',
+                    current?.diseaseName ?? 'Unknown',
                     style: TextStyle(
                       color: Colors.red,
                       fontSize: 20,
@@ -261,7 +277,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   Text(
-                    'Confidence: 87%',
+                    current?.confidence != null
+                        ? 'Confidence: ${((current!.confidence ?? 0) * 100).toStringAsFixed(0)}%'
+                        : 'Confidence: N/A',
                     style: TextStyle(
                       color: const Color.fromARGB(255, 95, 95, 95),
                       fontSize: 14,

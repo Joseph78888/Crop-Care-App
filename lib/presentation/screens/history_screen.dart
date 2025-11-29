@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// import '/presentation/widgets/history_card.dart';
 import '/presentation/widgets/history_searh_bar.dart';
 import '/presentation/widgets/total_healthy_deasise_filter.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
+import '/presentation/widgets/history_card.dart';
+import '/presentation/providers/history_provider.dart';
 
-class HistoryScreen extends StatefulWidget {
+class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
 
   @override
-  State<HistoryScreen> createState() => _HistoryScreenState();
+  ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   final TextEditingController controller = TextEditingController();
   final isSelected = false;
   String _filterType = 'all'; // all, healthy, diseased
@@ -21,6 +23,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {
       _filterType = filter;
     });
+  }
+  
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -70,8 +78,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
 
                 const SizedBox(height: 20),
-                _buildEmptyHistoryState(),
-                // HistoryCard(),
+                // History list (watches provider)
+                Consumer(
+                  builder: (context, ref, _) {
+                    final items = ref.watch(historyProvider);
+                    if (items.isEmpty) return _buildEmptyHistoryState();
+                    return Column(
+                      children: items.map((e) => HistoryCard(result: e)).toList(),
+                    );
+                  },
+                ),
               ],
             ),
           ),

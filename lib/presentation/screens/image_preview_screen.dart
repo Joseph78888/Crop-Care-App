@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/presentation/screens/capture_tips_screen.dart';
 import '/presentation/screens/result_screen.dart';
 import '/presentation/widgets/capture_image.dart';
+import '/presentation/providers/history_provider.dart';
 
-class ImagePreviewScreen extends StatelessWidget {
+class ImagePreviewScreen extends ConsumerWidget {
   const ImagePreviewScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
 
       backgroundColor: const Color.fromARGB(255, 234, 255, 235),
@@ -70,10 +72,25 @@ class ImagePreviewScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(
-                    context,
-                  ).pushReplacement(MaterialPageRoute(builder: (ctx) => ResultScreen()));
+                onPressed: () async {
+                  // TODO: replace this simulated prediction with real model inference
+                  const predictedLabel = 'Early Blight';
+                  const confidence = 0.87;
+                  final status = statusFromModel(predictedLabel: predictedLabel, confidence: confidence);
+
+                  // Add to history and set current result
+                  await ref.read(historyProvider.notifier).add(
+                    imagePath: image!.path,
+                    diseaseName: predictedLabel,
+                    status: status,
+                    confidence: confidence,
+                  );
+
+                  // set current result for ResultScreen
+                  final latest = ref.read(historyProvider).first;
+                  ref.read(currentResultProvider.notifier).state = latest;
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => const ResultScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,

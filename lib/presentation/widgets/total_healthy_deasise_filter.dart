@@ -1,6 +1,9 @@
+import 'package:crop_care_app/data/models/detection_result.dart';
+import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TotalHealthyDeasiseFilter extends StatelessWidget {
+class TotalHealthyDeasiseFilter extends ConsumerWidget {
   const TotalHealthyDeasiseFilter({super.key, required this.name});
   final String name;
   Color _getDeferenceColor(String name) {
@@ -13,8 +16,14 @@ class TotalHealthyDeasiseFilter extends StatelessWidget {
         : Colors.black;
   }
 
+  _getDiseasedNum(){
+
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final total = ref.watch(historyProvider);
+    
     return Container(
       height: 120,
       width: 120,
@@ -33,11 +42,17 @@ class TotalHealthyDeasiseFilter extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                '16',
+                name == 'Total'
+                    ? '${total.length}'
+                    : name == 'Healthy'
+                    ? '${total}'
+                    : name == 'Diseased'
+                    ?'${total.contains('Diseased').toString().length}'
+                    : '${total.length}',
                 style: TextStyle(color: _getDeferenceColor(name), fontSize: 24),
               ),
               const SizedBox(height: 20),
-              
+
               Text(
                 name,
                 style: TextStyle(
