@@ -38,22 +38,22 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               children: [
                 Card(
                   // shape: BeveledRectangleBorder(borderRadius: BorderRadiusGeometry.circular(20)),
-                  child: Container(
+                  child: SizedBox(
                     height: 300,
                     width: double.infinity,
-                    padding: const EdgeInsets.all(8),
                     child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Hero(
-                            tag: 'preview-image',
-                            child: current != null
-                                ? Image.file(
-                                    File(current.imagePath),
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    alignment: Alignment.center,
-                                    errorBuilder: (context, error, stackTrace) => Container(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Hero(
+                        tag: 'preview-image',
+                        child: current != null
+                            ? Image.file(
+                                File(current.imagePath),
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                                alignment: Alignment.center,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
                                       color: Colors.grey[200],
                                       alignment: Alignment.center,
                                       child: Column(
@@ -67,32 +67,32 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                           const SizedBox(height: 8),
                                           Text(
                                             'Image not available',
-                                            style: TextStyle(color: Colors.grey[700]),
+                                            style: TextStyle(
+                                              color: Colors.grey[700],
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  )
-                                : (image != null
-                                    ? Image.file(
-                                        image,
-                                        fit: BoxFit.cover,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        alignment: Alignment.center,
-                                      )
-                                    : Container(color: Colors.grey[200])),
-                          ),
-                        ),
+                              )
+                            : (image != null
+                                  ? Image.file(
+                                      image,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      alignment: Alignment.center,
+                                    )
+                                  : Container(color: Colors.grey[200])),
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
                 const SizedBox(height: 20),
                 _deseaseNameAndConfidence(current),
                 const SizedBox(height: 20),
                 _buildAnalysisDetails(current),
                 const SizedBox(height: 20),
-
                 _buildRecommendations(context, current),
                 const SizedBox(height: 20),
 
@@ -128,9 +128,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.of(
-                        context,
-                      ).push(MaterialPageRoute(builder: (ctx) => TabsScreen()));
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const TabsScreen(),
+                        ),
+                        (route) => false,
+                      );
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -184,15 +187,17 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     // Get disease info to determine if healthy
     DiseaseInfo? diseaseInfo;
     if (current != null) {
-      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(current.diseaseName);
+      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(
+        current.diseaseName,
+      );
     }
-    
+
     final isHealthy = diseaseInfo?.isHealthy ?? false;
     final statusColor = isHealthy ? Colors.green : Colors.red;
-    final backgroundColor = isHealthy 
-        ? const Color.fromARGB(193, 218, 255, 221)
+    final backgroundColor = isHealthy
+        ? const Color.fromARGB(193, 133, 255, 143)
         : const Color.fromARGB(193, 255, 221, 218);
-    
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: double.infinity,
@@ -232,6 +237,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                       style: TextStyle(
                         color: const Color.fromARGB(255, 95, 95, 95),
                         fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -239,7 +245,6 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               ),
             ],
           ),
-          // const SizedBox(height: 8),
           LinearProgressIndicator(
             value: current?.confidence ?? 0.0,
             backgroundColor: Colors.grey,
@@ -255,7 +260,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   Widget _buildAnalysisDetails(DetectionResult? current) {
     DiseaseInfo? diseaseInfo;
     if (current != null) {
-      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(current.diseaseName);
+      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(
+        current.diseaseName,
+      );
     }
 
     return Container(
@@ -294,10 +301,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            ...diseaseInfo.symptoms.map((symptom) => Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: _recomendatons(context, symptom),
-            )),
+            ...diseaseInfo.symptoms.map(
+              (symptom) => Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: _recomendatons(context, symptom),
+              ),
+            ),
           ],
         ],
       ),
@@ -307,7 +316,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   Widget _buildRecommendations(BuildContext context, DetectionResult? current) {
     DiseaseInfo? diseaseInfo;
     if (current != null) {
-      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(current.diseaseName);
+      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(
+        current.diseaseName,
+      );
     }
 
     final recommendations = diseaseInfo?.recommendations ?? [];
@@ -349,10 +360,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               ),
             )
           else
-            ...recommendations.map((rec) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: _recomendatons(context, rec),
-            )),
+            ...recommendations.map(
+              (rec) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _recomendatons(context, rec),
+              ),
+            ),
         ],
       ),
     );

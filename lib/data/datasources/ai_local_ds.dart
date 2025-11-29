@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
@@ -35,17 +36,17 @@ class TFLiteService {
           .toList();
 
       _isInitialized = true;
-      print('TFLite model initialized successfully');
-      print('Model input shape: ${_interpreter!.getInputTensors()}');
-      print('Model output shape: ${_interpreter!.getOutputTensors()}');
-      print('Loaded ${_labels!.length} labels');
+      debugPrint('TFLite model initialized successfully');
+      debugPrint('Model input shape: ${_interpreter!.getInputTensors()}');
+      debugPrint('Model output shape: ${_interpreter!.getOutputTensors()}');
+      debugPrint('Loaded ${_labels!.length} labels');
 
       // Log the specific shape of the first output tensor
       var outputTensor = _interpreter!.getOutputTensor(0);
-      print('Output tensor 0 shape: ${outputTensor.shape}');
-      print('Output tensor 0 type: ${outputTensor.type}');
+      debugPrint('Output tensor 0 shape: ${outputTensor.shape}');
+      debugPrint('Output tensor 0 type: ${outputTensor.type}');
     } catch (e) {
-      print('Error initializing TFLite model: $e');
+      debugPrint('Error initializing TFLite model: $e');
       rethrow;
     }
   }
@@ -90,9 +91,10 @@ class TFLiteService {
       // Calculate total elements in output
       int totalElements = 1;
       for (var s in outputShape) {
-        if (s > 0)
+        if (s > 0) {
           totalElements *=
               s; // Handle dynamic dimensions if represented as -1, though usually fixed at runtime
+        }
       }
 
       // If the first dimension is 1 (batch size), we might want to ignore it for total count calculation if we just want the features
@@ -140,10 +142,10 @@ class TFLiteService {
 
       flatten(outputBuffer);
 
-      print(
+      debugPrint(
         'Raw model output (flattened, first 20): ${predictions.take(20).toList()}',
       );
-      print('Total predictions count: ${predictions.length}');
+      debugPrint('Total predictions count: ${predictions.length}');
 
       // Find the class with highest confidence
       double maxConfidence = 0.0;
@@ -164,7 +166,7 @@ class TFLiteService {
 
       // Ensure we have enough labels
       if (maxIndex >= _labels!.length) {
-        print(
+        debugPrint(
           'Warning: Model output index $maxIndex exceeds label count ${_labels!.length}',
         );
         maxIndex = 0; // Fallback to first label
@@ -175,7 +177,7 @@ class TFLiteService {
       // Check confidence threshold
       // Check confidence threshold
       if (maxConfidence < _confidenceThreshold) {
-        print(
+        debugPrint(
           'Confidence $maxConfidence is below threshold $_confidenceThreshold. Returning Unknown.',
         );
         predictedLabel = 'Unknown';
@@ -185,17 +187,17 @@ class TFLiteService {
       final sortedIndices = List.generate(predictions.length, (i) => i)
         ..sort((a, b) => predictions[b].compareTo(predictions[a]));
 
-      print('Top 3 Predictions:');
+      debugPrint('Top 3 Predictions:');
       for (int i = 0; i < 3 && i < sortedIndices.length; i++) {
         final idx = sortedIndices[i];
         if (idx < _labels!.length) {
-          print(
+          debugPrint(
             '${i + 1}. ${_labels![idx]}: ${(predictions[idx] * 100).toStringAsFixed(2)}%',
           );
         }
       }
 
-      print(
+      debugPrint(
         'Prediction: $predictedLabel with confidence: ${(maxConfidence * 100).toStringAsFixed(2)}%',
       );
 
@@ -208,7 +210,7 @@ class TFLiteService {
         ),
       };
     } catch (e) {
-      print('Error during image analysis: $e');
+      debugPrint('Error during image analysis: $e');
       rethrow;
     }
   }
@@ -244,6 +246,6 @@ class TFLiteService {
     _interpreter = null;
     _labels = null;
     _isInitialized = false;
-    print('TFLite service disposed');
+    debugPrint('TFLite service disposed');
   }
 }
