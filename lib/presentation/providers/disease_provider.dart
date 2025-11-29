@@ -22,8 +22,14 @@ final cropDiseaseRepositoryProvider = Provider<CropDiseaseRepository>((ref) {
 });
 
 /// Provider to track model initialization state
+/// This ensures the model is loaded before any analysis
 final modelInitializationProvider = FutureProvider<bool>((ref) async {
   final repository = ref.watch(cropDiseaseRepositoryProvider);
-  await repository.initialize();
-  return true;
+  try {
+    await repository.initialize();
+    return true;
+  } catch (e) {
+    print('Error initializing model in provider: $e');
+    rethrow;
+  }
 });

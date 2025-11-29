@@ -86,6 +86,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                const SizedBox(height: 20),
+                _deseaseNameAndConfidence(current),
+                const SizedBox(height: 20),
                 _buildAnalysisDetails(current),
                 const SizedBox(height: 20),
 

@@ -103,6 +103,11 @@ class ImagePreviewScreen extends ConsumerWidget {
                     // Get the disease repository
                     final repository = ref.read(cropDiseaseRepositoryProvider);
 
+                    // Ensure model is initialized
+                    if (!repository.isReady) {
+                      await repository.initialize();
+                    }
+
                     // Run model inference
                     final result = await repository.analyzeImage(image!);
 

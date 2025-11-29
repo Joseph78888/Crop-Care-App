@@ -16,9 +16,7 @@ class TotalHealthyDeasiseFilter extends ConsumerWidget {
         : Colors.black;
   }
 
-  _getDiseasedNum(){
 
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,9 +43,9 @@ class TotalHealthyDeasiseFilter extends ConsumerWidget {
                 name == 'Total'
                     ? '${total.length}'
                     : name == 'Healthy'
-                    ? '${total}'
+                    ? '${total.where((e) => e.status == HealthStatus.healthy).length}'
                     : name == 'Diseased'
-                    ?'${total.contains('Diseased').toString().length}'
+                    ? '${total.where((e) => e.status == HealthStatus.diseased).length}'
                     : '${total.length}',
                 style: TextStyle(color: _getDeferenceColor(name), fontSize: 24),
               ),

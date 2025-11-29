@@ -24,7 +24,7 @@ android {
 
     // TensorFlow Lite configuration
     aaptOptions {
-        noCompress "tflite"
+        noCompress ("tflite")
     }
 
     defaultConfig {

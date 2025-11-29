@@ -12,8 +12,10 @@ class TFLiteService {
 
   static const String _modelPath = 'assets/models/tomato_model.tflite';
   static const String _labelsPath = 'assets/models/labels.txt';
-  static const int _inputSize = 224; // Standard input size for most models
+  static const int _inputSize = 300; // Updated to match model input shape
   static const int _numChannels = 3; // RGB
+
+  static const double _confidenceThreshold = 0.79; // 79% threshold
 
   /// Initialize the TFLite model and load labels
   Future<void> initialize() async {
@@ -22,16 +24,26 @@ class TFLiteService {
     try {
       // Load the model
       _interpreter = await Interpreter.fromAsset(_modelPath);
-      
+
       // Load labels
       final labelsData = await rootBundle.loadString(_labelsPath);
-      _labels = labelsData.split('\n').where((label) => label.trim().isNotEmpty).toList();
+      // Load labels and ensure they are trimmed (removes \r from Windows line endings)
+      _labels = labelsData
+          .split('\n')
+          .map((l) => l.trim())
+          .where((l) => l.isNotEmpty)
+          .toList();
 
       _isInitialized = true;
       print('TFLite model initialized successfully');
       print('Model input shape: ${_interpreter!.getInputTensors()}');
       print('Model output shape: ${_interpreter!.getOutputTensors()}');
       print('Loaded ${_labels!.length} labels');
+
+      // Log the specific shape of the first output tensor
+      var outputTensor = _interpreter!.getOutputTensor(0);
+      print('Output tensor 0 shape: ${outputTensor.shape}');
+      print('Output tensor 0 type: ${outputTensor.type}');
     } catch (e) {
       print('Error initializing TFLite model: $e');
       rethrow;
@@ -48,7 +60,7 @@ class TFLiteService {
       // Read and decode the image
       final imageBytes = await imageFile.readAsBytes();
       img.Image? image = img.decodeImage(imageBytes);
-      
+
       if (image == null) {
         throw Exception('Failed to decode image');
       }
@@ -60,37 +72,140 @@ class TFLiteService {
         height: _inputSize,
       );
 
-      // Convert image to input tensor format
-      var input = _imageToByteListFloat32(resizedImage);
+      // Convert image to input tensor format [1, 224, 224, 3] as Uint8
+      var input = _imageToByteListUint8(resizedImage);
 
-      // Prepare output buffer
-      var output = List.filled(1, List.filled(_labels!.length, 0.0)).cast<List<double>>();
+      // Reshape input to 4D tensor
+      var inputReshaped = input.reshape([
+        1,
+        _inputSize,
+        _inputSize,
+        _numChannels,
+      ]);
+
+      // Get output tensor shape from the model
+      var outputTensor = _interpreter!.getOutputTensor(0);
+      var outputShape = outputTensor.shape;
+
+      // Calculate total elements in output
+      int totalElements = 1;
+      for (var s in outputShape) {
+        if (s > 0)
+          totalElements *=
+              s; // Handle dynamic dimensions if represented as -1, though usually fixed at runtime
+      }
+
+      // If the first dimension is 1 (batch size), we might want to ignore it for total count calculation if we just want the features
+      // But for safety, let's just allocate a flat buffer or a shaped buffer.
+      // TFLite Flutter run usually expects the buffer to match the shape or be flat.
+      // Let's try to allocate a buffer matching the shape.
+
+      // We need to handle the case where outputShape might be [1, 10, 10] or [1, 16] etc.
+      // Since we don't know the exact rank, let's use a flattened buffer approach if possible,
+      // or just allocate a multi-dimensional list if we can easily construct it.
+      // However, `run` expects a specific structure.
+
+      // EASIER APPROACH: Allocate a flat Float32List (or similar) and reshape if needed,
+      // BUT `interpreter.run` takes `Object input, Object output`.
+      // If we pass a pre-allocated buffer of the wrong shape, it might fail.
+
+      // Let's try to infer the structure.
+      // If shape is [1, 10, 10], we should pass List<List<List<double>>> or a flat buffer and use runForMultipleInputs if needed?
+      // Actually `run` usually handles a map or a list.
+
+      // Let's try to use a flat buffer and `run` with a single output buffer.
+      // If the output is [1, 10, 10], it effectively contains 100 numbers.
+
+      // We will use a flattened list for the output to make it easier to process
+      // Model output is uint8, so use Uint8List
+      var outputBuffer = Uint8List(totalElements).reshape(outputShape);
 
       // Run inference
-      _interpreter!.run(input, output);
+      _interpreter!.run(inputReshaped, outputBuffer);
 
-      // Get the results
-      final predictions = output[0];
-      
+      // Flatten the output to find the max
+      List<double> predictions = [];
+
+      // Helper to flatten dynamic list
+      void flatten(dynamic list) {
+        if (list is List) {
+          for (var item in list) {
+            flatten(item);
+          }
+        } else if (list is num) {
+          // Convert uint8 (0-255) to probability (0.0-1.0)
+          predictions.add(list.toDouble() / 255.0);
+        }
+      }
+
+      flatten(outputBuffer);
+
+      print(
+        'Raw model output (flattened, first 20): ${predictions.take(20).toList()}',
+      );
+      print('Total predictions count: ${predictions.length}');
+
       // Find the class with highest confidence
       double maxConfidence = 0.0;
       int maxIndex = 0;
-      
-      for (int i = 0; i < predictions.length; i++) {
+
+      // If we have more predictions than labels, we might be looking at a feature map or incorrect model.
+      // But we will try to match the first N predictions to N labels.
+      int limit = predictions.length < _labels!.length
+          ? predictions.length
+          : _labels!.length;
+
+      for (int i = 0; i < limit; i++) {
         if (predictions[i] > maxConfidence) {
           maxConfidence = predictions[i];
           maxIndex = i;
         }
       }
 
-      final predictedLabel = _labels![maxIndex];
-      
-      print('Prediction: $predictedLabel with confidence: ${(maxConfidence * 100).toStringAsFixed(2)}%');
+      // Ensure we have enough labels
+      if (maxIndex >= _labels!.length) {
+        print(
+          'Warning: Model output index $maxIndex exceeds label count ${_labels!.length}',
+        );
+        maxIndex = 0; // Fallback to first label
+      }
+
+      String predictedLabel = _labels![maxIndex];
+
+      // Check confidence threshold
+      // Check confidence threshold
+      if (maxConfidence < _confidenceThreshold) {
+        print(
+          'Confidence $maxConfidence is below threshold $_confidenceThreshold. Returning Unknown.',
+        );
+        predictedLabel = 'Unknown';
+      }
+
+      // Log top 3 predictions for debugging
+      final sortedIndices = List.generate(predictions.length, (i) => i)
+        ..sort((a, b) => predictions[b].compareTo(predictions[a]));
+
+      print('Top 3 Predictions:');
+      for (int i = 0; i < 3 && i < sortedIndices.length; i++) {
+        final idx = sortedIndices[i];
+        if (idx < _labels!.length) {
+          print(
+            '${i + 1}. ${_labels![idx]}: ${(predictions[idx] * 100).toStringAsFixed(2)}%',
+          );
+        }
+      }
+
+      print(
+        'Prediction: $predictedLabel with confidence: ${(maxConfidence * 100).toStringAsFixed(2)}%',
+      );
 
       return {
         'label': predictedLabel,
         'confidence': maxConfidence,
-        'allPredictions': Map.fromIterables(_labels!, predictions),
+        'allPredictions': Map.fromIterables(
+          _labels!.take(predictions.length),
+          predictions,
+        ),
       };
     } catch (e) {
       print('Error during image analysis: $e');
@@ -98,20 +213,19 @@ class TFLiteService {
     }
   }
 
-  /// Convert image to Float32 byte list for model input
-  Float32List _imageToByteListFloat32(img.Image image) {
-    var convertedBytes = Float32List(1 * _inputSize * _inputSize * _numChannels);
-    var buffer = Float32List.view(convertedBytes.buffer);
+  /// Convert image to Uint8 byte list for model input (0-255 range)
+  Uint8List _imageToByteListUint8(img.Image image) {
+    var convertedBytes = Uint8List(1 * _inputSize * _inputSize * _numChannels);
     int pixelIndex = 0;
 
     for (int y = 0; y < _inputSize; y++) {
       for (int x = 0; x < _inputSize; x++) {
         final pixel = image.getPixel(x, y);
-        
-        // Normalize pixel values to [0, 1] range
-        buffer[pixelIndex++] = pixel.r / 255.0;
-        buffer[pixelIndex++] = pixel.g / 255.0;
-        buffer[pixelIndex++] = pixel.b / 255.0;
+
+        // Keep pixel values in [0, 255] range as uint8
+        convertedBytes[pixelIndex++] = pixel.r.toInt();
+        convertedBytes[pixelIndex++] = pixel.g.toInt();
+        convertedBytes[pixelIndex++] = pixel.b.toInt();
       }
     }
 

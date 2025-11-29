@@ -7,7 +7,6 @@ import 'core/firebase_options.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/core/theme/app_theme.dart';
-import '/data/datasources/ai_local_ds.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,16 +14,6 @@ void main() async {
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadNotificationPreference();
-  
-  // Initialize TFLite model
-  final tfliteService = TFLiteService();
-  try {
-    await tfliteService.initialize();
-    print('✓ TFLite model loaded successfully');
-  } catch (e) {
-    print('✗ Failed to load TFLite model: $e');
-    // Continue anyway - error will be shown when user tries to analyze
-  }
   
   runApp(ProviderScope(child: MyApp()));
 }
