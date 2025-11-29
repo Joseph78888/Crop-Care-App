@@ -18,7 +18,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _notificationsEnabled = true; // Default state
-  bool _isLoading = true;
   bool darkModeToggle = false;
   String _selectedLanguage = 'English';
 
@@ -33,7 +32,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final isEnabled = await loadNotificationPreference();
     setState(() {
       _notificationsEnabled = isEnabled;
-      _isLoading = false;
     });
   }
 

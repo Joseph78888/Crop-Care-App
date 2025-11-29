@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/presentation/widgets/capture_image.dart';
+import '/presentation/providers/image_provider.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/providers/history_provider.dart';
@@ -22,6 +22,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     final DetectionResult? current = ref.watch(currentResultProvider);
+    final image = ref.watch(selectedImageProvider);
 
     return GradientScaffold(
       appBar: AppBar(
@@ -74,7 +75,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                   )
                                 : (image != null
                                     ? Image.file(
-                                        image!,
+                                        image,
                                         fit: BoxFit.cover,
                                         width: double.infinity,
                                         height: double.infinity,

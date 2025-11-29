@@ -1,20 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '/presentation/screens/image_preview_screen.dart';
+import '/presentation/providers/image_provider.dart';
 
- File? image;
-
-class CaptureContainer extends StatefulWidget {
+class CaptureContainer extends ConsumerStatefulWidget {
   const CaptureContainer({super.key});
 
   @override
-  State<CaptureContainer> createState() => _CaptureContainerState();
+  ConsumerState<CaptureContainer> createState() => _CaptureContainerState();
 }
 
-class _CaptureContainerState extends State<CaptureContainer> {
+class _CaptureContainerState extends ConsumerState<CaptureContainer> {
  
   void _pickImage() async {
     final pickedImage = await ImagePicker().pickImage(
@@ -27,15 +27,15 @@ class _CaptureContainerState extends State<CaptureContainer> {
       return;
     }
 
-    setState(() {
-      image = File(pickedImage.path);
-    });
+    ref.read(selectedImageProvider.notifier).state = File(pickedImage.path);
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ImagePreviewScreen(),
-      ),
-    );
+    if (mounted) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const ImagePreviewScreen(),
+        ),
+      );
+    }
   }
   @override
   Widget build(BuildContext context) {

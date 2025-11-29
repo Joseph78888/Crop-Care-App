@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/detection_result.dart';
-import '../providers/history_provider.dart';
 
 class HistoryCard extends ConsumerWidget {
   final DetectionResult result;
