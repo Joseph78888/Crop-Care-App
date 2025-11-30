@@ -28,9 +28,8 @@ class ImagePreviewScreen extends ConsumerWidget {
             // Image Preview
             Expanded(
               child: Card(
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(8),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Hero(
