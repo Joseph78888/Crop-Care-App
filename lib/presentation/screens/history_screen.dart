@@ -7,6 +7,7 @@ import '/presentation/widgets/total_healthy_deasise_filter.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/widgets/history_card.dart';
 import '/presentation/providers/history_provider.dart';
+import '/core/utils/responsive_helper.dart';
 
 class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
@@ -55,7 +56,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(context.responsive.md),
 
             child: Column(
               children: [
@@ -68,14 +69,14 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                     TotalHealthyDeasiseFilter(name: 'Diseased'),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.lg),
 
                 // HistorySearhBar
                 HistorySearhBar(
                   controller: controller,
                   onChanged: _onSearchChanged,
                 ),
-                const SizedBox(height: 14),
+                SizedBox(height: context.responsive.sm),
                 
                 // Filter Buttons
                 Row(
@@ -88,7 +89,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.md),
                 // History list (watches provider)
                 Consumer(
                   builder: (context, ref, _) {
@@ -146,21 +147,21 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.history, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
+            Icon(Icons.history, size: context.responsive.rs(64), color: Colors.grey[400]),
+            SizedBox(height: context.responsive.md),
             Text(
               'No Analysis History',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: context.responsive.textXL,
                 fontWeight: FontWeight.w600,
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.responsive.sm),
             Text(
               'Start analyzing your crops to see results here',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+              style: TextStyle(fontSize: context.responsive.textSM, color: Colors.grey[500]),
             ),
           ],
         ),

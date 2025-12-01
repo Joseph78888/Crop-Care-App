@@ -10,6 +10,7 @@ import '/presentation/providers/history_provider.dart';
 import '/data/models/detection_result.dart';
 import '/data/datasources/disease_database.dart';
 import '/data/models/disease_info_model.dart';
+import '/core/utils/responsive_helper.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
@@ -39,16 +40,16 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(context.responsive.md),
             child: Column(
               children: [
                 Card(
                   // shape: BeveledRectangleBorder(borderRadius: BorderRadiusGeometry.circular(20)),
                   child: SizedBox(
-                    height: 300,
+                    height: context.responsive.hp(37),
                     width: double.infinity,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(context.responsive.md),
                       child: Hero(
                         tag: 'preview-image',
                         child: current != null
@@ -70,7 +71,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                             size: 48,
                                             color: Colors.grey[600],
                                           ),
-                                          const SizedBox(height: 8),
+                                          SizedBox(height: context.responsive.sm),
                                           Text(
                                             'Image not available',
                                             style: TextStyle(
@@ -94,13 +95,13 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.lg),
                 _deseaseNameAndConfidence(current),
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.lg),
                 _buildAnalysisDetails(current),
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.lg),
                 _buildRecommendations(context, current),
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.lg),
 
                 // Analyze Another Crop Button
                 SizedBox(
@@ -112,22 +113,22 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: context.responsive.md),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.camera_alt_rounded),
-                        SizedBox(width: 8),
+                        SizedBox(width: context.responsive.sm),
                         Text(
                           'Analyze Another Crop',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: context.responsive.textMD),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: context.responsive.md),
 
                 // Back to Home Button
                 SizedBox(
@@ -142,14 +143,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: context.responsive.md),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.home_rounded),
-                        SizedBox(width: 8),
-                        Text('Back to Home', style: TextStyle(fontSize: 16)),
+                        SizedBox(width: context.responsive.sm),
+                        Text('Back to Home', style: TextStyle(fontSize: context.responsive.textMD)),
                       ],
                     ),
                   ),
@@ -168,20 +169,20 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          height: 6,
-          width: 6,
+          height: context.responsive.rs(6),
+          width: context.responsive.rs(6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: context.responsive.sm),
         Expanded(
           child: Text(
             text,
             style: TextStyle(
               color: const Color.fromARGB(255, 48, 48, 48),
-              fontSize: 16,
+              fontSize: context.responsive.textMD,
             ),
           ),
         ),
@@ -205,11 +206,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
         : const Color.fromARGB(193, 255, 221, 218);
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.responsive.lg,
+        vertical: context.responsive.sm,
+      ),
       width: double.infinity,
-      height: 120,
+      height: context.responsive.rs(120),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(context.responsive.lg),
         color: backgroundColor,
       ),
       child: Column(
@@ -219,10 +223,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
             children: [
               Icon(
                 isHealthy ? Icons.check_circle_rounded : Icons.warning_rounded,
-                size: 60,
+                size: context.responsive.rs(60),
                 color: statusColor,
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: context.responsive.xs),
 
               Expanded(
                 child: Column(
@@ -232,7 +236,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                       current?.diseaseName ?? 'Unknown',
                       style: TextStyle(
                         color: statusColor,
-                        fontSize: 20,
+                        fontSize: context.responsive.textXL,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -242,7 +246,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                           : 'Confidence: N/A',
                       style: TextStyle(
                         color: const Color.fromARGB(255, 95, 95, 95),
-                        fontSize: 14,
+                        fontSize: context.responsive.textSM,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -255,8 +259,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
             value: current?.confidence ?? 0.0,
             backgroundColor: Colors.grey,
             color: statusColor,
-            borderRadius: BorderRadius.circular(6),
-            minHeight: 8,
+            borderRadius: BorderRadius.circular(context.responsive.xs),
+            minHeight: context.responsive.sm,
           ),
         ],
       ),
@@ -272,10 +276,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     }
 
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(context.responsive.md),
       decoration: BoxDecoration(
         color: const Color.fromARGB(15, 24, 121, 0),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(context.responsive.lg),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,32 +288,32 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
             'Analysis Details',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 20,
+              fontSize: context.responsive.textXL,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: context.responsive.sm),
           Text(
             diseaseInfo?.description ?? 'No description available.',
             style: TextStyle(
               color: const Color.fromARGB(255, 48, 48, 48),
-              fontSize: 16,
+              fontSize: context.responsive.textMD,
             ),
           ),
           if (diseaseInfo != null && diseaseInfo.symptoms.isNotEmpty) ...[
-            const SizedBox(height: 16),
+            SizedBox(height: context.responsive.md),
             Text(
               'Symptoms:',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 18,
+                fontSize: context.responsive.textLG,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.responsive.sm),
             ...diseaseInfo.symptoms.map(
               (symptom) => Padding(
-                padding: const EdgeInsets.only(bottom: 6),
+                padding: EdgeInsets.only(bottom: context.responsive.xs),
                 child: _recomendatons(context, symptom),
               ),
             ),
@@ -330,10 +334,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     final recommendations = diseaseInfo?.recommendations ?? [];
 
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(context.responsive.md),
       decoration: BoxDecoration(
         color: const Color.fromARGB(15, 24, 121, 0),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(context.responsive.lg),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,26 +347,26 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               Icon(
                 Icons.lightbulb_outline_rounded,
                 color: Theme.of(context).colorScheme.primary,
-                size: 25,
+                size: context.responsive.rs(25),
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: context.responsive.xs),
               Text(
                 'Recommendations',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: context.responsive.textXL,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: context.responsive.sm),
           if (recommendations.isEmpty)
             Text(
               'No recommendations available.',
               style: TextStyle(
                 color: const Color.fromARGB(255, 48, 48, 48),
-                fontSize: 16,
+                fontSize: context.responsive.textMD,
               ),
             )
           else
