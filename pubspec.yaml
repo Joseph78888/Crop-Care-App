@@ -29,6 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  sentry_flutter: ^9.8.0
   cupertino_icons: ^1.0.8
   firebase_core: ^4.2.1
   firebase_messaging: ^16.0.4
@@ -39,11 +40,13 @@ dependencies:
   image: ^4.0.17
   image_picker: ^1.2.1
   intl: ^0.20.2
+  path_provider: ^2.1.5
   shared_preferences: ^2.5.3
-  uuid: ^4.5.2
   tflite_flutter: ^0.12.1
+  uuid: ^4.5.2
 
 dev_dependencies:
+  sentry_dart_plugin: ^3.2.0
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
@@ -84,3 +87,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: flutter
+  org: yousif-z3

@@ -7,15 +7,27 @@ import 'core/firebase_options.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/core/theme/app_theme.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  SentryWidgetsFlutterBinding.ensureInitialized();
   
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadNotificationPreference();
   
-  runApp(ProviderScope(child: MyApp()));
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(SentryWidget(child: ProviderScope(child: MyApp()))),
+  );
+  // TODO: Remove this line after sending the first sample event to sentry.
+  await Sentry.captureException(Exception('This is a sample exception.'));
 }
 
 class MyApp extends ConsumerWidget {
