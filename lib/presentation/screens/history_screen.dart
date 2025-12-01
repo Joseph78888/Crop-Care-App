@@ -1,3 +1,4 @@
+import 'package:crop_care_app/data/models/detection_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -81,10 +82,18 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 // History list (watches provider)
                 Consumer(
                   builder: (context, ref, _) {
-                    final items = ref.watch(historyProvider);
-                    if (items.isEmpty) return _buildEmptyHistoryState();
+                    final allItems = ref.watch(historyProvider);
+                    
+                    // Filter items based on selected filter type
+                    final filteredItems = _filterType == 'all'
+                        ? allItems
+                        : _filterType == 'healthy'
+                            ? allItems.where((e) => e.status == HealthStatus.healthy).toList()
+                            : allItems.where((e) => e.status == HealthStatus.diseased).toList();
+                    
+                    if (filteredItems.isEmpty) return _buildEmptyHistoryState();
                     return Column(
-                      children: items.map((e) => HistoryCard(result: e)).toList(),
+                      children: filteredItems.map((e) => HistoryCard(result: e)).toList(),
                     );
                   },
                 ),

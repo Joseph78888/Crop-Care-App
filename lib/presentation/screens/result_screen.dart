@@ -21,6 +21,12 @@ class ResultScreen extends ConsumerStatefulWidget {
 class _ResultScreenState extends ConsumerState<ResultScreen> {
   @override
   Widget build(BuildContext context) {
+    // STEP 3: Retrieving Data
+    // The ResultScreen watches the currentResultProvider to get the detection result.
+    // This provider is set by:
+    // 1. The ImagePreviewScreen after fresh AI analysis, OR
+    // 2. The HistoryCard when a user taps a historical record
+    // By using a provider instead of route parameters, we have a single source of truth.
     final DetectionResult? current = ref.watch(currentResultProvider);
     final image = ref.watch(selectedImageProvider);
 

@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/detection_result.dart';
+import '../../presentation/providers/history_provider.dart';
+import '../../presentation/screens/result_screen.dart';
 
 class HistoryCard extends ConsumerWidget {
   final DetectionResult result;
@@ -16,6 +18,23 @@ class HistoryCard extends ConsumerWidget {
       color: const Color.fromARGB(49, 206, 206, 206),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
+        onTap: () {
+          // STEP 1: Data Identification
+          // We already have the DetectionResult object (this.result) with a unique ID.
+          // Instead of extracting just the ID, we pass the entire object via the provider.
+          
+          // STEP 2: Navigation Parameter Passing
+          // Update the currentResultProvider with this historical result.
+          // The ResultScreen watches this provider to display the data.
+          ref.read(currentResultProvider.notifier).state = result;
+          
+          // Navigate to the ResultScreen
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const ResultScreen(),
+            ),
+          );
+        },
         child: ListTile(
           contentPadding: const EdgeInsets.all(12),
           leading: ClipRRect(
