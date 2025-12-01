@@ -19,10 +19,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   final TextEditingController controller = TextEditingController();
   final isSelected = false;
   String _filterType = 'all'; // all, healthy, diseased
+  String _searchQuery = ''; // Track search text for filtering
 
   void _onFilterChanged(String filter) {
     setState(() {
       _filterType = filter;
+    });
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query.toLowerCase(); // Case-insensitive search
     });
   }
   
@@ -64,7 +71,10 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 const SizedBox(height: 20),
 
                 // HistorySearhBar
-                const HistorySearhBar(),
+                HistorySearhBar(
+                  controller: controller,
+                  onChanged: _onSearchChanged,
+                ),
                 const SizedBox(height: 14),
                 
                 // Filter Buttons
@@ -84,12 +94,19 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   builder: (context, ref, _) {
                     final allItems = ref.watch(historyProvider);
                     
-                    // Filter items based on selected filter type
-                    final filteredItems = _filterType == 'all'
+                    // STAGE 1: Filter by status (healthy/diseased/all)
+                    final statusFiltered = _filterType == 'all'
                         ? allItems
                         : _filterType == 'healthy'
                             ? allItems.where((e) => e.status == HealthStatus.healthy).toList()
                             : allItems.where((e) => e.status == HealthStatus.diseased).toList();
+                    
+                    // STAGE 2: Filter by search query (disease name)
+                    final filteredItems = _searchQuery.isEmpty
+                        ? statusFiltered
+                        : statusFiltered
+                            .where((e) => e.diseaseName.toLowerCase().contains(_searchQuery))
+                            .toList();
                     
                     if (filteredItems.isEmpty) return _buildEmptyHistoryState();
                     return Column(
