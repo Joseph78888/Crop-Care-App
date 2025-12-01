@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '/presentation/widgets/quick_status_section.dart';
 import '/presentation/widgets/custom_capture_container.dart';
 import '/presentation/widgets/custom_home_app_bar.dart';
+import '/core/utils/responsive_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,21 +16,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(context.responsive.md),
       child: Column(
         children: [
           const CustomHomeAppBar(),
-          const SizedBox(height: 16),
+          SizedBox(height: context.responsive.md),
 
           Text(
             'How can we help your crops today?',
             style: TextStyle(
               color: const Color.fromARGB(255, 65, 65, 65),
               fontWeight: FontWeight.w500,
-              fontSize: 20,
+              fontSize: context.responsive.textLG,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: context.responsive.md),
 
           CustomCaptureContainer.capture(
             title: 'Capture Image',

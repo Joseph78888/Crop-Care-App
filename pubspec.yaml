@@ -39,14 +39,18 @@ dependencies:
   image: ^4.0.17
   image_picker: ^1.2.1
   intl: ^0.20.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  sentry_flutter: ^9.8.0
   shared_preferences: ^2.5.3
-  uuid: ^4.5.2
   tflite_flutter: ^0.12.1
+  uuid: ^4.5.2
 
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
+  sentry_dart_plugin: ^3.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -84,3 +88,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: flutter
+  org: yousif-z3

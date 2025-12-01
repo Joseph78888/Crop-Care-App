@@ -1,3 +1,4 @@
+import 'package:crop_care_app/data/models/detection_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,6 +7,7 @@ import '/presentation/widgets/total_healthy_deasise_filter.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/widgets/history_card.dart';
 import '/presentation/providers/history_provider.dart';
+import '/core/utils/responsive_helper.dart';
 
 class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
@@ -18,10 +20,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   final TextEditingController controller = TextEditingController();
   final isSelected = false;
   String _filterType = 'all'; // all, healthy, diseased
+  String _searchQuery = ''; // Track search text for filtering
 
   void _onFilterChanged(String filter) {
     setState(() {
       _filterType = filter;
+    });
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query.toLowerCase(); // Case-insensitive search
     });
   }
   
@@ -47,7 +56,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(context.responsive.md),
 
             child: Column(
               children: [
@@ -60,11 +69,14 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                     TotalHealthyDeasiseFilter(name: 'Diseased'),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.lg),
 
                 // HistorySearhBar
-                const HistorySearhBar(),
-                const SizedBox(height: 14),
+                HistorySearhBar(
+                  controller: controller,
+                  onChanged: _onSearchChanged,
+                ),
+                SizedBox(height: context.responsive.sm),
                 
                 // Filter Buttons
                 Row(
@@ -77,14 +89,29 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.md),
                 // History list (watches provider)
                 Consumer(
                   builder: (context, ref, _) {
-                    final items = ref.watch(historyProvider);
-                    if (items.isEmpty) return _buildEmptyHistoryState();
+                    final allItems = ref.watch(historyProvider);
+                    
+                    // STAGE 1: Filter by status (healthy/diseased/all)
+                    final statusFiltered = _filterType == 'all'
+                        ? allItems
+                        : _filterType == 'healthy'
+                            ? allItems.where((e) => e.status == HealthStatus.healthy).toList()
+                            : allItems.where((e) => e.status == HealthStatus.diseased).toList();
+                    
+                    // STAGE 2: Filter by search query (disease name)
+                    final filteredItems = _searchQuery.isEmpty
+                        ? statusFiltered
+                        : statusFiltered
+                            .where((e) => e.diseaseName.toLowerCase().contains(_searchQuery))
+                            .toList();
+                    
+                    if (filteredItems.isEmpty) return _buildEmptyHistoryState();
                     return Column(
-                      children: items.map((e) => HistoryCard(result: e)).toList(),
+                      children: filteredItems.map((e) => HistoryCard(result: e)).toList(),
                     );
                   },
                 ),
@@ -120,21 +147,21 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.history, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
+            Icon(Icons.history, size: context.responsive.rs(64), color: Colors.grey[400]),
+            SizedBox(height: context.responsive.md),
             Text(
               'No Analysis History',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: context.responsive.textXL,
                 fontWeight: FontWeight.w600,
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.responsive.sm),
             Text(
               'Start analyzing your crops to see results here',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+              style: TextStyle(fontSize: context.responsive.textSM, color: Colors.grey[500]),
             ),
           ],
         ),

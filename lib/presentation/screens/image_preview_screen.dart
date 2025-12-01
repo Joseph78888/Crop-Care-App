@@ -7,6 +7,7 @@ import '/presentation/providers/history_provider.dart';
 import '/presentation/providers/disease_provider.dart';
 import '/presentation/providers/image_provider.dart';
 import '/data/models/detection_result.dart';
+import '/core/utils/responsive_helper.dart';
 
 class ImagePreviewScreen extends ConsumerWidget {
   const ImagePreviewScreen({super.key});
@@ -22,17 +23,16 @@ class ImagePreviewScreen extends ConsumerWidget {
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(context.responsive.md),
         child: Column(
           children: [
             // Image Preview
             Expanded(
               child: Card(
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(8),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(context.responsive.md),
                     child: Hero(
                       tag: 'preview-image',
                       child: InteractiveViewer(
@@ -49,12 +49,12 @@ class ImagePreviewScreen extends ConsumerWidget {
                             : Container(
                                 color: Colors.grey[200],
                                 alignment: Alignment.center,
-                                child: const Column(
-                                  mainAxisSize: MainAxisSize.min,
+                                child:  Column(
+                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(Icons.image_not_supported,
-                                        size: 48, color: Colors.grey),
-                                    SizedBox(height: 8),
+                                        size: context.responsive.rs(48), color: Colors.grey),
+                                    SizedBox(height: context.responsive.sm),
                                     Text('No image selected',
                                         style: TextStyle(color: Colors.grey)),
                                   ],
@@ -79,18 +79,18 @@ class ImagePreviewScreen extends ConsumerWidget {
                         showDialog(
                           context: context,
                           barrierDismissible: false,
-                          builder: (ctx) => const Center(
+                          builder: (ctx) => Center(
                             child: Card(
                               child: Padding(
-                                padding: EdgeInsets.all(24.0),
+                                padding: EdgeInsets.all(context.responsive.lg),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     CircularProgressIndicator(),
-                                    SizedBox(height: 16),
+                                    SizedBox(height: context.responsive.md),
                                     Text(
                                       'Analyzing image...',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: context.responsive.textMD),
                                     ),
                                   ],
                                 ),
@@ -168,19 +168,19 @@ class ImagePreviewScreen extends ConsumerWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: context.responsive.md),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.psychology_rounded),
-                    SizedBox(width: 8),
-                    Text('Analyze Disease', style: TextStyle(fontSize: 16)),
+                    SizedBox(width: context.responsive.sm),
+                    Text('Analyze Disease', style: TextStyle(fontSize: context.responsive.textMD)),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: context.responsive.md),
 
             // Choose Different Image Button
             SizedBox(
@@ -192,22 +192,22 @@ class ImagePreviewScreen extends ConsumerWidget {
                   );
                 },
                 style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: context.responsive.md),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.image),
-                    SizedBox(width: 8),
+                    SizedBox(width: context.responsive.sm),
                     Text(
                       'Choose Different Image',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: context.responsive.textMD),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: context.responsive.md),
           ],
         ),
       ),

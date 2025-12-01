@@ -1,7 +1,8 @@
-import 'package:crop_care_app/data/models/detection_result.dart';
-import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '/data/models/detection_result.dart';
+import '/presentation/providers/history_provider.dart';
 
 class TotalHealthyDeasiseFilter extends ConsumerWidget {
   const TotalHealthyDeasiseFilter({super.key, required this.name});

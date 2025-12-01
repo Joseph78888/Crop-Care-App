@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '/presentation/screens/image_preview_screen.dart';
 import '/presentation/providers/image_provider.dart';
+import '/core/utils/image_storage_service.dart';
 
 class CaptureContainer extends ConsumerStatefulWidget {
   const CaptureContainer({super.key});
@@ -27,7 +28,12 @@ class _CaptureContainerState extends ConsumerState<CaptureContainer> {
       return;
     }
 
-    ref.read(selectedImageProvider.notifier).state = File(pickedImage.path);
+    // Copy image to permanent storage to prevent OS cleanup
+    final permanentPath = await ImageStorageService.saveImagePermanently(
+      pickedImage.path,
+    );
+
+    ref.read(selectedImageProvider.notifier).state = File(permanentPath);
 
     if (mounted) {
       Navigator.of(context).push(

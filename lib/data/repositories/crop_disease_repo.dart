@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
+
 import '../datasources/ai_local_ds.dart';
 import '../datasources/disease_database.dart';
 import '../models/disease_info_model.dart';
@@ -38,7 +40,7 @@ class CropDiseaseRepository {
         'isHealthy': diseaseInfo.isHealthy,
       };
     } catch (e) {
-      print('Error in CropDiseaseRepository.analyzeImage: $e');
+      debugPrint('Error in CropDiseaseRepository.analyzeImage: $e');
       rethrow;
     }
   }

@@ -123,20 +123,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         onChanged: _onSwitchChanged,
                       ),
                     ),
-                    ListTile(
-                      leading: Icon(Icons.dark_mode),
-                      title: Text('Dark Mode'),
-                      subtitle: Text('Light'),
-                      trailing: Switch(
-                        value: darkModeToggle,
-                        onChanged: (newValue) {
-                          setState(() {
-                            darkModeToggle =
-                                newValue; // TODO state managment with reverpod
-                          });
-                        },
-                      ),
-                    ),
+                    // ListTile(
+                    //   leading: Icon(Icons.dark_mode),
+                    //   title: Text('Dark Mode'),
+                    //   subtitle: Text('Light'),
+                    //   trailing: Switch(
+                    //     value: darkModeToggle,
+                    //     onChanged: (newValue) {
+                    //       setState(() {
+                    //         darkModeToggle =
+                    //             newValue; // TODO state managment with reverpod
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
 

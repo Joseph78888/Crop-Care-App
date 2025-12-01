@@ -1,15 +1,18 @@
+import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class QuickStatsSection extends StatefulWidget {
+class QuickStatsSection extends ConsumerStatefulWidget {
   const QuickStatsSection({super.key});
 
   @override
-  State<QuickStatsSection> createState() => _QuickStatsSectionState();
+  ConsumerState<QuickStatsSection> createState() => _QuickStatsSectionState();
 }
 
-class _QuickStatsSectionState extends State<QuickStatsSection> {
+class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
   @override
   Widget build(BuildContext context) {
+    final total = ref.watch(historyProvider);
     return Container(
       padding: EdgeInsets.all(16),
       height: 140,
@@ -34,7 +37,7 @@ class _QuickStatsSectionState extends State<QuickStatsSection> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(),
-              statusSection('145', 'Crop Analyzed'),
+              statusSection('${total.length}', 'Crop Analyzed'),
               statusSection('95%', 'Accuracy Rate'),
               const SizedBox(),
             ],
