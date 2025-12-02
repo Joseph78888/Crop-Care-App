@@ -35,17 +35,17 @@ class TFLiteService {
           .toList();
 
       _isInitialized = true;
-      debugPrint('TFLite model initialized successfully');
-      debugPrint('Model input shape: ${_interpreter!.getInputTensors()}');
-      debugPrint('Model output shape: ${_interpreter!.getOutputTensors()}');
-      debugPrint('Loaded ${_labels!.length} labels');
+      print('TFLite model initialized successfully');
+      print('Model input shape: ${_interpreter!.getInputTensors()}');
+      print('Model output shape: ${_interpreter!.getOutputTensors()}');
+      print('Loaded ${_labels!.length} labels');
 
       // Log the specific shape of the first output tensor
       var outputTensor = _interpreter!.getOutputTensor(0);
-      debugPrint('Output tensor 0 shape: ${outputTensor.shape}');
-      debugPrint('Output tensor 0 type: ${outputTensor.type}');
+      print('Output tensor 0 shape: ${outputTensor.shape}');
+      print('Output tensor 0 type: ${outputTensor.type}');
     } catch (e) {
-      debugPrint('Error initializing TFLite model: $e');
+      print('Error initializing TFLite model: $e');
       rethrow;
     }
   }
@@ -141,10 +141,10 @@ class TFLiteService {
 
       flatten(outputBuffer);
 
-      debugPrint(
+      print(
         'Raw model output (flattened, first 20): ${predictions.take(20).toList()}',
       );
-      debugPrint('Total predictions count: ${predictions.length}');
+      print('Total predictions count: ${predictions.length}');
 
       // Find the class with highest confidence
       double maxConfidence = 0.0;
@@ -165,7 +165,7 @@ class TFLiteService {
 
       // Ensure we have enough labels
       if (maxIndex >= _labels!.length) {
-        debugPrint(
+        print(
           'Warning: Model output index $maxIndex exceeds label count ${_labels!.length}',
         );
         maxIndex = 0; // Fallback to first label
@@ -176,7 +176,7 @@ class TFLiteService {
       // Check confidence threshold
       // Check confidence threshold
       if (maxConfidence < _confidenceThreshold) {
-        debugPrint(
+        print(
           'Confidence $maxConfidence is below threshold $_confidenceThreshold. Returning Unknown.',
         );
         predictedLabel = 'Unknown';
@@ -186,17 +186,17 @@ class TFLiteService {
       final sortedIndices = List.generate(predictions.length, (i) => i)
         ..sort((a, b) => predictions[b].compareTo(predictions[a]));
 
-      debugPrint('Top 3 Predictions:');
+      print('Top 3 Predictions:');
       for (int i = 0; i < 3 && i < sortedIndices.length; i++) {
         final idx = sortedIndices[i];
         if (idx < _labels!.length) {
-          debugPrint(
+          print(
             '${i + 1}. ${_labels![idx]}: ${(predictions[idx] * 100).toStringAsFixed(2)}%',
           );
         }
       }
 
-      debugPrint(
+      print(
         'Prediction: $predictedLabel with confidence: ${(maxConfidence * 100).toStringAsFixed(2)}%',
       );
 
@@ -209,7 +209,7 @@ class TFLiteService {
         ),
       };
     } catch (e) {
-      debugPrint('Error during image analysis: $e');
+      print('Error during image analysis: $e');
       rethrow;
     }
   }
@@ -245,6 +245,6 @@ class TFLiteService {
     _interpreter = null;
     _labels = null;
     _isInitialized = false;
-    debugPrint('TFLite service disposed');
+    print('TFLite service disposed');
   }
 }
