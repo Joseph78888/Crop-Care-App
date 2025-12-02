@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HistorySearhBar extends StatelessWidget {
-  const HistorySearhBar({
+class HistorySearchBar extends StatelessWidget {
+  const HistorySearchBar({
     super.key,
     required this.controller,
     this.onChanged,
@@ -17,7 +17,7 @@ class HistorySearhBar extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
-              hintText: 'Search for disease name...',
+              hintText: 'Search by disease name...',
               prefixIcon: const Icon(Icons.search),
               filled: true,
               fillColor: const Color.fromARGB(255, 217, 217, 217),

@@ -2,7 +2,7 @@ import 'package:crop_care_app/data/models/detection_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '/presentation/widgets/history_searh_bar.dart';
+import '/presentation/widgets/history_search_bar.dart';
 import '/presentation/widgets/total_healthy_deasise_filter.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/widgets/history_card.dart';
@@ -72,7 +72,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 SizedBox(height: context.responsive.lg),
 
                 // HistorySearhBar
-                HistorySearhBar(
+                HistorySearchBar(
                   controller: controller,
                   onChanged: _onSearchChanged,
                 ),
