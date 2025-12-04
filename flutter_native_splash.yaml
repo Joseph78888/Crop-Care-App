@@ -142,7 +142,7 @@ flutter_native_splash:
     # with background: 960×960 px (fit within circle 640px in diameter)    
     # without background: 1152×1152 px (fit within circle 768px in diameter)
     # ensure that the most important design elements of your image are placed within a circular area 
-    image: assets\images\Crop_Care.png
+    image: assets\images\splash_android12.png
     # image_dark: assets/images/logo/logo-splash2.png  
 
     # center-logo background color
@@ -151,5 +151,5 @@ flutter_native_splash:
 
     # branding:
     # The branding image dimensions must be 800x320 px.
-    #branding:      assets/dart.png      
+    # branding:    assets\images\Frame1.png 
     #branding_dark: assets/dart_dark.png

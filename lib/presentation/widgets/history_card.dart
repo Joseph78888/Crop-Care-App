@@ -22,18 +22,16 @@ class HistoryCard extends ConsumerWidget {
           // STEP 1: Data Identification
           // We already have the DetectionResult object (this.result) with a unique ID.
           // Instead of extracting just the ID, we pass the entire object via the provider.
-          
+
           // STEP 2: Navigation Parameter Passing
           // Update the currentResultProvider with this historical result.
           // The ResultScreen watches this provider to display the data.
           ref.read(currentResultProvider.notifier).state = result;
-          
+
           // Navigate to the ResultScreen
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const ResultScreen(),
-            ),
-          );
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => const ResultScreen()));
         },
         child: ListTile(
           contentPadding: const EdgeInsets.all(12),
