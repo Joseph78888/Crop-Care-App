@@ -46,6 +46,7 @@ dependencies:
   tflite_flutter: ^0.12.1
   uuid: ^4.5.2
   flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_lints: ^5.0.0

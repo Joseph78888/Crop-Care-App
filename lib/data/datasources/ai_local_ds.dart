@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
+
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// TensorFlow Lite service for tomato disease detection
 class TFLiteService {
