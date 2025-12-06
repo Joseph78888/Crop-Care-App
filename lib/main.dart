@@ -1,7 +1,9 @@
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/firebase_options.dart';
 
 import '/data/datasources/local/notification_local_data_source.dart';
@@ -9,23 +11,20 @@ import '/presentation/screens/tabs_screen.dart';
 import '/core/theme/app_theme.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-
 void main() async {
   SentryWidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadNotificationPreference();
-  
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = 'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
-      // We recommend adjusting this value in production.
-      options.tracesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(SentryWidget(child: ProviderScope(child: MyApp()))),
-  );
+
+  await SentryFlutter.init((options) {
+    options.dsn =
+        'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
+    // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+    // We recommend adjusting this value in production.
+    options.tracesSampleRate = 1.0;
+  }, appRunner: () => runApp(SentryWidget(child: ProviderScope(child: MyApp()))));
   await Sentry.captureException(Exception('This is a sample exception.'));
 }
 
@@ -35,6 +34,14 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      locale: Locale('ar'),
       title: 'Crop Care',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

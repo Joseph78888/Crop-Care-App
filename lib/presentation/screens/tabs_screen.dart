@@ -1,3 +1,4 @@
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '/presentation/screens/history_screen.dart';
@@ -43,11 +44,11 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedPageIndex,
         onTap: _selectPage,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.eco), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history_rounded), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.eco), label: S.of(context).home),
+          BottomNavigationBarItem(icon: Icon(Icons.history_rounded), label: S.of(context).history),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Settings',
+            label: S.of(context).settings,
           ),
         ],
       ),

@@ -1,0 +1,17 @@
+{
+    "appTitle": "crop care",
+    "welcomeMessage": "Welcome to Crop Care",
+    "welcomeSubtitle": "AI-powered disease detection",
+    "howWeCanHelp": "How can we help your crop today!",
+    "captureImage": "Capture Image",
+    "captureSubtitle": "Take a photo of your crop leaf",
+    "uploadeImage": "Upload Image",
+    "uploadeImageSubtitle": "Select from your gallery",
+    "quichStatus": "Quick Status",
+    "accuracyRate": "Accuracy Rate",
+    "cropAnalayzed": " Crop Analyzed",
+    "home": "Home",
+    "settings": "Settings",
+    "history": "History"
+
+}

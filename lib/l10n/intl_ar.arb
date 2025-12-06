@@ -1,0 +1,17 @@
+{
+    "appTitle": "عناية المحاصيل",
+    "welcomeMessage": "مرحباً بك!",
+    "welcomeSubtitle": "أستخدم الذكاء الاصطناعي لرعاية محاصيلك",
+    "howWeCanHelp": "كيف بنقدر نساعد محصولك اليوم!",
+    "captureImage": "التقط صورة",
+    "captureSubtitle": "التقط صورة للنبتة المصابة",
+    "uploadeImage": "اختر من المعرض",
+    "uploadeImageSubtitle": "اختر صورة من معرض الصور الخاص بك",
+    "quichStatus": "تحليل سريع للحالة",
+    "accuracyRate": "الدقــة", 
+    "cropAnalayzed": "تم تحليل",
+    "home": "الرئيسية",
+    "settings": "الإعدادات",
+    "history": "السجل"
+
+}

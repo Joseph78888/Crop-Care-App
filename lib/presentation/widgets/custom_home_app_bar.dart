@@ -1,3 +1,4 @@
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
@@ -33,18 +34,26 @@ class CustomHomeAppBar extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Welcom to Crop Care',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                Builder(
+                  builder: (context) {
+                    return Text(
+                      S.of(context).welcomeMessage,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    );
+                  },
                 ),
 
-                const Text(
-                  'AI-Powered disease ditecton',
-                  style: TextStyle(color: Colors.white70, fontSize: 15),
+                Builder(
+                  builder: (context) {
+                    return Text(
+                      S.of(context).welcomeSubtitle,
+                      style: TextStyle(color: Colors.white70, fontSize: 15),
+                    );
+                  },
                 ),
               ],
             ),
