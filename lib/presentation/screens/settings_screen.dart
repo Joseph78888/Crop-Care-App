@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:crop_care_app/generated/l10n.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
+import '/presentation/providers/locale_provider.dart';
 import '/presentation/widgets/about_app.dart';
 import '/core/theme/app_colors.dart';
 import '/presentation/widgets/settings_section.dart';
@@ -20,7 +21,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _notificationsEnabled = true; // Default state
   bool darkModeToggle = false;
-  String _selectedLanguage = 'English';
 
   @override
   void initState() {
@@ -122,7 +122,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           onTap: _showLanguageDialog,
                           leading: const Icon(Icons.language),
                           title: Text(S.of(context).languages),
-                          subtitle: Text(_selectedLanguage),
+                          subtitle: Builder(
+                            builder: (context) {
+                              final locale = ref.watch(localeProvider);
+                              return Text(
+                                locale.languageCode == 'ar'
+                                    ? S.of(context).arabic
+                                    : S.of(context).english,
+                              );
+                            },
+                          ),
                           trailing: const Icon(Icons.arrow_forward_ios),
                         ),
                         ListTile(
@@ -311,16 +320,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   Widget _buildLanguageOption(String language) {
+    final locale = ref.watch(localeProvider);
+    final currentLanguage = locale.languageCode == 'ar'
+        ? S.of(context).arabic
+        : S.of(context).english;
+
     return RadioListTile<String>(
       title: Text(language),
       value: language,
-      groupValue: _selectedLanguage,
-      onChanged: (value) {
-        setState(() {
-          _selectedLanguage = value!;
-        });
-        //_saveSettings();
-        Navigator.of(context).pop();
+      groupValue: currentLanguage,
+      onChanged: (value) async {
+        // Determine locale code based on selected language
+        final localeCode = value == S.of(context).english ? 'en' : 'ar';
+
+        // Update the locale provider
+        await ref.read(localeProvider.notifier).setLocale(Locale(localeCode));
+
+        // Close the dialog
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       },
     );
   }

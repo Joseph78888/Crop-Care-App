@@ -9,6 +9,7 @@ import 'core/firebase_options.dart';
 import 'package:crop_care_app/generated/l10n.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
+import '/presentation/providers/locale_provider.dart';
 import '/core/theme/app_theme.dart';
 
 void main() async {
@@ -33,6 +34,9 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Watch the locale provider for dynamic language changes
+    final locale = ref.watch(localeProvider);
+
     return MaterialApp(
       localizationsDelegates: [
         S.delegate,
@@ -41,7 +45,7 @@ class MyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: Locale('ar'),
+      locale: locale,
       title: 'Crop Care',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
