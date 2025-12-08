@@ -145,6 +145,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
+    "onboardingGetStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
+    "onboardingSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Scan plants, spot issues, and get instant care tips.",
+    ),
+    "onboardingWelcome": MessageLookupByLibrary.simpleMessage("Welcome"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "quichStatus": MessageLookupByLibrary.simpleMessage("Quick Status"),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("Rate The App"),

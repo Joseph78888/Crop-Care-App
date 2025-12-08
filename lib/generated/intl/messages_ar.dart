@@ -139,6 +139,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
+    "onboardingGetStarted": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
+    "onboardingSubtitle": MessageLookupByLibrary.simpleMessage(
+      "افحص النباتات، اكتشف المشاكل، واحصل على نصائح العناية الفورية.",
+    ),
+    "onboardingWelcome": MessageLookupByLibrary.simpleMessage("مرحباً"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
     "quichStatus": MessageLookupByLibrary.simpleMessage("تحليل سريع للحالة"),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("قيم التطبيق"),

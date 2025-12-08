@@ -39,6 +39,8 @@ class ResponsiveHelper {
   double get md => rs(16);  // Medium: 16dp (standard)
   double get lg => rs(24);  // Large: 24dp
   double get xl => rs(32);  // Extra large: 32dp
+  double get xxl => rs(48); // Extra extra large: 48dp
+  double get xxxl => rs(64); // Extra extra extra large: 64dp
   
   // Typography scale
   double get textXS => sp(12);   // Extra small text

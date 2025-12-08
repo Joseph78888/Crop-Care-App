@@ -97,5 +97,8 @@
     "recommendations": "Recommendations",
     "noRecommendationsAvailable": "No recommendations available.",
     "analyzeAnotherCrop": "Analyze Another Crop",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "onboardingWelcome": "Welcome",
+    "onboardingSubtitle": "Scan plants, spot issues, and get instant care tips.",
+    "onboardingGetStarted": "Get Started"
 }

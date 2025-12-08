@@ -97,5 +97,8 @@
     "recommendations": "التوصيات",
     "noRecommendationsAvailable": "لا توجد توصيات متاحة.",
     "analyzeAnotherCrop": "حلل محصول آخر",
-    "backToHome": "العودة للرئيسية"
+    "backToHome": "العودة للرئيسية",
+    "onboardingWelcome": "مرحباً",
+    "onboardingSubtitle": "افحص النباتات، اكتشف المشاكل، واحصل على نصائح العناية الفورية.",
+    "onboardingGetStarted": "ابدأ الآن"
 }

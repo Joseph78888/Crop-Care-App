@@ -4,13 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/firebase_options.dart';
 
 import 'package:crop_care_app/generated/l10n.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
+import '/presentation/screens/onboarding_screen.dart';
 import '/presentation/providers/locale_provider.dart';
 import '/core/theme/app_theme.dart';
+
+/// Global variable to track onboarding status
+bool _hasCompletedOnboarding = false;
 
 void main() async {
   SentryWidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +23,10 @@ void main() async {
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadNotificationPreference();
+
+  // Check if onboarding has been completed
+  final prefs = await SharedPreferences.getInstance();
+  _hasCompletedOnboarding = prefs.getBool('onboarding_completed') ?? false;
 
   await SentryFlutter.init((options) {
     options.dsn =
@@ -74,7 +83,9 @@ class MyApp extends ConsumerWidget {
       ),
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      home: const TabsScreen(),
+      home: _hasCompletedOnboarding
+          ? const TabsScreen()
+          : const OnboardingScreen(),
     );
   }
 }

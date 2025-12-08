@@ -903,6 +903,36 @@ class S {
   String get backToHome {
     return Intl.message('Back to Home', name: 'backToHome', desc: '', args: []);
   }
+
+  /// `Welcome`
+  String get onboardingWelcome {
+    return Intl.message(
+      'Welcome',
+      name: 'onboardingWelcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scan plants, spot issues, and get instant care tips.`
+  String get onboardingSubtitle {
+    return Intl.message(
+      'Scan plants, spot issues, and get instant care tips.',
+      name: 'onboardingSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get Started`
+  String get onboardingGetStarted {
+    return Intl.message(
+      'Get Started',
+      name: 'onboardingGetStarted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
