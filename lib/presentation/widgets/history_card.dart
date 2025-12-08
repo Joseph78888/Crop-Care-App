@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:crop_care_app/generated/l10n.dart';
 import '../../data/models/detection_result.dart';
 import '../../presentation/providers/history_provider.dart';
 import '../../presentation/screens/result_screen.dart';
@@ -65,12 +66,19 @@ class HistoryCard extends ConsumerWidget {
                       border: Border.all(color: statusColor),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(
-                      result.status.name,
-                      style: TextStyle(
-                        color: statusColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Builder(
+                      builder: (context) {
+                        final statusText = result.status == HealthStatus.healthy
+                            ? S.of(context).healthy
+                            : S.of(context).diseased;
+                        return Text(
+                          statusText,
+                          style: TextStyle(
+                            color: statusColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(width: 8),

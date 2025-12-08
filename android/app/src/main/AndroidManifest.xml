@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="crop_care"
+        android:label="Crop Care"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

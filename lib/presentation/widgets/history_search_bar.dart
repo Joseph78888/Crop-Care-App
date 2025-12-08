@@ -1,3 +1,4 @@
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class HistorySearchBar extends StatelessWidget {
@@ -17,7 +18,7 @@ class HistorySearchBar extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
-              hintText: 'Search by disease name...',
+              hintText: S.of(context).searchHint,
               prefixIcon: const Icon(Icons.search),
               filled: true,
               fillColor: const Color.fromARGB(255, 217, 217, 217),

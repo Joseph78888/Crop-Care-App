@@ -1,15 +1,15 @@
-import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'core/firebase_options.dart';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/core/theme/app_theme.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
   SentryWidgetsFlutterBinding.ensureInitialized();

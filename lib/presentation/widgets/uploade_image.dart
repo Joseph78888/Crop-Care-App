@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +17,7 @@ class UploadeContainer extends ConsumerStatefulWidget {
 }
 
 class _UploadeContainerState extends ConsumerState<UploadeContainer> {
-   void _uploadeImage() async {
+  void _uploadeImage() async {
     final pickedImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 100,
@@ -36,12 +37,11 @@ class _UploadeContainerState extends ConsumerState<UploadeContainer> {
 
     if (mounted) {
       Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const ImagePreviewScreen(),
-        ),
+        MaterialPageRoute(builder: (context) => const ImagePreviewScreen()),
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -53,12 +53,12 @@ class _UploadeContainerState extends ConsumerState<UploadeContainer> {
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.upload),
             SizedBox(width: 8),
-            Text('Upload from Gallery', style: TextStyle(fontSize: 18)),
+            Text(S.of(context).uploadeImage, style: TextStyle(fontSize: 18)),
           ],
         ),
       ),

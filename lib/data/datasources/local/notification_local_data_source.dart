@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,9 +12,9 @@ const String _kPrefsKey = 'notifications_enabled';
 Future<void> _subscribeToTopic() async {
   try {
     await FirebaseMessaging.instance.subscribeToTopic(_kTopicName);
-    print('FCM: Subscribed to global_notifications');
+    log('FCM: Subscribed to global_notifications');
   } catch (e) {
-    print('FCM Error: Failed to subscribe to topic: $e');
+    log('FCM Error: Failed to subscribe to topic: $e');
   }
 }
 
@@ -56,9 +58,9 @@ Future<void> disableNotifications() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kPrefsKey, false);
     
-    print('FCM: Unsubscribed from $_kTopicName');
+    log('FCM: Unsubscribed from $_kTopicName');
   } catch (e) {
-    print('FCM Error: Failed to unsubscribe from topic: $e');
+    log('FCM Error: Failed to unsubscribe from topic: $e');
   }
 }
 
@@ -77,6 +79,6 @@ Future<bool> loadNotificationPreference() async {
       await FirebaseMessaging.instance.unsubscribeFromTopic(_kTopicName);
   }
 
-  print('FCM: Initial notification preference loaded: $isEnabled');
+  log('FCM: Initial notification preference loaded: $isEnabled');
   return isEnabled;
 }

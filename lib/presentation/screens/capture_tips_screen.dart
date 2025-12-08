@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import '/presentation/widgets/capture_image.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/widgets/uploade_image.dart';
@@ -14,8 +15,10 @@ class CaptureTipsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         // elevation: 0,
-        title: Text(
-          'Analyze Your Crop',
+        title: Builder(
+          builder: (context) {
+            return Text(S.of(context).analyzeYourCrop);
+          },
         ),
       ),
       body: ListView(
@@ -26,41 +29,45 @@ class CaptureTipsScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 220),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32),
-                  padding: EdgeInsets.all(22),
-                  height: 230,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(193, 237, 245, 235),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.info_outline_rounded,
-                        size: 48,
-                        color: Theme.of(context).colorScheme.primary,
+                Builder(
+                  builder: (context) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 32),
+                      padding: const EdgeInsets.all(22),
+                      height: 230,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(193, 237, 245, 235),
                       ),
-                      const SizedBox(height: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline_rounded,
+                            size: 48,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(height: 12),
 
-                      Text(
-                        'Capture Tips',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+                          Text(
+                            S.of(context).captureTips,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+
+                          tips(S.of(context).captureTip1),
+                          tips(S.of(context).captureTip2),
+                          tips(S.of(context).captureTip3),
+                          tips(S.of(context).captureTip4),
+                        ],
                       ),
-                      const SizedBox(height: 18),
-
-                      tips('Take a clear photo of the affected leaf'),
-                      tips('Ensure good lighting conditions'),
-                      tips('Fill the frame with the leaf'),
-                      tips('Avoid blurry or dark images'),
-                    ],
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 28),
 
