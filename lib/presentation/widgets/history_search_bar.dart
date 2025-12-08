@@ -21,10 +21,10 @@ class HistorySearchBar extends StatelessWidget {
               hintText: S.of(context).searchHint,
               prefixIcon: const Icon(Icons.search),
               filled: true,
-              fillColor: const Color.fromARGB(255, 217, 217, 217),
+              fillColor: const Color.fromARGB(255, 255, 255, 255),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(color: Colors.grey.shade500),
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
