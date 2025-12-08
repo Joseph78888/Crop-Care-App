@@ -58,7 +58,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                         context.responsive.md,
                       ),
                       child: Hero(
-                        tag: 'preview-image',
+                        tag: current != null
+                            ? 'history-image-${current.id}'
+                            : 'preview-image',
                         child: current != null
                             ? Image.file(
                                 File(current.imagePath),

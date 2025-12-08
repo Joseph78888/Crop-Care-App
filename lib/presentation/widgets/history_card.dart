@@ -36,9 +36,12 @@ class HistoryCard extends ConsumerWidget {
         },
         child: ListTile(
           contentPadding: const EdgeInsets.all(12),
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: SizedBox(width: 72, height: 80, child: _buildImage()),
+          leading: Hero(
+            tag: 'history-image-${result.id}',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(width: 72, height: 80, child: _buildImage()),
+            ),
           ),
           title: Text(
             result.diseaseName,
