@@ -38,14 +38,30 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   // Handles the switch change event
   void _onSwitchChanged(bool newValue) async {
-    setState(() {
-      _notificationsEnabled = newValue;
-    });
-
     if (newValue) {
-      await enableNotifications(); // Call the subscribe function
+      // User wants to enable notifications - request permission
+      final wasEnabled = await enableNotifications();
+      setState(() {
+        _notificationsEnabled = wasEnabled;
+      });
+
+      // Show feedback if permission was denied
+      if (!wasEnabled && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              S.of(context).featureComingSoon,
+            ), // TODO: Add proper permission denied message
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
     } else {
-      await disableNotifications(); // Call the unsubscribe function
+      // User wants to disable notifications
+      await disableNotifications();
+      setState(() {
+        _notificationsEnabled = false;
+      });
     }
   }
 

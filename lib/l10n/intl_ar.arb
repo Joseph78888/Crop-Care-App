@@ -100,5 +100,7 @@
     "backToHome": "العودة للرئيسية",
     "onboardingWelcome": "مرحباً",
     "onboardingSubtitle": "افحص النباتات، اكتشف المشاكل، واحصل على نصائح العناية الفورية.",
-    "onboardingGetStarted": "ابدأ الآن"
+    "onboardingGetStarted": "ابدأ الآن",
+    "noInternetConnection": "لا يوجد اتصال بالإنترنت - قد تكون بعض الميزات غير متاحة.",
+    "retry": "إعادة المحاولة"
 }

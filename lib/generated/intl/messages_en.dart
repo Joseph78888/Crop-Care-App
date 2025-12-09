@@ -140,6 +140,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noImageSelected": MessageLookupByLibrary.simpleMessage(
       "No image selected",
     ),
+    "noInternetConnection": MessageLookupByLibrary.simpleMessage(
+      "No internet connection - some features may be unavailable.",
+    ),
     "noRecommendationsAvailable": MessageLookupByLibrary.simpleMessage(
       "No recommendations available.",
     ),
@@ -157,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "removeAllHistory": MessageLookupByLibrary.simpleMessage(
       "Remove all analysis history",
     ),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "searchHint": MessageLookupByLibrary.simpleMessage(
       "Search by disease name...",
     ),

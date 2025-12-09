@@ -134,6 +134,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noImageSelected": MessageLookupByLibrary.simpleMessage(
       "لم يتم اختيار صورة",
     ),
+    "noInternetConnection": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد اتصال بالإنترنت - قد تكون بعض الميزات غير متاحة.",
+    ),
     "noRecommendationsAvailable": MessageLookupByLibrary.simpleMessage(
       "لا توجد توصيات متاحة.",
     ),
@@ -151,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "removeAllHistory": MessageLookupByLibrary.simpleMessage(
       "حذف جميع سجلات التحليل",
     ),
+    "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "searchHint": MessageLookupByLibrary.simpleMessage(
       "أبحث عن طريق أسم المرض...",
     ),

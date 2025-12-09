@@ -64,98 +64,89 @@ class OnboardingScreen extends StatelessWidget {
                     left: 0,
                     right: 0,
                     bottom: responsive.hp(5),
-                    child: Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: responsive.lg,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Welcome title
-                            Builder(
-                              builder: (context) {
-                                return Text(
-                                  S.of(context).onboardingWelcome,
-                                  style: TextStyle(
-                                    fontSize: responsive.sp(32),
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF1F2937),
-                                    letterSpacing: -0.5,
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: responsive.md),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: responsive.lg),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Welcome title
+                          Builder(
+                            builder: (context) {
+                              return Text(
+                                S.of(context).onboardingWelcome,
+                                style: TextStyle(
+                                  fontSize: responsive.sp(32),
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF1F2937),
+                                  letterSpacing: -0.5,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: responsive.md),
 
-                            // Subtitle
-                            Builder(
-                              builder: (context) {
-                                return Text(
-                                  S.of(context).onboardingSubtitle,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: responsive.textMD,
-                                    color: const Color(0xFF6B7280),
-                                    height: 1.5,
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: responsive.xxxl),
+                          // Subtitle
+                          Builder(
+                            builder: (context) {
+                              return Text(
+                                S.of(context).onboardingSubtitle,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: responsive.textMD,
+                                  color: const Color(0xFF6B7280),
+                                  height: 1.5,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: responsive.xxxl),
 
-                            // Get Started button
-                            SizedBox(
-                              width: responsive.wp(65),
-                              height: responsive.rs(56),
-                              child: Builder(
-                                builder: (context) {
-                                  return ElevatedButton(
-                                    onPressed: () =>
-                                        _completeOnboarding(context),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF4ADE80),
-                                      foregroundColor: Colors.white,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          responsive.rs(28),
-                                        ),
+                          // Get Started button
+                          SizedBox(
+                            width: responsive.wp(65),
+                            height: responsive.rs(56),
+                            child: Builder(
+                              builder: (context) {
+                                return ElevatedButton(
+                                  onPressed: () => _completeOnboarding(context),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF4ADE80),
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        responsive.rs(28),
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          size: responsive.textLG,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: responsive.textLG,
+                                      ),
+                                      SizedBox(width: responsive.sm),
+                                      Text(
+                                        S.of(context).onboardingGetStarted,
+                                        style: TextStyle(
+                                          fontSize: responsive.textMD,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        SizedBox(width: responsive.sm),
-                                        Text(
-                                          S.of(context).onboardingGetStarted,
-                                          style: TextStyle(
-                                            fontSize: responsive.textMD,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-
-            // Bottom section with text and button
           ],
         ),
       ),

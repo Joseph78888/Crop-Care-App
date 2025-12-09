@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +10,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/firebase_options.dart';
 
-import 'package:crop_care_app/generated/l10n.dart';
+import '/generated/l10n.dart';
 import '/data/datasources/local/notification_local_data_source.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/presentation/screens/onboarding_screen.dart';
@@ -17,25 +20,63 @@ import '/core/theme/app_theme.dart';
 /// Global variable to track onboarding status
 bool _hasCompletedOnboarding = false;
 
+/// Global variable to track if Firebase initialized successfully
+bool firebaseInitialized = false;
+
 void main() async {
   SentryWidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await loadNotificationPreference();
+  // Initialize Firebase with timeout (graceful failure for offline support)
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    ).timeout(
+      const Duration(seconds: 3),
+      onTimeout: () => throw TimeoutException('Firebase timeout'),
+    );
+    firebaseInitialized = true;
+    log('Firebase initialized successfully');
+  } catch (e) {
+    log('Firebase initialization failed (offline?): $e');
+    firebaseInitialized = false;
+  }
+
+  // Initialize notifications only if Firebase is available
+  if (firebaseInitialized) {
+    try {
+      await initializeNotifications();
+      log('Notifications initialized successfully');
+    } catch (e) {
+      log('Notification initialization failed (offline?): $e');
+    }
+  }
 
   // Check if onboarding has been completed
   final prefs = await SharedPreferences.getInstance();
   _hasCompletedOnboarding = prefs.getBool('onboarding_completed') ?? false;
 
-  await SentryFlutter.init((options) {
-    options.dsn =
-        'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
-    // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
-    // We recommend adjusting this value in production.
-    options.tracesSampleRate = 1.0;
-  }, appRunner: () => runApp(SentryWidget(child: ProviderScope(child: MyApp()))));
-  await Sentry.captureException(Exception('This is a sample exception.'));
+  // Initialize Sentry with timeout (graceful failure for offline support)
+  try {
+    await SentryFlutter.init(
+      (options) {
+        options.dsn =
+            'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
+        options.tracesSampleRate = 1.0;
+      },
+      appRunner: () =>
+          runApp(SentryWidget(child: ProviderScope(child: MyApp()))),
+    ).timeout(
+      const Duration(seconds: 3),
+      onTimeout: () {
+        log('Sentry initialization timed out, running without Sentry');
+        runApp(const ProviderScope(child: MyApp()));
+      },
+    );
+  } catch (e) {
+    log('Sentry initialization failed (offline?): $e');
+    // Run app without Sentry wrapper
+    runApp(const ProviderScope(child: MyApp()));
+  }
 }
 
 class MyApp extends ConsumerWidget {

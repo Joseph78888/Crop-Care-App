@@ -933,6 +933,21 @@ class S {
       args: [],
     );
   }
+
+  /// `No internet connection - some features may be unavailable.`
+  String get noInternetConnection {
+    return Intl.message(
+      'No internet connection - some features may be unavailable.',
+      name: 'noInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

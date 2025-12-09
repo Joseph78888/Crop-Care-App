@@ -100,5 +100,7 @@
     "backToHome": "Back to Home",
     "onboardingWelcome": "Welcome",
     "onboardingSubtitle": "Scan plants, spot issues, and get instant care tips.",
-    "onboardingGetStarted": "Get Started"
+    "onboardingGetStarted": "Get Started",
+    "noInternetConnection": "No internet connection - some features may be unavailable.",
+    "retry": "Retry"
 }

@@ -5,6 +5,7 @@ import '/presentation/screens/history_screen.dart';
 import '/presentation/screens/home_screen.dart';
 import '/presentation/screens/settings_screen.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
+import '/presentation/widgets/offline_banner.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -27,8 +28,6 @@ class _TabsScreenState extends State<TabsScreen> {
     // Determine which page to show based on selected tab
     Widget activePage = const HomeScreen();
 
-   
-
     if (_selectedPageIndex == 1) {
       activePage = const HistoryScreen();
     } else if (_selectedPageIndex == 2) {
@@ -44,8 +43,14 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedPageIndex,
         onTap: _selectPage,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.eco), label: S.of(context).home),
-          BottomNavigationBarItem(icon: Icon(Icons.history_rounded), label: S.of(context).history),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.eco),
+            label: S.of(context).home,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history_rounded),
+            label: S.of(context).history,
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: S.of(context).settings,
@@ -53,7 +58,16 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
 
-      body: activePage,
+      body: Column(
+        children: [
+          Dismissible(
+            key: UniqueKey(),
+            direction: DismissDirection.horizontal,
+            child: const OfflineBanner(),
+          ),
+          Expanded(child: activePage),
+        ],
+      ),
     );
   }
 }
