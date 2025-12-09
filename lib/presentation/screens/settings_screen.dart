@@ -10,6 +10,7 @@ import '/presentation/widgets/about_app.dart';
 import '/core/theme/app_colors.dart';
 import '/presentation/widgets/settings_section.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
+import '/main.dart' show firebaseInitialized;
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -38,6 +39,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   // Handles the switch change event
   void _onSwitchChanged(bool newValue) async {
+    // Check if we're offline (Firebase not initialized)
+    if (!firebaseInitialized) {
+      // Show offline message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(S.of(context).noInternetConnection),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+      return; // Don't change the switch
+    }
+
     if (newValue) {
       // User wants to enable notifications - request permission
       final wasEnabled = await enableNotifications();

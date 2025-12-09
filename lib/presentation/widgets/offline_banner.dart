@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import '/presentation/providers/connectivity_provider.dart';
 import '/generated/l10n.dart';
 
+/// Provider to track if offline banner has been shown in this session
+final _offlineBannerShownProvider = StateProvider<bool>((ref) => false);
+
 /// A banner widget that displays briefly when the device goes offline.
-/// Shows for a few seconds then auto-dismisses to avoid UX clutter.
+/// Shows only once per offline session to avoid UX clutter.
 class OfflineBanner extends ConsumerStatefulWidget {
   const OfflineBanner({super.key});
 
@@ -22,7 +26,7 @@ class OfflineBanner extends ConsumerStatefulWidget {
 class _OfflineBannerState extends ConsumerState<OfflineBanner>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  bool _wasOnline = true;
+  bool? _previousOnlineState;
 
   @override
   void initState() {
@@ -40,6 +44,9 @@ class _OfflineBannerState extends ConsumerState<OfflineBanner>
   }
 
   void _showBannerBriefly() {
+    // Mark as shown for this offline session
+    ref.read(_offlineBannerShownProvider.notifier).state = true;
+
     // Slide in
     _animationController.forward();
 
@@ -54,15 +61,32 @@ class _OfflineBannerState extends ConsumerState<OfflineBanner>
   @override
   Widget build(BuildContext context) {
     final isOnline = ref.watch(connectivityProvider);
+    final hasBeenShown = ref.watch(_offlineBannerShownProvider);
 
-    // Detect transition from online to offline
-    if (_wasOnline && !isOnline) {
+    // Reset "shown" state when coming back online
+    if (isOnline && _previousOnlineState == false) {
+      // Reset so banner can show again next time we go offline
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(_offlineBannerShownProvider.notifier).state = false;
+      });
+    }
+
+    // Detect transition from online to offline (only if not already shown)
+    if (_previousOnlineState == true && !isOnline && !hasBeenShown) {
       // Schedule after frame to avoid setState during build
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _showBannerBriefly();
       });
     }
-    _wasOnline = isOnline;
+
+    // Also show on initial load if offline and not shown yet
+    if (_previousOnlineState == null && !isOnline && !hasBeenShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showBannerBriefly();
+      });
+    }
+
+    _previousOnlineState = isOnline;
 
     // Use SizeTransition to properly collapse the space when hidden
     return SizeTransition(

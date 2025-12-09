@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '/main.dart' show firebaseInitialized;
 
 // --- Configuration ---
 const String _kTopicName = 'global_notifications';
@@ -85,6 +86,14 @@ Future<void> _syncNotificationSubscription() async {
 /// Handles setting the notifications ON, including requesting OS permission.
 /// Returns true if notifications were successfully enabled.
 Future<bool> enableNotifications() async {
+  // Check if Firebase is available (may not be if offline)
+  if (!firebaseInitialized) {
+    log(
+      'FCM: Cannot enable notifications - Firebase not initialized (offline?)',
+    );
+    return false;
+  }
+
   // 1. Check/Request OS-level permission first (Crucial for iOS/Android 13+)
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
@@ -115,6 +124,17 @@ Future<bool> enableNotifications() async {
 
 /// Unsubscribes the device from the FCM topic and updates local preference.
 Future<void> disableNotifications() async {
+  // Check if Firebase is available (may not be if offline)
+  if (!firebaseInitialized) {
+    log(
+      'FCM: Cannot disable notifications - Firebase not initialized (offline?)',
+    );
+    // Still save preference locally so it takes effect when online
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_kPrefsKey, false);
+    return;
+  }
+
   try {
     // 1. Unsubscribe the device from the topic
     await _unsubscribeFromTopic();
