@@ -1,3 +1,4 @@
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -38,8 +39,8 @@ class SplashScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             // App name
-            const Text(
-              'Crop Care',
+            Text(
+              S.of(context).appTitle,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -50,7 +51,7 @@ class SplashScreen extends StatelessWidget {
             const SizedBox(height: 8),
             // Tagline
             Text(
-              'AI-Powered Plant Disease Detection',
+              S.of(context).welcomeSubtitle,
               style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
             ),
             const SizedBox(height: 40),
