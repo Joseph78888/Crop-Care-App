@@ -1,6 +1,7 @@
 import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:crop_care_app/generated/l10n.dart';
 
 class QuickStatsSection extends ConsumerStatefulWidget {
   const QuickStatsSection({super.key});
@@ -15,7 +16,7 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
     final total = ref.watch(historyProvider);
     return Container(
       padding: EdgeInsets.all(16),
-      height: 140,
+      height: 150,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -24,23 +25,31 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Quick Status',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+          Builder(
+            builder: (context) {
+              return Text(
+                S.of(context).quichStatus,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              );
+            },
           ),
           SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(),
-              statusSection('${total.length}', 'Crop Analyzed'),
-              statusSection('95%', 'Accuracy Rate'),
-              const SizedBox(),
-            ],
+          Builder(
+            builder: (context) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(),
+                  statusSection('${total.length}', S.of(context).cropAnalayzed),
+                  statusSection('95%', S.of(context).accuracyRate),
+                  const SizedBox(),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -63,7 +72,7 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
           descreption,
           style: TextStyle(
             color: const Color.fromARGB(255, 102, 102, 102),
-            fontSize: 12,
+            fontSize: 14, // Adjust font size dynamically
           ),
         ),
       ],

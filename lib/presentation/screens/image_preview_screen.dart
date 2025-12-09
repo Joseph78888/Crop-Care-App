@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import '/presentation/screens/capture_tips_screen.dart';
 import '/presentation/screens/result_screen.dart';
 import '/presentation/providers/history_provider.dart';
@@ -19,7 +20,11 @@ class ImagePreviewScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 234, 255, 235),
       appBar: AppBar(
-        title: const Text('Analyze Your Crop'),
+        title: Builder(
+          builder: (context) {
+            return Text(S.of(context).analyzeYourCrop);
+          },
+        ),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -46,24 +51,30 @@ class ImagePreviewScreen extends ConsumerWidget {
                                 width: double.infinity,
                                 height: double.infinity,
                               )
-                            : Container(
-                                color: Colors.grey[200],
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.image_not_supported,
-                                      size: context.responsive.rs(48),
-                                      color: Colors.grey,
+                            : Builder(
+                                builder: (context) {
+                                  return Container(
+                                    color: Colors.grey[200],
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.image_not_supported,
+                                          size: context.responsive.rs(48),
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(height: context.responsive.sm),
+                                        Text(
+                                          S.of(context).noImageSelected,
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(height: context.responsive.sm),
-                                    Text(
-                                      'No image selected',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
+                                  );
+                                },
                               ),
                       ),
                     ),
@@ -84,25 +95,31 @@ class ImagePreviewScreen extends ConsumerWidget {
                         showDialog(
                           context: context,
                           barrierDismissible: false,
-                          builder: (ctx) => Center(
-                            child: Card(
-                              child: Padding(
-                                padding: EdgeInsets.all(context.responsive.lg),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    CircularProgressIndicator(),
-                                    SizedBox(height: context.responsive.md),
-                                    Text(
-                                      'Analyzing image...',
-                                      style: TextStyle(
-                                        fontSize: context.responsive.textMD,
-                                      ),
+                          builder: (ctx) => Builder(
+                            builder: (context) {
+                              return Center(
+                                child: Card(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                      context.responsive.lg,
                                     ),
-                                  ],
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const CircularProgressIndicator(),
+                                        SizedBox(height: context.responsive.md),
+                                        Text(
+                                          S.of(context).analyzingImage,
+                                          style: TextStyle(
+                                            fontSize: context.responsive.textMD,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         );
 
@@ -164,17 +181,22 @@ class ImagePreviewScreen extends ConsumerWidget {
                           if (context.mounted) {
                             showDialog(
                               context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: const Text('Analysis Failed'),
-                                content: Text(
-                                  'Failed to analyze the image. Please try again.\n\nError: $e',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.of(ctx).pop(),
-                                    child: const Text('OK'),
-                                  ),
-                                ],
+                              builder: (ctx) => Builder(
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(S.of(context).analysisFailed),
+                                    content: Text(
+                                      '${S.of(context).analysisFailedMessage}\n\n${S.of(context).error}: $e',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(ctx).pop(),
+                                        child: Text(S.of(context).ok),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                             );
                           }
@@ -187,16 +209,20 @@ class ImagePreviewScreen extends ConsumerWidget {
                     vertical: context.responsive.md,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.psychology_rounded),
-                    SizedBox(width: context.responsive.sm),
-                    Text(
-                      'Analyze Disease',
-                      style: TextStyle(fontSize: context.responsive.textMD),
-                    ),
-                  ],
+                child: Builder(
+                  builder: (context) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.psychology_rounded),
+                        SizedBox(width: context.responsive.sm),
+                        Text(
+                          S.of(context).analyzeDisease,
+                          style: TextStyle(fontSize: context.responsive.textMD),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -218,16 +244,20 @@ class ImagePreviewScreen extends ConsumerWidget {
                     vertical: context.responsive.md,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.image),
-                    SizedBox(width: context.responsive.sm),
-                    Text(
-                      'Choose Different Image',
-                      style: TextStyle(fontSize: context.responsive.textMD),
-                    ),
-                  ],
+                child: Builder(
+                  builder: (context) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.image),
+                        SizedBox(width: context.responsive.sm),
+                        Text(
+                          S.of(context).chooseDifferentImage,
+                          style: TextStyle(fontSize: context.responsive.textMD),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),

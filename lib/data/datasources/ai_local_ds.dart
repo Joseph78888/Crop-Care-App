@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
+
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// TensorFlow Lite service for tomato disease detection
 class TFLiteService {
@@ -35,17 +37,17 @@ class TFLiteService {
           .toList();
 
       _isInitialized = true;
-      print('TFLite model initialized successfully');
-      print('Model input shape: ${_interpreter!.getInputTensors()}');
-      print('Model output shape: ${_interpreter!.getOutputTensors()}');
-      print('Loaded ${_labels!.length} labels');
+      log('TFLite model initialized successfully');
+      log('Model input shape: ${_interpreter!.getInputTensors()}');
+      log('Model output shape: ${_interpreter!.getOutputTensors()}');
+      log('Loaded ${_labels!.length} labels');
 
       // Log the specific shape of the first output tensor
       var outputTensor = _interpreter!.getOutputTensor(0);
-      print('Output tensor 0 shape: ${outputTensor.shape}');
-      print('Output tensor 0 type: ${outputTensor.type}');
+      log('Output tensor 0 shape: ${outputTensor.shape}');
+      log('Output tensor 0 type: ${outputTensor.type}');
     } catch (e) {
-      print('Error initializing TFLite model: $e');
+      log('Error initializing TFLite model: $e');
       rethrow;
     }
   }
@@ -141,10 +143,10 @@ class TFLiteService {
 
       flatten(outputBuffer);
 
-      print(
+      log(
         'Raw model output (flattened, first 20): ${predictions.take(20).toList()}',
       );
-      print('Total predictions count: ${predictions.length}');
+      log('Total predictions count: ${predictions.length}');
 
       // Find the class with highest confidence
       double maxConfidence = 0.0;
@@ -165,7 +167,7 @@ class TFLiteService {
 
       // Ensure we have enough labels
       if (maxIndex >= _labels!.length) {
-        print(
+        log(
           'Warning: Model output index $maxIndex exceeds label count ${_labels!.length}',
         );
         maxIndex = 0; // Fallback to first label
@@ -176,7 +178,7 @@ class TFLiteService {
       // Check confidence threshold
       // Check confidence threshold
       if (maxConfidence < _confidenceThreshold) {
-        print(
+        log(
           'Confidence $maxConfidence is below threshold $_confidenceThreshold. Returning Unknown.',
         );
         predictedLabel = 'Unknown';
@@ -186,17 +188,17 @@ class TFLiteService {
       final sortedIndices = List.generate(predictions.length, (i) => i)
         ..sort((a, b) => predictions[b].compareTo(predictions[a]));
 
-      print('Top 3 Predictions:');
+      log('Top 3 Predictions:');
       for (int i = 0; i < 3 && i < sortedIndices.length; i++) {
         final idx = sortedIndices[i];
         if (idx < _labels!.length) {
-          print(
+          log(
             '${i + 1}. ${_labels![idx]}: ${(predictions[idx] * 100).toStringAsFixed(2)}%',
           );
         }
       }
 
-      print(
+      log(
         'Prediction: $predictedLabel with confidence: ${(maxConfidence * 100).toStringAsFixed(2)}%',
       );
 
@@ -209,7 +211,7 @@ class TFLiteService {
         ),
       };
     } catch (e) {
-      print('Error during image analysis: $e');
+      log('Error during image analysis: $e');
       rethrow;
     }
   }
@@ -245,6 +247,6 @@ class TFLiteService {
     _interpreter = null;
     _labels = null;
     _isInitialized = false;
-    print('TFLite service disposed');
+    log('TFLite service disposed');
   }
 }

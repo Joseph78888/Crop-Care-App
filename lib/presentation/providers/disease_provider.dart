@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../data/datasources/ai_local_ds.dart';
 import '../../data/repositories/crop_disease_repo.dart';
 
@@ -29,7 +32,7 @@ final modelInitializationProvider = FutureProvider<bool>((ref) async {
     await repository.initialize();
     return true;
   } catch (e) {
-    print('Error initializing model in provider: $e');
+    log('Error initializing model in provider: $e');
     rethrow;
   }
 });

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +17,6 @@ class CaptureContainer extends ConsumerStatefulWidget {
 }
 
 class _CaptureContainerState extends ConsumerState<CaptureContainer> {
- 
   void _pickImage() async {
     final pickedImage = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -37,12 +37,11 @@ class _CaptureContainerState extends ConsumerState<CaptureContainer> {
 
     if (mounted) {
       Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const ImagePreviewScreen(),
-        ),
+        MaterialPageRoute(builder: (context) => const ImagePreviewScreen()),
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -54,12 +53,12 @@ class _CaptureContainerState extends ConsumerState<CaptureContainer> {
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.camera_alt),
             SizedBox(width: 8),
-            Text('Capture Photo', style: TextStyle(fontSize: 18)),
+            Text(S.of(context).captureImage, style: TextStyle(fontSize: 18)),
           ],
         ),
       ),

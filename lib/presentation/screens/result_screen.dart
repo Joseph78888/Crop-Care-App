@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import '/presentation/providers/image_provider.dart';
 import '/presentation/screens/tabs_screen.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
@@ -33,7 +34,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
 
     return GradientScaffold(
       appBar: AppBar(
-        title: Text('Analyze Result'),
+        title: Builder(
+          builder: (context) {
+            return Text(S.of(context).analyzeResult);
+          },
+        ),
         backgroundColor: Colors.transparent,
       ),
       extendBodyBehindAppBar: true,
@@ -49,9 +54,13 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     height: context.responsive.hp(37),
                     width: double.infinity,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(context.responsive.md),
+                      borderRadius: BorderRadius.circular(
+                        context.responsive.md,
+                      ),
                       child: Hero(
-                        tag: 'preview-image',
+                        tag: current != null
+                            ? 'history-image-${current.id}'
+                            : 'preview-image',
                         child: current != null
                             ? Image.file(
                                 File(current.imagePath),
@@ -60,26 +69,32 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                 height: double.infinity,
                                 alignment: Alignment.center,
                                 errorBuilder: (context, error, stackTrace) =>
-                                    Container(
-                                      color: Colors.grey[200],
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(
-                                            Icons.broken_image,
-                                            size: 48,
-                                            color: Colors.grey[600],
+                                    Builder(
+                                      builder: (context) {
+                                        return Container(
+                                          color: Colors.grey[200],
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.broken_image,
+                                                size: 48,
+                                                color: Colors.grey[600],
+                                              ),
+                                              SizedBox(
+                                                height: context.responsive.sm,
+                                              ),
+                                              Text(
+                                                S.of(context).imageNotAvailable,
+                                                style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(height: context.responsive.sm),
-                                          Text(
-                                            'Image not available',
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        );
+                                      },
                                     ),
                               )
                             : (image != null
@@ -113,18 +128,26 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: context.responsive.md),
+                      padding: EdgeInsets.symmetric(
+                        vertical: context.responsive.md,
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.camera_alt_rounded),
-                        SizedBox(width: context.responsive.sm),
-                        Text(
-                          'Analyze Another Crop',
-                          style: TextStyle(fontSize: context.responsive.textMD),
-                        ),
-                      ],
+                    child: Builder(
+                      builder: (context) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.camera_alt_rounded),
+                            SizedBox(width: context.responsive.sm),
+                            Text(
+                              S.of(context).analyzeAnotherCrop,
+                              style: TextStyle(
+                                fontSize: context.responsive.textMD,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -143,15 +166,26 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: context.responsive.md),
+                      padding: EdgeInsets.symmetric(
+                        vertical: context.responsive.md,
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.home_rounded),
-                        SizedBox(width: context.responsive.sm),
-                        Text('Back to Home', style: TextStyle(fontSize: context.responsive.textMD)),
-                      ],
+                    child: Builder(
+                      builder: (context) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.home_rounded),
+                            SizedBox(width: context.responsive.sm),
+                            Text(
+                              S.of(context).backToHome,
+                              style: TextStyle(
+                                fontSize: context.responsive.textMD,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -232,23 +266,31 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      current?.diseaseName ?? 'Unknown',
-                      style: TextStyle(
-                        color: statusColor,
-                        fontSize: context.responsive.textXL,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Builder(
+                      builder: (context) {
+                        return Text(
+                          current?.diseaseName ?? S.of(context).unknown,
+                          style: TextStyle(
+                            color: statusColor,
+                            fontSize: context.responsive.textXL,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      },
                     ),
-                    Text(
-                      current?.confidence != null
-                          ? 'Confidence: ${((current!.confidence ?? 0) * 100).toStringAsFixed(0)}%'
-                          : 'Confidence: N/A',
-                      style: TextStyle(
-                        color: const Color.fromARGB(255, 95, 95, 95),
-                        fontSize: context.responsive.textSM,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    Builder(
+                      builder: (context) {
+                        return Text(
+                          current?.confidence != null
+                              ? '${S.of(context).confidence}: ${((current!.confidence ?? 0) * 100).toStringAsFixed(0)}%'
+                              : '${S.of(context).confidence}: N/A',
+                          style: TextStyle(
+                            color: const Color.fromARGB(255, 95, 95, 95),
+                            fontSize: context.responsive.textSM,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -284,31 +326,44 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Analysis Details',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: context.responsive.textXL,
-              fontWeight: FontWeight.bold,
-            ),
+          Builder(
+            builder: (context) {
+              return Text(
+                S.of(context).analysisDetails,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: context.responsive.textXL,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            },
           ),
           SizedBox(height: context.responsive.sm),
-          Text(
-            diseaseInfo?.description ?? 'No description available.',
-            style: TextStyle(
-              color: const Color.fromARGB(255, 48, 48, 48),
-              fontSize: context.responsive.textMD,
-            ),
+          Builder(
+            builder: (context) {
+              return Text(
+                diseaseInfo?.description ??
+                    S.of(context).noDescriptionAvailable,
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 48, 48, 48),
+                  fontSize: context.responsive.textMD,
+                ),
+              );
+            },
           ),
           if (diseaseInfo != null && diseaseInfo.symptoms.isNotEmpty) ...[
             SizedBox(height: context.responsive.md),
-            Text(
-              'Symptoms:',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: context.responsive.textLG,
-                fontWeight: FontWeight.w600,
-              ),
+            Builder(
+              builder: (context) {
+                return Text(
+                  S.of(context).symptoms,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: context.responsive.textLG,
+                    fontWeight: FontWeight.w600,
+                  ),
+                );
+              },
             ),
             SizedBox(height: context.responsive.sm),
             ...diseaseInfo.symptoms.map(
@@ -350,24 +405,32 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                 size: context.responsive.rs(25),
               ),
               SizedBox(width: context.responsive.xs),
-              Text(
-                'Recommendations',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: context.responsive.textXL,
-                  fontWeight: FontWeight.bold,
-                ),
+              Builder(
+                builder: (context) {
+                  return Text(
+                    S.of(context).recommendations,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: context.responsive.textXL,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
             ],
           ),
           SizedBox(height: context.responsive.sm),
           if (recommendations.isEmpty)
-            Text(
-              'No recommendations available.',
-              style: TextStyle(
-                color: const Color.fromARGB(255, 48, 48, 48),
-                fontSize: context.responsive.textMD,
-              ),
+            Builder(
+              builder: (context) {
+                return Text(
+                  S.of(context).noRecommendationsAvailable,
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 48, 48, 48),
+                    fontSize: context.responsive.textMD,
+                  ),
+                );
+              },
             )
           else
             ...recommendations.map(

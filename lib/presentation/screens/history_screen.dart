@@ -2,6 +2,7 @@ import 'package:crop_care_app/data/models/detection_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:crop_care_app/generated/l10n.dart';
 import '/presentation/widgets/history_search_bar.dart';
 import '/presentation/widgets/total_healthy_deasise_filter.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
@@ -33,7 +34,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       _searchQuery = query.toLowerCase(); // Case-insensitive search
     });
   }
-  
+
   @override
   void dispose() {
     controller.dispose();
@@ -47,9 +48,13 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         // elevation: 0,
-        title: const Text(
-          'Analysis History',
-          style: TextStyle(fontWeight: FontWeight.w400),
+        title: Builder(
+          builder: (context) {
+            return Text(
+              S.of(context).analysisHistory,
+              style: const TextStyle(fontWeight: FontWeight.w400),
+            );
+          },
         ),
       ),
 
@@ -61,14 +66,16 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
             child: Column(
               children: [
                 // TotalHealthyDeasiseFilter
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    TotalHealthyDeasiseFilter(name: 'Total'),
-                    TotalHealthyDeasiseFilter(name: 'Healthy'),
-                    TotalHealthyDeasiseFilter(name: 'Diseased'),
-                  ],
-                ),
+                
+                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TotalHealthyDeasiseFilter(name: S.of(context).total),
+                        TotalHealthyDeasiseFilter(name: S.of(context).healthy),
+                        TotalHealthyDeasiseFilter(name: S.of(context).diseased),
+                      ],
+                    ),
+                  
                 SizedBox(height: context.responsive.lg),
 
                 // HistorySearhBar
@@ -77,16 +84,20 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   onChanged: _onSearchChanged,
                 ),
                 SizedBox(height: context.responsive.sm),
-                
+
                 // Filter Buttons
-                Row(
-                  children: [
-                    _buildFilterChip('All', 'all'),
-                    const SizedBox(width: 8),
-                    _buildFilterChip('Healthy', 'healthy'),
-                    const SizedBox(width: 8),
-                    _buildFilterChip('Diseased', 'diseased'),
-                  ],
+                Builder(
+                  builder: (context) {
+                    return Row(
+                      children: [
+                        _buildFilterChip(S.of(context).all, 'all'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip(S.of(context).healthy, 'healthy'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip(S.of(context).diseased, 'diseased'),
+                      ],
+                    );
+                  },
                 ),
 
                 SizedBox(height: context.responsive.md),
@@ -94,24 +105,34 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 Consumer(
                   builder: (context, ref, _) {
                     final allItems = ref.watch(historyProvider);
-                    
+
                     // STAGE 1: Filter by status (healthy/diseased/all)
                     final statusFiltered = _filterType == 'all'
                         ? allItems
                         : _filterType == 'healthy'
-                            ? allItems.where((e) => e.status == HealthStatus.healthy).toList()
-                            : allItems.where((e) => e.status == HealthStatus.diseased).toList();
-                    
+                        ? allItems
+                              .where((e) => e.status == HealthStatus.healthy)
+                              .toList()
+                        : allItems
+                              .where((e) => e.status == HealthStatus.diseased)
+                              .toList();
+
                     // STAGE 2: Filter by search query (disease name)
                     final filteredItems = _searchQuery.isEmpty
                         ? statusFiltered
                         : statusFiltered
-                            .where((e) => e.diseaseName.toLowerCase().contains(_searchQuery))
-                            .toList();
-                    
+                              .where(
+                                (e) => e.diseaseName.toLowerCase().contains(
+                                  _searchQuery,
+                                ),
+                              )
+                              .toList();
+
                     if (filteredItems.isEmpty) return _buildEmptyHistoryState();
                     return Column(
-                      children: filteredItems.map((e) => HistoryCard(result: e)).toList(),
+                      children: filteredItems
+                          .map((e) => HistoryCard(result: e))
+                          .toList(),
                     );
                   },
                 ),
@@ -141,33 +162,42 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   }
 
   Widget _buildEmptyHistoryState() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 100),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.history, size: context.responsive.rs(64), color: Colors.grey[400]),
-            SizedBox(height: context.responsive.md),
-            Text(
-              'No Analysis History',
-              style: TextStyle(
-                fontSize: context.responsive.textXL,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[600],
-              ),
+    return Builder(
+      builder: (context) {
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.history,
+                  size: context.responsive.rs(64),
+                  color: Colors.grey[400],
+                ),
+                SizedBox(height: context.responsive.md),
+                Text(
+                  S.of(context).noAnalysisHistory,
+                  style: TextStyle(
+                    fontSize: context.responsive.textXL,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                SizedBox(height: context.responsive.sm),
+                Text(
+                  S.of(context).startAnalyzingMessage,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: context.responsive.textSM,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: context.responsive.sm),
-            Text(
-              'Start analyzing your crops to see results here',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: context.responsive.textSM, color: Colors.grey[500]),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
-
-
 }
