@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,11 +16,11 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
   Widget build(BuildContext context) {
     final total = ref.watch(historyProvider);
     return Container(
-      padding: EdgeInsets.all(16),
-      height: 150,
+      padding: EdgeInsets.all(context.responsive.sp(16)),
+      height: context.responsive.sp(150),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(context.responsive.sp(20)),
         color: const Color.fromARGB(15, 24, 121, 0),
       ),
       child: Column(
@@ -32,12 +33,12 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: context.responsive.sp(20),
                 ),
               );
             },
           ),
-          SizedBox(height: 20),
+          SizedBox(height: context.responsive.sp(20)),
           Builder(
             builder: (context) {
               return Row(
@@ -64,15 +65,15 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
-            fontSize: 24,
+            fontSize: context.responsive.sp(24),
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: context.responsive.sp(8)),
         Text(
           descreption,
           style: TextStyle(
             color: const Color.fromARGB(255, 102, 102, 102),
-            fontSize: 14, // Adjust font size dynamically
+            fontSize: context.responsive.sp(14), // Adjust font size dynamically
           ),
         ),
       ],

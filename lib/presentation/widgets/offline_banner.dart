@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -97,14 +98,17 @@ class _OfflineBannerState extends ConsumerState<OfflineBanner>
       axisAlignment: -1.0, // Align to top
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.responsive.rs(16),
+          vertical: context.responsive.rs(10),
+        ),
         decoration: BoxDecoration(
           color: Colors.orange.shade700,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(25),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+              blurRadius: context.responsive.rs(4),
+              offset: Offset(0, context.responsive.rs(2)),
             ),
           ],
         ),
@@ -113,13 +117,13 @@ class _OfflineBannerState extends ConsumerState<OfflineBanner>
           child: Row(
             children: [
               const Icon(Icons.wifi_off_rounded, color: Colors.white, size: 20),
-              const SizedBox(width: 12),
+              SizedBox(width: context.responsive.rs(12)),
               Expanded(
                 child: Text(
                   S.of(context).noInternetConnection,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: context.responsive.sp(14),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

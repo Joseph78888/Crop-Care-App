@@ -64,7 +64,9 @@ class ImagePreviewScreen extends ConsumerWidget {
                                           size: context.responsive.rs(48),
                                           color: Colors.grey,
                                         ),
-                                        SizedBox(height: context.responsive.sm),
+                                        SizedBox(
+                                          height: context.responsive.sp(8),
+                                        ),
                                         Text(
                                           S.of(context).noImageSelected,
                                           style: const TextStyle(
@@ -82,7 +84,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: context.responsive.sp(8)),
 
             // Analysis Button
             SizedBox(
@@ -107,7 +109,9 @@ class ImagePreviewScreen extends ConsumerWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         const CircularProgressIndicator(),
-                                        SizedBox(height: context.responsive.md),
+                                        SizedBox(
+                                          height: context.responsive.sp(8),
+                                        ),
                                         Text(
                                           S.of(context).analyzingImage,
                                           style: TextStyle(
@@ -206,7 +210,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(
-                    vertical: context.responsive.md,
+                    vertical: context.responsive.sp(16),
                   ),
                 ),
                 child: Builder(
@@ -215,10 +219,10 @@ class ImagePreviewScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.psychology_rounded),
-                        SizedBox(width: context.responsive.sm),
+                        SizedBox(width: context.responsive.sp(8)),
                         Text(
                           S.of(context).analyzeDisease,
-                          style: TextStyle(fontSize: context.responsive.textMD),
+                          style: TextStyle(fontSize: context.responsive.sp(16)),
                         ),
                       ],
                     );
@@ -226,7 +230,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: context.responsive.md),
+            SizedBox(height: context.responsive.sp(8)),
 
             // Choose Different Image Button
             SizedBox(
@@ -241,7 +245,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                 },
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.symmetric(
-                    vertical: context.responsive.md,
+                    vertical: context.responsive.sp(16),
                   ),
                 ),
                 child: Builder(
@@ -250,10 +254,10 @@ class ImagePreviewScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.image),
-                        SizedBox(width: context.responsive.sm),
+                        SizedBox(width: context.responsive.sp(8)),
                         Text(
                           S.of(context).chooseDifferentImage,
-                          style: TextStyle(fontSize: context.responsive.textMD),
+                          style: TextStyle(fontSize: context.responsive.sp(16)),
                         ),
                       ],
                     );
@@ -261,7 +265,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: context.responsive.md),
+            SizedBox(height: context.responsive.sp(8)),
           ],
         ),
       ),

@@ -66,24 +66,23 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
             child: Column(
               children: [
                 // TotalHealthyDeasiseFilter
-                
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TotalHealthyDeasiseFilter(name: S.of(context).total),
-                        TotalHealthyDeasiseFilter(name: S.of(context).healthy),
-                        TotalHealthyDeasiseFilter(name: S.of(context).diseased),
-                      ],
-                    ),
-                  
-                SizedBox(height: context.responsive.lg),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TotalHealthyDeasiseFilter(name: S.of(context).total),
+                    TotalHealthyDeasiseFilter(name: S.of(context).healthy),
+                    TotalHealthyDeasiseFilter(name: S.of(context).diseased),
+                  ],
+                ),
+
+                SizedBox(height: context.responsive.sp(12)),
 
                 // HistorySearhBar
                 HistorySearchBar(
                   controller: controller,
                   onChanged: _onSearchChanged,
                 ),
-                SizedBox(height: context.responsive.sm),
+                SizedBox(height: context.responsive.sp(8)),
 
                 // Filter Buttons
                 Builder(
@@ -91,16 +90,16 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                     return Row(
                       children: [
                         _buildFilterChip(S.of(context).all, 'all'),
-                        const SizedBox(width: 8),
+                        SizedBox(width: context.responsive.sp(8)),
                         _buildFilterChip(S.of(context).healthy, 'healthy'),
-                        const SizedBox(width: 8),
+                        SizedBox(width: context.responsive.sp(8)),
                         _buildFilterChip(S.of(context).diseased, 'diseased'),
                       ],
                     );
                   },
                 ),
 
-                SizedBox(height: context.responsive.md),
+                SizedBox(height: context.responsive.sp(8)),
                 // History list (watches provider)
                 Consumer(
                   builder: (context, ref, _) {
@@ -166,7 +165,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       builder: (context) {
         return Center(
           child: Padding(
-            padding: const EdgeInsets.only(top: 100),
+            padding: EdgeInsets.only(top: context.responsive.rs(100)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

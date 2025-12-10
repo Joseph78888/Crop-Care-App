@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -184,7 +185,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 /// Help & Support Section
                 ///
                 /// this section is about Help & Support it contains User guid, Contact Support and Rate The App
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.rs(20)),
                 Builder(
                   builder: (context) {
                     return SettingsSections(
@@ -232,7 +233,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 /// Data & Privacy Section
                 ///
                 /// this section is about Data & Privacy it contains User guid, Contact Support and Rate The App
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.rs(20)),
                 Builder(
                   builder: (context) {
                     return SettingsSections(
@@ -280,20 +281,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 /// About Crop Care Section
                 ///
                 /// this section is about About Crop Care it contains Summary info about the app and Development Team
-                const SizedBox(height: 20),
+                SizedBox(height: context.responsive.rs(20)),
                 Builder(
                   builder: (context) {
                     return Row(
                       children: [
-                        const Icon(
+                        Icon(
                           color: AppColors.primary,
                           Icons.shield_outlined,
-                          size: 22,
+                          size: context.responsive.sp(22),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: context.responsive.rs(8)),
                         Text(
                           S.of(context).aboutCropCare, // section title
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Color.fromARGB(
                               191,
                               65,
@@ -301,14 +302,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                               65,
                             ), // section title color
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: context.responsive.sp(18),
                           ),
                         ),
                       ],
                     );
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: context.responsive.rs(16)),
 
                 /// About App Section
                 ///

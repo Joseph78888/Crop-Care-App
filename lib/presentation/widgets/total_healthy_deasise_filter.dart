@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,17 +19,16 @@ class TotalHealthyDeasiseFilter extends ConsumerWidget {
         : Colors.black;
   }
 
-  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final total = ref.watch(historyProvider);
 
     return Container(
-      height: 120,
-      width: 120,
+      height: context.responsive.sp(110),
+      width: context.responsive.sp(110),
 
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(context.responsive.sp(20)),
         color: Colors.transparent,
         border: Border.all(color: _getDeferenceColor(context, name)),
       ),
@@ -39,28 +39,31 @@ class TotalHealthyDeasiseFilter extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: context.responsive.sp(20)),
               Text(
                 name == 'Total' || name == 'الكل'
                     ? '${total.length}'
-                    : name == 'Healthy'|| name == 'سليمه'
+                    : name == 'Healthy' || name == 'سليمه'
                     ? '${total.where((e) => e.status == HealthStatus.healthy).length}'
-                    : name == 'Diseased'|| name == 'مريضه'
+                    : name == 'Diseased' || name == 'مريضه'
                     ? '${total.where((e) => e.status == HealthStatus.diseased).length}'
                     : '${total.length}',
-                style: TextStyle(color: _getDeferenceColor(context, name), fontSize: 24),
+                style: TextStyle(
+                  color: _getDeferenceColor(context, name),
+                  fontSize: context.responsive.sp(24),
+                ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: context.responsive.rs(20)),
 
               Text(
                 name,
                 style: TextStyle(
                   color: _getDeferenceColor(context, name),
-                  fontSize: 14,
+                  fontSize: context.responsive.sp(14),
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: context.responsive.rs(10)),
             ],
           ),
         ],

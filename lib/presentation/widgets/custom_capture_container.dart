@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 import '/presentation/screens/capture_tips_screen.dart';
@@ -35,27 +36,33 @@ class CustomCaptureContainer extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: 100,
+        height: context.responsive.rs(100),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(context.responsive.rs(20)),
           gradient: LinearGradient(colors: [color1, color2]),
         ),
         child: Padding(
-          padding: EdgeInsetsGeometry.all(20),
+          padding: EdgeInsets.all(context.responsive.rs(20)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 60,
-                height: 60,
+                width: context.responsive.rs(60),
+                height: context.responsive.rs(60),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(
+                    context.responsive.rs(100),
+                  ),
                   color: Colors.white24,
                 ),
-                child: Icon(icon, color: Colors.white, size: 30),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: context.responsive.rs(30),
+                ),
               ),
 
-              const SizedBox(width: 12),
+              SizedBox(width: context.responsive.rs(12)),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -64,12 +71,15 @@ class CustomCaptureContainer extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: context.responsive.sp(18),
                     ),
                   ),
                   Text(
                     subTitle,
-                    style: TextStyle(color: Colors.white70, fontSize: 15),
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: context.responsive.sp(15),
+                    ),
                   ),
                 ],
               ),

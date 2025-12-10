@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -32,33 +33,36 @@ class SplashScreen extends StatelessWidget {
             // Lottie animation
             Lottie.asset(
               'assets/animations/Agriculture_technology.json',
-              width: 280,
-              height: 280,
+              width: context.responsive.rs(280),
+              height: context.responsive.rs(280),
               fit: BoxFit.contain,
               repeat: true,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: context.responsive.rs(24)),
             // App name
             Text(
               S.of(context).appTitle,
               style: TextStyle(
-                fontSize: 32,
+                fontSize: context.responsive.sp(32),
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF22C55E),
+                color: const Color(0xFF22C55E),
                 letterSpacing: 1.2,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.responsive.rs(8)),
             // Tagline
             Text(
               S.of(context).welcomeSubtitle,
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+              style: TextStyle(
+                fontSize: context.responsive.sp(14),
+                color: Colors.grey.shade600,
+              ),
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: context.responsive.rs(40)),
             // Loading indicator
             SizedBox(
-              width: 24,
-              height: 24,
+              width: context.responsive.rs(24),
+              height: context.responsive.rs(24),
               child: CircularProgressIndicator(
                 strokeWidth: 2,
                 color: const Color(0xFF22C55E).withAlpha(180),
