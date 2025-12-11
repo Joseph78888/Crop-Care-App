@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           const CustomHomeAppBar(),
-          SizedBox(height: context.responsive.md),
+          SizedBox(height: context.responsive.sp(10)),
 
           Builder(
             builder: (context) {
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          SizedBox(height: context.responsive.sp(8)),
+          SizedBox(height: context.responsive.sp(10)),
 
           Builder(
             builder: (context) {
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          SizedBox(height: context.responsive.sp(10)),
+          SizedBox(height: context.responsive.sp(20)),
 
           QuickStatsSection(),
         ],

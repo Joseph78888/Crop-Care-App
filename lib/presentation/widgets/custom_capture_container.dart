@@ -36,7 +36,7 @@ class CustomCaptureContainer extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: context.responsive.rs(100),
+        height: context.responsive.rs(90),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(context.responsive.rs(20)),
           gradient: LinearGradient(colors: [color1, color2]),
@@ -47,8 +47,8 @@ class CustomCaptureContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: context.responsive.rs(60),
-                height: context.responsive.rs(60),
+                width: context.responsive.rs(55),
+                height: context.responsive.rs(55),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     context.responsive.rs(100),
@@ -71,14 +71,14 @@ class CustomCaptureContainer extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: context.responsive.sp(18),
+                      fontSize: context.responsive.sp(16),
                     ),
                   ),
                   Text(
                     subTitle,
                     style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: context.responsive.sp(15),
+                      color: Colors.white.withValues(alpha: 0.85),
+                      fontSize: context.responsive.sp(14),
                     ),
                   ),
                 ],

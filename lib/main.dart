@@ -61,7 +61,7 @@ Future<void> _initializeApp(WidgetRef ref) async {
   _initSentryBackground();
 
   // 3. Minimum Splash Duration (UX)
-  // Ensure splash shows for at least 2 seconds so it doesn't just flash
+  // Ensure splash shows for at least 4 seconds so it doesn't just flash
   final elapsed = stopwatch.elapsedMilliseconds;
   if (elapsed < 2000) {
     await Future.delayed(Duration(milliseconds: 4000 - elapsed));

@@ -36,7 +36,7 @@ class _CaptureContainerState extends ConsumerState<CaptureContainer> {
     ref.read(selectedImageProvider.notifier).state = File(permanentPath);
 
     if (mounted) {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const ImagePreviewScreen()),
       );
     }

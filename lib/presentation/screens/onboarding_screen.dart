@@ -59,6 +59,7 @@ class OnboardingScreen extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
+
                   Positioned(
                     top: responsive.hp(45),
                     left: 0,

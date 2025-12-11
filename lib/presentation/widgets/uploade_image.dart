@@ -37,7 +37,7 @@ class _UploadeContainerState extends ConsumerState<UploadeContainer> {
     ref.read(selectedImageProvider.notifier).state = File(permanentPath);
 
     if (mounted) {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const ImagePreviewScreen()),
       );
     }

@@ -42,7 +42,7 @@ class CustomHomeAppBar extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: context.responsive.sp(20),
+                        fontSize: context.responsive.sp(18),
                       ),
                     );
                   },
@@ -53,8 +53,8 @@ class CustomHomeAppBar extends StatelessWidget {
                     return Text(
                       S.of(context).welcomeSubtitle,
                       style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: context.responsive.sp(15),
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: context.responsive.sp(14),
                       ),
                     );
                   },

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crop_care_app/presentation/screens/capture_tips_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,7 +52,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                 Card(
                   // shape: BeveledRectangleBorder(borderRadius: BorderRadiusGeometry.circular(20)),
                   child: SizedBox(
-                    height: context.responsive.hp(37),
+                    height: context.responsive.hp(36),
                     width: double.infinity,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(
@@ -123,7 +124,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const CaptureTipsScreen(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,

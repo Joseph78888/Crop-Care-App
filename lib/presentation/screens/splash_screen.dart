@@ -58,7 +58,7 @@ class SplashScreen extends StatelessWidget {
                 color: Colors.grey.shade600,
               ),
             ),
-            SizedBox(height: context.responsive.rs(40)),
+            SizedBox(height: context.responsive.rs(160)),
             // Loading indicator
             SizedBox(
               width: context.responsive.rs(24),

@@ -33,7 +33,7 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                  fontSize: context.responsive.sp(20),
+                  fontSize: context.responsive.sp(18),
                 ),
               );
             },
@@ -65,7 +65,7 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
-            fontSize: context.responsive.sp(24),
+            fontSize: context.responsive.sp(22),
           ),
         ),
         SizedBox(height: context.responsive.sp(8)),
@@ -74,6 +74,7 @@ class _QuickStatsSectionState extends ConsumerState<QuickStatsSection> {
           style: TextStyle(
             color: const Color.fromARGB(255, 102, 102, 102),
             fontSize: context.responsive.sp(14), // Adjust font size dynamically
+            fontWeight: FontWeight.bold,
           ),
         ),
       ],
