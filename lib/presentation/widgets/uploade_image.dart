@@ -57,7 +57,7 @@ class _UploadeContainerState extends ConsumerState<UploadeContainer> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.upload),
+            Icon(Icons.upload, size: context.responsive.rs(24)),
             SizedBox(width: context.responsive.rs(8)),
             Text(
               S.of(context).uploadeImage,

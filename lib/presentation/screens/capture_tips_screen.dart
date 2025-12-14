@@ -34,9 +34,9 @@ class CaptureTipsScreen extends StatelessWidget {
                   builder: (context) {
                     return Container(
                       margin: EdgeInsets.symmetric(
-                        horizontal: context.responsive.sp(32),
+                        horizontal: context.responsive.sp(8),
                       ),
-                      padding: EdgeInsets.all(context.responsive.sp(16)),
+                      padding: EdgeInsets.all(context.responsive.sp(8)),
                       height: context.responsive.sp(210),
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -102,9 +102,10 @@ class CaptureTipsScreen extends StatelessWidget {
         SizedBox(width: context.responsive.sp(6)),
         Text(
           info,
+          
           style: TextStyle(
             color: Colors.black,
-            fontSize: context.responsive.sp(12),
+            fontSize: context.responsive.sp(14),
           ),
         ),
       ],
