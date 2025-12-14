@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -8,26 +9,26 @@ class CustomHomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: context.responsive.rs(100),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(context.responsive.rs(20)),
         gradient: LinearGradient(
           colors: [
             Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withOpacity(0.8),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, context.responsive.rs(4)),
           ),
         ],
       ),
 
       child: Padding(
-        padding: EdgeInsetsGeometry.all(20),
+        padding: EdgeInsets.all(context.responsive.rs(20)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -41,7 +42,7 @@ class CustomHomeAppBar extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: context.responsive.sp(18),
                       ),
                     );
                   },
@@ -51,7 +52,10 @@ class CustomHomeAppBar extends StatelessWidget {
                   builder: (context) {
                     return Text(
                       S.of(context).welcomeSubtitle,
-                      style: TextStyle(color: Colors.white70, fontSize: 15),
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: context.responsive.sp(14),
+                      ),
                     );
                   },
                 ),
@@ -61,10 +65,10 @@ class CustomHomeAppBar extends StatelessWidget {
             Spacer(),
 
             Container(
-              width: 50,
-              height: 50,
+              width: context.responsive.rs(50),
+              height: context.responsive.rs(50),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(context.responsive.rs(100)),
                 color: Colors.white24,
               ),
               child: const Icon(Icons.eco, color: Colors.white),

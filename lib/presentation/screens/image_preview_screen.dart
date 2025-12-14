@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -64,7 +65,9 @@ class ImagePreviewScreen extends ConsumerWidget {
                                           size: context.responsive.rs(48),
                                           color: Colors.grey,
                                         ),
-                                        SizedBox(height: context.responsive.sm),
+                                        SizedBox(
+                                          height: context.responsive.sp(8),
+                                        ),
                                         Text(
                                           S.of(context).noImageSelected,
                                           style: const TextStyle(
@@ -82,7 +85,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: context.responsive.sp(8)),
 
             // Analysis Button
             SizedBox(
@@ -107,7 +110,9 @@ class ImagePreviewScreen extends ConsumerWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         const CircularProgressIndicator(),
-                                        SizedBox(height: context.responsive.md),
+                                        SizedBox(
+                                          height: context.responsive.sp(8),
+                                        ),
                                         Text(
                                           S.of(context).analyzingImage,
                                           style: TextStyle(
@@ -124,55 +129,8 @@ class ImagePreviewScreen extends ConsumerWidget {
                         );
 
                         try {
-                          // Get the disease repository
-                          final repository = ref.read(
-                            cropDiseaseRepositoryProvider,
-                          );
-
-                          // Ensure model is initialized
-                          if (!repository.isReady) {
-                            await repository.initialize();
-                          }
-
-                          // Run model inference
-                          final result = await repository.analyzeImage(
-                            imageFile,
-                          );
-
-                          // Extract results
-                          final String diseaseName = result['diseaseName'];
-                          final double confidence = result['confidence'];
-                          final bool isHealthy = result['isHealthy'];
-                          final status = isHealthy
-                              ? HealthStatus.healthy
-                              : HealthStatus.diseased;
-
-                          // Add to history and set current result
-                          await ref
-                              .read(historyProvider.notifier)
-                              .add(
-                                imagePath: imageFile.path,
-                                diseaseName: diseaseName,
-                                status: status,
-                                confidence: confidence,
-                              );
-
-                          // Set current result for ResultScreen
-                          final latest = ref.read(historyProvider).first;
-                          ref.read(currentResultProvider.notifier).state =
-                              latest;
-
-                          // Close loading dialog
-                          if (context.mounted) Navigator.of(context).pop();
-
-                          // Navigate to result screen
-                          if (context.mounted) {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (ctx) => const ResultScreen(),
-                              ),
-                            );
-                          }
+                          // start analyze disease
+                          await _startAnalyze(ref, imageFile, context);
                         } catch (e) {
                           // Close loading dialog
                           if (context.mounted) Navigator.of(context).pop();
@@ -206,7 +164,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(
-                    vertical: context.responsive.md,
+                    vertical: context.responsive.sp(16),
                   ),
                 ),
                 child: Builder(
@@ -215,10 +173,10 @@ class ImagePreviewScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.psychology_rounded),
-                        SizedBox(width: context.responsive.sm),
+                        SizedBox(width: context.responsive.sp(8)),
                         Text(
                           S.of(context).analyzeDisease,
-                          style: TextStyle(fontSize: context.responsive.textMD),
+                          style: TextStyle(fontSize: context.responsive.sp(16)),
                         ),
                       ],
                     );
@@ -226,14 +184,14 @@ class ImagePreviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: context.responsive.md),
+            SizedBox(height: context.responsive.sp(8)),
 
             // Choose Different Image Button
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (ctx) => const CaptureTipsScreen(),
                     ),
@@ -241,7 +199,7 @@ class ImagePreviewScreen extends ConsumerWidget {
                 },
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.symmetric(
-                    vertical: context.responsive.md,
+                    vertical: context.responsive.sp(16),
                   ),
                 ),
                 child: Builder(
@@ -250,10 +208,10 @@ class ImagePreviewScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.image),
-                        SizedBox(width: context.responsive.sm),
+                        SizedBox(width: context.responsive.sp(8)),
                         Text(
                           S.of(context).chooseDifferentImage,
-                          style: TextStyle(fontSize: context.responsive.textMD),
+                          style: TextStyle(fontSize: context.responsive.sp(16)),
                         ),
                       ],
                     );
@@ -261,10 +219,59 @@ class ImagePreviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: context.responsive.md),
+            SizedBox(height: context.responsive.sp(8)),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _startAnalyze(
+    WidgetRef ref,
+    File imageFile,
+    BuildContext context,
+  ) async {
+    // Get the disease repository
+    final repository = ref.read(cropDiseaseRepositoryProvider);
+
+    // Ensure model is initialized
+    if (!repository.isReady) {
+      await repository.initialize();
+    }
+
+    // Run model inference
+    final result = await repository.analyzeImage(imageFile);
+
+    // Extract results
+    final String diseaseName = result['diseaseName'];
+    final double confidence = result['confidence'];
+    final bool isHealthy = result['isHealthy'];
+    final status = isHealthy ? HealthStatus.healthy : HealthStatus.diseased;
+
+    // Create detection result
+    final detectionResult = DetectionResult(
+      imagePath: imageFile.path,
+      diseaseName: diseaseName,
+      status: status,
+      confidence: confidence,
+    );
+
+    // Save to history ONLY if it is NOT "Unknown Condition"
+    if (diseaseName != 'Unknown Condition') {
+      await ref.read(historyProvider.notifier).addResult(detectionResult);
+    }
+
+    // Always set current result for ResultScreen (so user sees "Unknown")
+    ref.read(currentResultProvider.notifier).state = detectionResult;
+
+    // Close loading dialog
+    if (context.mounted) Navigator.of(context).pop();
+
+    // Navigate to result screen
+    if (context.mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (ctx) => const ResultScreen()),
+      );
+    }
   }
 }

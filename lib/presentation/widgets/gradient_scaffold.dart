@@ -7,11 +7,13 @@ class GradientScaffold extends StatelessWidget {
     this.appBar,
     this.bottomNavigationBar,
     this.extendBodyBehindAppBar,
+    this.floatingActionButton,
   });
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
   final bool? extendBodyBehindAppBar;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class GradientScaffold extends StatelessWidget {
       ),
 
       bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

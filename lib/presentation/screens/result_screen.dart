@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:crop_care_app/presentation/screens/capture_tips_screen.dart';
+import 'package:crop_care_app/presentation/screens/chatbot_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,6 +35,26 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     final image = ref.watch(selectedImageProvider);
 
     return GradientScaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final current = ref.read(currentResultProvider);
+          DiseaseInfo? info;
+          if (current != null) {
+            info = DiseaseDatabase.getDiseaseInfoByDisplayName(
+              current.diseaseName,
+            );
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  ChatbotScreen(detectionResult: current, diseaseInfo: info),
+            ),
+          );
+        },
+        shape: CircleBorder(),
+
+        child: Icon(Icons.assistant),
+      ),
       appBar: AppBar(
         title: Builder(
           builder: (context) {
@@ -49,9 +71,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
             child: Column(
               children: [
                 Card(
-                  // shape: BeveledRectangleBorder(borderRadius: BorderRadiusGeometry.circular(20)),
                   child: SizedBox(
-                    height: context.responsive.hp(37),
+                    height: context.responsive.hp(36),
                     width: double.infinity,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(
@@ -111,7 +132,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   ),
                 ),
                 SizedBox(height: context.responsive.lg),
-                _deseaseNameAndConfidence(current),
+                _diseaseNameAndConfidence(current),
                 SizedBox(height: context.responsive.lg),
                 _buildAnalysisDetails(current),
                 SizedBox(height: context.responsive.lg),
@@ -123,7 +144,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const CaptureTipsScreen(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -189,6 +214,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 60),
               ],
             ),
           ),
@@ -224,7 +250,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     );
   }
 
-  Container _deseaseNameAndConfidence(DetectionResult? current) {
+  Container _diseaseNameAndConfidence(DetectionResult? current) {
     // Get disease info to determine if healthy
     DiseaseInfo? diseaseInfo;
     if (current != null) {

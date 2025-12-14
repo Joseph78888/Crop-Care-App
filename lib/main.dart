@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,62 +29,90 @@ bool firebaseInitialized = false;
 /// Provider to track initialization status
 final initializationProvider = StateProvider<bool>((ref) => false);
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
 
   // Run app immediately with splash screen
   runApp(const ProviderScope(child: MyApp()));
 }
 
 /// Performs all async initialization tasks
+/// Strategy: "Fire and Forget" for network services to ensure app NEVER hangs.
 Future<void> _initializeApp(WidgetRef ref) async {
-  // Initialize Firebase with timeout (graceful failure for offline support)
+  final stopwatch = Stopwatch()..start();
+
+  // 1. SharedPreferences (CRITICAL - Local & Fast)
   try {
+    final prefs = await SharedPreferences.getInstance();
+    _hasCompletedOnboarding = prefs.getBool('onboarding_completed') ?? false;
+  } catch (e) {
+    log('Critical: Failed to load SharedPreferences: $e');
+    // Default to onboarding if prefs fail
+    _hasCompletedOnboarding = false;
+  }
+
+  // 2. Background Initializations (NON-BLOCKING)
+  // We start these but DO NOT await them. They will finish whenever they can.
+  // This ensures the splash screen never hangs due to network issues.
+
+  // Start Firebase & Notifications in background
+  _initFirebaseBackground();
+
+  // Start Sentry in background
+  _initSentryBackground();
+
+  // 3. Minimum Splash Duration (UX)
+  // Ensure splash shows for at least 4 seconds so it doesn't just flash
+  final elapsed = stopwatch.elapsedMilliseconds;
+  if (elapsed < 2000) {
+    await Future.delayed(Duration(milliseconds: 4000 - elapsed));
+  }
+
+  log('Splash completed in ${stopwatch.elapsedMilliseconds}ms. App ready.');
+
+  // 4. Unblock UI in 6 seconds
+  await Future.delayed(const Duration(seconds: 6));
+  ref.read(initializationProvider.notifier).state = true;
+}
+
+/// Initialize Firebase in background - purely fire-and-forget
+Future<void> _initFirebaseBackground() async {
+  try {
+    // Try to init Firebase
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     ).timeout(
-      const Duration(seconds: 3),
-      onTimeout: () => throw TimeoutException('Firebase timeout'),
-    );
-    firebaseInitialized = true;
-    log('Firebase initialized suc-cessfully');
-  } catch (e) {
-    log('Firebase initialization failed (offline?): $e');
-    firebaseInitialized = false;
-  }
+      const Duration(seconds: 5),
+    ); // generous timeout since it's background
 
-  // Initialize notifications only if Firebase is available
-  if (firebaseInitialized) {
+    firebaseInitialized = true;
+    log('Background: Firebase initialized successfully');
+
+    // Once Firebase is ready, try notifications
     try {
       await initializeNotifications();
-      log('Notifications initialized successfully');
+      log('Background: Notifications initialized successfully');
     } catch (e) {
-      log('Notification initialization failed (offline?): $e');
+      log('Background: Notification init failed: $e');
     }
+  } catch (e) {
+    log('Background: Firebase init failed (offline?): $e');
+    firebaseInitialized = false;
   }
+}
 
-  // Check if onboarding has been completed
-  final prefs = await SharedPreferences.getInstance();
-  _hasCompletedOnboarding = prefs.getBool('onboarding_completed') ?? false;
-
-  // Initialize Sentry (non-blocking)
+/// Initialize Sentry in background - purely fire-and-forget
+Future<void> _initSentryBackground() async {
   try {
     await SentryFlutter.init((options) {
-      options.dsn =
-          'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
+      options.dsn = dotenv.env['SENTRY_DSN'];
       options.tracesSampleRate = 1.0;
-    }).timeout(
-      const Duration(seconds: 3),
-      onTimeout: () {
-        log('Sentry initialization timed out');
-      },
-    );
+    }).timeout(const Duration(seconds: 5));
+    log('Background: Sentry initialized');
   } catch (e) {
-    log('Sentry initialization failed (offline?): $e');
+    log('Background: Sentry init failed: $e');
   }
-
-  // Mark initialization as complete
-  ref.read(initializationProvider.notifier).state = true;
 }
 
 class MyApp extends ConsumerStatefulWidget {

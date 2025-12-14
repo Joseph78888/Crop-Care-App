@@ -75,7 +75,7 @@ final historyProvider = StateNotifierProvider<HistoryNotifier, List<DetectionRes
   (ref) => HistoryNotifier(const HistoryRepository()),
 );
 
-/// Helper to decide status from model output (adjust logic to your model's output).
+/// Helper to decide status from model output (adjust logic to model's output).
 HealthStatus statusFromModel({required String predictedLabel, double? confidence, double threshold = 0.5}) {
   // Example logic:
   // - if the label equals 'healthy' OR confidence is below threshold => healthy

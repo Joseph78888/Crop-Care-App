@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           const CustomHomeAppBar(),
-          SizedBox(height: context.responsive.md),
+          SizedBox(height: context.responsive.sp(10)),
 
           Builder(
             builder: (context) {
@@ -33,9 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: context.responsive.textLG,
                 ),
               );
-            }
+            },
           ),
-          SizedBox(height: context.responsive.md),
+          SizedBox(height: context.responsive.sp(10)),
 
           Builder(
             builder: (context) {
@@ -43,17 +43,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: S.of(context).captureImage,
                 subTitle: S.of(context).captureSubtitle,
                 icon: Icons.camera_alt,
-                color1: Theme.of(context).colorScheme.primary.withValues(alpha: .8),
+                color1: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: .8),
                 color2: Theme.of(context).colorScheme.primary,
               );
-            }
+            },
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: context.responsive.sp(8)),
 
           Builder(
             builder: (context) {
               return CustomCaptureContainer.upload(
-                title: S.of( context).uploadeImage,
+                title: S.of(context).uploadeImage,
                 subTitle: S.of(context).uploadeImageSubtitle,
                 icon: Icons.upload_rounded,
                 color1: Theme.of(
@@ -61,9 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ).colorScheme.secondary.withValues(alpha: .8),
                 color2: Theme.of(context).colorScheme.secondary,
               );
-            }
+            },
           ),
-          const SizedBox(height: 22),
+          SizedBox(height: context.responsive.sp(20)),
 
           QuickStatsSection(),
         ],

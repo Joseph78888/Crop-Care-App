@@ -59,6 +59,7 @@ class OnboardingScreen extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
+
                   Positioned(
                     top: responsive.hp(45),
                     left: 0,
@@ -83,7 +84,7 @@ class OnboardingScreen extends StatelessWidget {
                               );
                             },
                           ),
-                          SizedBox(height: responsive.md),
+                          SizedBox(height: responsive.sp(8)),
 
                           // Subtitle
                           Builder(
@@ -126,7 +127,7 @@ class OnboardingScreen extends StatelessWidget {
                                         Icons.arrow_forward_ios_rounded,
                                         size: responsive.textLG,
                                       ),
-                                      SizedBox(width: responsive.sm),
+                                      SizedBox(width: responsive.sp(8)),
                                       Text(
                                         S.of(context).onboardingGetStarted,
                                         style: TextStyle(

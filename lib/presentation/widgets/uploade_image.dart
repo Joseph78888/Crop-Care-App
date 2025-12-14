@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:crop_care_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +37,7 @@ class _UploadeContainerState extends ConsumerState<UploadeContainer> {
     ref.read(selectedImageProvider.notifier).state = File(permanentPath);
 
     if (mounted) {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const ImagePreviewScreen()),
       );
     }
@@ -51,14 +52,17 @@ class _UploadeContainerState extends ConsumerState<UploadeContainer> {
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFEAB308),
           foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: context.responsive.rs(16)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.upload),
-            SizedBox(width: 8),
-            Text(S.of(context).uploadeImage, style: TextStyle(fontSize: 18)),
+            SizedBox(width: context.responsive.rs(8)),
+            Text(
+              S.of(context).uploadeImage,
+              style: TextStyle(fontSize: context.responsive.sp(18)),
+            ),
           ],
         ),
       ),

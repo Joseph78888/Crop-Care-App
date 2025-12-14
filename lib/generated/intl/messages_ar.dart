@@ -63,6 +63,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "تجنب الصور الضبابية أو المظلمة",
     ),
     "captureTips": MessageLookupByLibrary.simpleMessage("نصائح التصوير"),
+    "chatbot": MessageLookupByLibrary.simpleMessage("المساعد"),
+    "chatbotAppBar": MessageLookupByLibrary.simpleMessage("المساعد الذكي"),
+    "chatbotTextFieldHint": MessageLookupByLibrary.simpleMessage(
+      "اسال عن اي شيء",
+    ),
     "chooseDifferentImage": MessageLookupByLibrary.simpleMessage(
       "اختر صورة أخرى",
     ),

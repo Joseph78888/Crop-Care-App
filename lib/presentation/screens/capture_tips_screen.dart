@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crop_care_app/generated/l10n.dart';
@@ -24,17 +25,19 @@ class CaptureTipsScreen extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(context.responsive.sp(16)),
 
             child: Column(
               children: [
-                const SizedBox(height: 220),
+                SizedBox(height: context.responsive.sp(220)),
                 Builder(
                   builder: (context) {
                     return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 32),
-                      padding: const EdgeInsets.all(22),
-                      height: 230,
+                      margin: EdgeInsets.symmetric(
+                        horizontal: context.responsive.sp(32),
+                      ),
+                      padding: EdgeInsets.all(context.responsive.sp(16)),
+                      height: context.responsive.sp(210),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -45,10 +48,10 @@ class CaptureTipsScreen extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.info_outline_rounded,
-                            size: 48,
+                            size: context.responsive.sp(48),
                             color: Theme.of(context).colorScheme.primary,
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: context.responsive.sp(12)),
 
                           Text(
                             S.of(context).captureTips,
@@ -58,25 +61,25 @@ class CaptureTipsScreen extends StatelessWidget {
                               fontSize: 18,
                             ),
                           ),
-                          const SizedBox(height: 18),
+                          SizedBox(height: context.responsive.sp(18)),
 
-                          tips(S.of(context).captureTip1),
-                          tips(S.of(context).captureTip2),
-                          tips(S.of(context).captureTip3),
-                          tips(S.of(context).captureTip4),
+                          tips(S.of(context).captureTip1, context),
+                          tips(S.of(context).captureTip2, context),
+                          tips(S.of(context).captureTip3, context),
+                          tips(S.of(context).captureTip4, context),
                         ],
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 28),
+                SizedBox(height: context.responsive.sp(28)),
 
                 // capture photo section ===================
-                const CaptureContainer(),
-                const SizedBox(height: 14),
+                CaptureContainer(),
+                SizedBox(height: context.responsive.sp(14)),
 
                 // uploade photo section ===================
-                const UploadeContainer(),
+                UploadeContainer(),
               ],
             ),
           ),
@@ -85,19 +88,25 @@ class CaptureTipsScreen extends StatelessWidget {
     );
   }
 
-  Widget tips(String info) {
+  Widget tips(String info, BuildContext context) {
     return Row(
       children: [
         Container(
-          height: 4,
-          width: 4,
+          height: context.responsive.sp(4),
+          width: context.responsive.sp(4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.black,
           ),
         ),
-        const SizedBox(width: 6),
-        Text(info, style: TextStyle(color: Colors.black, fontSize: 14)),
+        SizedBox(width: context.responsive.sp(6)),
+        Text(
+          info,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: context.responsive.sp(12),
+          ),
+        ),
       ],
     );
   }
