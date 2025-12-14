@@ -60,7 +60,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh_rounded),
+            icon: const Icon(Icons.delete_outline_rounded),
             tooltip: 'Clear Chat',
             onPressed: () {
               ref.invalidate(chatProvider);
@@ -107,7 +107,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            "Ask me anything about your crops!",
+                            S.of(context).askMeAnything,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(context)

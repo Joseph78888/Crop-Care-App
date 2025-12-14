@@ -973,6 +973,16 @@ class S {
   String get retry {
     return Intl.message('Retry', name: 'retry', desc: '', args: []);
   }
+
+  /// `Ask me anything about your crops!`
+  String get askMeAnything {
+    return Intl.message(
+      'Ask me anything about your crops!',
+      name: 'askMeAnything',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
