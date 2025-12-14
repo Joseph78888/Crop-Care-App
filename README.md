@@ -19,7 +19,7 @@ Crop Care is a Flutter application empowering farmers and agronomists to instant
 
 ## 📸 Screens
 
-| Onboarding | Home | Capture | Analysis Result | History |
+| Settings | Capture Tips | Analysis Result | History | Home |
 |:---:|:---:|:---:|:---:|:---:|
 | <img src="https://github.com/user-attachments/assets/c107eb85-f5d6-4df0-897f-47fc648f02f4" width="200"/> | <img src="https://github.com/user-attachments/assets/5604b8fa-e454-4da5-983b-0685fcdfae4c" width="200"/> | <img src="https://github.com/user-attachments/assets/0fac85a0-52d1-49c1-98ed-c0daaa386635" width="200"/> | <img src="https://github.com/user-attachments/assets/a1280f84-ac9f-459f-b93f-2fe2ebf045dd" width="200"/> | <img src="https://github.com/user-attachments/assets/0e1871bb-2a03-462f-a33d-1028c556ffc2" width="200"/> |
 
