@@ -1,3 +1,4 @@
+import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 import '/core/theme/app_colors.dart';
@@ -43,11 +44,11 @@ class _SettingsSectionState extends State<SettingsSections> {
       children: [
         sectionTitle(),
 
-        const SizedBox(height: 16),
+        SizedBox(height: context.responsive.rs(16)),
         Container(
           // section container
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(context.responsive.rs(20)),
             color: const Color.fromARGB(193, 237, 245, 235),
           ),
           child: Column(children: [...widget._buildTilsWithDividers()]),
@@ -59,15 +60,19 @@ class _SettingsSectionState extends State<SettingsSections> {
   Row sectionTitle() {
     return Row(
       children: [
-        Icon(color: AppColors.primary, widget.icon, size: 22),
+        Icon(
+          color: AppColors.primary,
+          widget.icon,
+          size: context.responsive.sp(22),
+        ),
 
-        const SizedBox(width: 8),
+        SizedBox(width: context.responsive.rs(8)),
         Text(
           widget.title, // section title
           style: TextStyle(
             color: const Color.fromARGB(191, 65, 65, 65), // section title color
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: context.responsive.sp(18),
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -128,55 +129,8 @@ class ImagePreviewScreen extends ConsumerWidget {
                         );
 
                         try {
-                          // Get the disease repository
-                          final repository = ref.read(
-                            cropDiseaseRepositoryProvider,
-                          );
-
-                          // Ensure model is initialized
-                          if (!repository.isReady) {
-                            await repository.initialize();
-                          }
-
-                          // Run model inference
-                          final result = await repository.analyzeImage(
-                            imageFile,
-                          );
-
-                          // Extract results
-                          final String diseaseName = result['diseaseName'];
-                          final double confidence = result['confidence'];
-                          final bool isHealthy = result['isHealthy'];
-                          final status = isHealthy
-                              ? HealthStatus.healthy
-                              : HealthStatus.diseased;
-
-                          // Add to history and set current result
-                          await ref
-                              .read(historyProvider.notifier)
-                              .add(
-                                imagePath: imageFile.path,
-                                diseaseName: diseaseName,
-                                status: status,
-                                confidence: confidence,
-                              );
-
-                          // Set current result for ResultScreen
-                          final latest = ref.read(historyProvider).first;
-                          ref.read(currentResultProvider.notifier).state =
-                              latest;
-
-                          // Close loading dialog
-                          if (context.mounted) Navigator.of(context).pop();
-
-                          // Navigate to result screen
-                          if (context.mounted) {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (ctx) => const ResultScreen(),
-                              ),
-                            );
-                          }
+                          // start analyze disease
+                          await _startAnalyze(ref, imageFile, context);
                         } catch (e) {
                           // Close loading dialog
                           if (context.mounted) Navigator.of(context).pop();
@@ -270,5 +224,54 @@ class ImagePreviewScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _startAnalyze(
+    WidgetRef ref,
+    File imageFile,
+    BuildContext context,
+  ) async {
+    // Get the disease repository
+    final repository = ref.read(cropDiseaseRepositoryProvider);
+
+    // Ensure model is initialized
+    if (!repository.isReady) {
+      await repository.initialize();
+    }
+
+    // Run model inference
+    final result = await repository.analyzeImage(imageFile);
+
+    // Extract results
+    final String diseaseName = result['diseaseName'];
+    final double confidence = result['confidence'];
+    final bool isHealthy = result['isHealthy'];
+    final status = isHealthy ? HealthStatus.healthy : HealthStatus.diseased;
+
+    // Create detection result
+    final detectionResult = DetectionResult(
+      imagePath: imageFile.path,
+      diseaseName: diseaseName,
+      status: status,
+      confidence: confidence,
+    );
+
+    // Save to history ONLY if it is NOT "Unknown Condition"
+    if (diseaseName != 'Unknown Condition') {
+      await ref.read(historyProvider.notifier).addResult(detectionResult);
+    }
+
+    // Always set current result for ResultScreen (so user sees "Unknown")
+    ref.read(currentResultProvider.notifier).state = detectionResult;
+
+    // Close loading dialog
+    if (context.mounted) Navigator.of(context).pop();
+
+    // Navigate to result screen
+    if (context.mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (ctx) => const ResultScreen()),
+      );
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,8 +29,9 @@ bool firebaseInitialized = false;
 /// Provider to track initialization status
 final initializationProvider = StateProvider<bool>((ref) => false);
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
 
   // Run app immediately with splash screen
   runApp(const ProviderScope(child: MyApp()));
@@ -104,8 +106,7 @@ Future<void> _initFirebaseBackground() async {
 Future<void> _initSentryBackground() async {
   try {
     await SentryFlutter.init((options) {
-      options.dsn =
-          'https://d496e915ceb7cbe361f4c157b69ce773@o4510458440056832.ingest.us.sentry.io/4510458441039872';
+      options.dsn = dotenv.env['SENTRY_DSN'];
       options.tracesSampleRate = 1.0;
     }).timeout(const Duration(seconds: 5));
     log('Background: Sentry initialized');

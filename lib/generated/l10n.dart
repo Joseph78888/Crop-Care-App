@@ -164,6 +164,31 @@ class S {
     return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 
+  /// `Assistance`
+  String get chatbot {
+    return Intl.message('Assistance', name: 'chatbot', desc: '', args: []);
+  }
+
+  /// `AI Assistance`
+  String get chatbotAppBar {
+    return Intl.message(
+      'AI Assistance',
+      name: 'chatbotAppBar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask about crops...`
+  String get chatbotTextFieldHint {
+    return Intl.message(
+      'Ask about crops...',
+      name: 'chatbotTextFieldHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message('Settings', name: 'settings', desc: '', args: []);

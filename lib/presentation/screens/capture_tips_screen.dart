@@ -2,7 +2,6 @@ import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crop_care_app/generated/l10n.dart';
-import 'package:path/path.dart';
 import '/presentation/widgets/capture_image.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/widgets/uploade_image.dart';

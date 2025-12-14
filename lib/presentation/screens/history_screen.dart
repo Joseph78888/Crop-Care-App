@@ -1,7 +1,7 @@
-import 'package:crop_care_app/data/models/detection_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:crop_care_app/data/models/detection_result.dart';
 import 'package:crop_care_app/generated/l10n.dart';
 import '/presentation/widgets/history_search_bar.dart';
 import '/presentation/widgets/total_healthy_deasise_filter.dart';
@@ -150,7 +150,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
       selected: isSelected,
       onSelected: (_) => _onFilterChanged(value),
       backgroundColor: Colors.white,
-      selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+      selectedColor: Theme.of(
+        context,
+      ).colorScheme.primary.withValues(alpha: 0.2),
       checkmarkColor: Theme.of(context).colorScheme.primary,
       side: BorderSide(
         color: isSelected

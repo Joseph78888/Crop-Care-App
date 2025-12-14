@@ -1,4 +1,5 @@
 import 'package:crop_care_app/generated/l10n.dart';
+import 'package:crop_care_app/presentation/screens/chatbot_screen.dart';
 import 'package:flutter/material.dart';
 
 import '/presentation/screens/history_screen.dart';
@@ -29,8 +30,10 @@ class _TabsScreenState extends State<TabsScreen> {
     Widget activePage = const HomeScreen();
 
     if (_selectedPageIndex == 1) {
-      activePage = const HistoryScreen();
+      activePage = const ChatbotScreen();
     } else if (_selectedPageIndex == 2) {
+      activePage = const HistoryScreen();
+    } else if (_selectedPageIndex == 3) {
       activePage = const SettingsScreen();
     }
 
@@ -38,14 +41,20 @@ class _TabsScreenState extends State<TabsScreen> {
       extendBodyBehindAppBar: true,
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30,
+        backgroundColor: Colors.white,
         fixedColor: Theme.of(context).colorScheme.primary,
         elevation: 5,
+        unselectedItemColor: const Color.fromARGB(255, 123, 123, 123),
         currentIndex: _selectedPageIndex,
         onTap: _selectPage,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.eco),
             label: S.of(context).home,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assistant_outlined),
+            label: S.of(context).chatbot,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history_rounded),

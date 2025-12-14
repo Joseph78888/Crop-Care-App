@@ -69,6 +69,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Avoid blurry or dark images",
     ),
     "captureTips": MessageLookupByLibrary.simpleMessage("Capture Tips"),
+    "chatbot": MessageLookupByLibrary.simpleMessage("Assistance"),
+    "chatbotAppBar": MessageLookupByLibrary.simpleMessage("AI Assistance"),
+    "chatbotTextFieldHint": MessageLookupByLibrary.simpleMessage(
+      "Ask about crops...",
+    ),
     "chooseDifferentImage": MessageLookupByLibrary.simpleMessage(
       "Choose Different Image",
     ),
