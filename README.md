@@ -1,101 +1,75 @@
 # Crop Care
 
-Crop Care is a Flutter prototype that helps farmers and agronomists validate crop health from a leaf photo, preview an AI diagnosis, and review results. This repository focuses on the capture → preview → analyze flow and provides a developer-friendly UI to integrate camera input and model inference.
+Crop Care is a Flutter application empowering farmers and agronomists to instantly diagnose crop health using AI. By capturing or uploading a leaf photo, users receive immediate diagnosis, confidence metrics, and actionable recommendations.
 
-## Progress (Current)
-- **Navigation implemented:** Splash → Home → Capture → Preview → Analyze → Result → History.
-- **Image preview & result screens:** Images now preserve aspect ratio, use a shared `Hero` transition, and support zoom & pan via `InteractiveViewer`.
-- **Graceful image fallback:** `Image.asset` usages include `errorBuilder` placeholders to avoid runtime crashes when an asset cannot be loaded.
-- **Assets included:** `assets/images/1.jpg`, `assets/images/2.jpeg`, `assets/images/8.png` and `pubspec.yaml` registers `assets/images/`.
+## Key Features
+- **AI-Powered Analysis**: Powered by Google's Gemini models for accurate plant disease diagnosis.
+- **Smart History**: Automatically saves analysis results; includes filtering to exclude "Unknown Conditions".
+- **Interactive Preview**: Zoom and pan capabilities for detailed image inspection.
+- **Robust Architecture**: Built with Flutter Riverpod for state management and Sentry for error tracking.
+- **Offline First**: Optimized to handle offline scenarios gracefully (banner notifications, cached history).
 
-## Features
-- **Capture flow:** Button to open a preview screen (placeholder for camera/file picker integration).
-- **Preview screen:** Zoomable/pannable image with Analyze action to navigate to the Result screen.
-- **Result screen:** Shows the analyzed image, diagnosis summary, confidence meter, recommendations, and navigation actions.
+## 🛠️ Tech Stack
+- **Framework**: Flutter (Dart)
+- **State Management**: [Riverpod](https://riverpod.dev/)
+- **ML diagnosis model** [TensorFlow Lite](https://www.tensorflow.org/lite)
+- **AI Service**: [Google Gemini](https://ai.google.dev/) via `google_generative_ai`
+- **Error Tracking**: [Sentry](https://sentry.io/)
+- **Environment Management**: `flutter_dotenv`
 
-## How to Run
-- **Prerequisites:** Flutter SDK, an Android/iOS emulator or device.
-- **Install dependencies:**
-```powershell
+## 📸 Screens
+
+| Onboarding | Home | Capture | Analysis Result | History |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://github.com/user-attachments/assets/c107eb85-f5d6-4df0-897f-47fc648f02f4" width="200"/> | <img src="https://github.com/user-attachments/assets/5604b8fa-e454-4da5-983b-0685fcdfae4c" width="200"/> | <img src="https://github.com/user-attachments/assets/0fac85a0-52d1-49c1-98ed-c0daaa386635" width="200"/> | <img src="https://github.com/user-attachments/assets/a1280f84-ac9f-459f-b93f-2fe2ebf045dd" width="200"/> | <img src="https://github.com/user-attachments/assets/0e1871bb-2a03-462f-a33d-1028c556ffc2" width="200"/> |
+
+## ⚙️ Setup & Installation
+
+### Prerequisites
+- Flutter SDK (latest stable)
+- Android Studio / Xcode
+- A Google Gemini API Key
+- A Sentry DSN (optional, for error reporting)
+
+### 1. Clone & Install Dependencies
+```bash
+git clone https://github.com/Joseph78888/Crop-Care-App.git
+cd Crop-Care-App
 flutter pub get
 ```
-- **If you see asset load errors (common after adding assets):**
-```powershell
-flutter clean
-flutter pub get
+
+### 2. Configure Environment Variables
+Create a `.env` file in the root directory:
+```bash
+touch .env
+```
+Add your API keys to the `.env` file:
+```properties
+GEMINI_API_KEY=your_gemini_api_key_here
+SENTRY_DSN=your_sentry_dsn_here
+```
+> [!IMPORTANT]
+> The `.env` file is git-ignored. You must create it manually or the app will fail to start/analyze.
+
+### 3. Run the App
+```bash
 flutter run
 ```
-- If assets still fail to appear, uninstall the app from the device/emulator and run `flutter run` again.
 
-## Known Issues & Quick Fixes
-- **Unable to load asset**: If an error like `Unable to load asset: assets/images/2.jpeg` appears at runtime, run the clean+pub get steps above — this usually resolves stale asset bundle issues.
-- **Dynamic images (camera/files):** The prototype currently uses app assets. For live capture, change widgets to `Image.file(File(path))` and pass image file paths between screens.
-
-## Next Steps
-- Integrate camera or file-picker and pass live image paths to Preview and Result screens.
-- Persist analysis results using a local database (e.g., Hive or sqflite) and improve the History screen.
-- Replace simulated analysis with a real on-device model or backend inference service.
-
-## Project Structure (high level)
+## Project Structure
 ```
 lib/
-  core/                  # theme, utils, constants, errors
-  data/                  # data sources, repositories
-  presentation/
-    screens/             # UI screens (preview, result, capture, tabs)
-    widgets/             # reusable UI widgets (capture button, image card)
-  main.dart              # app entry and routing
+├── core/               # App-wide constants, theme, utils
+├── data/               # Repositories, API services (Gemini), datasources
+├── presentation/       # UI Layer
+│   ├── providers/      # Riverpod providers
+│   ├── screens/        # Full-page widgets
+│   └── widgets/        # Reusable components
+└── main.dart           # Entry point
 ```
 
 ## Contributing
-- Open issues or PRs for UI improvements and camera/model integrations.
+Contributions are welcome! Please open an issue or submit a pull request for any bugs or improvements.
 
-## License
-MIT (see `LICENSE`)
-
-# Screens
-<img width="270" height="600" alt="Screenshot_1757894690" src="https://github.com/user-attachments/assets/c107eb85-f5d6-4df0-897f-47fc648f02f4" />  <img width="270" height="600" alt="Screenshot_1757894698" src="https://github.com/user-attachments/assets/5604b8fa-e454-4da5-983b-0685fcdfae4c" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/0fac85a0-52d1-49c1-98ed-c0daaa386635" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/a1280f84-ac9f-459f-b93f-2fe2ebf045dd" />  <img width="270" height="600" alt="Screenshot_1757894714" src="https://github.com/user-attachments/assets/0e1871bb-2a03-462f-a33d-1028c556ffc2" />
-
-## Changelog (selected)
-- 2025-10-30: Added aspect-preserving image rendering, Hero shared transition, and `InteractiveViewer` zoom/pan for image preview and result screens. Added `errorBuilder` fallbacks for asset rendering.
-- 2025-11-24: README expanded with developer notes, run instructions, and guidance for switching to dynamic (captured) images.
-
-## Developer Notes
-- Files/areas touched recently:
-  - `lib/presentation/screens/image_preview_screen.dart` — preview UI, `Hero` tag `preview-image`, wrapped image with `InteractiveViewer` and `errorBuilder`.
-  - `lib/presentation/screens/result_screen.dart` — result image card uses `Hero` and `BoxFit.cover`, added `errorBuilder`.
-  - `lib/presentation/widgets/capture_image.dart` — entrypoint button navigates to the preview screen.
-
-- Using dynamic (captured) images:
-  - Current prototype uses `Image.asset`. To show camera/file images, change constructors to accept a String `path` and use `Image.file(File(path))`.
-  - Example constructor pattern for `ImagePreviewScreen`:
-
-```dart
-class ImagePreviewScreen extends StatelessWidget {
-  final String imagePath;
-  const ImagePreviewScreen({super.key, required this.imagePath});
-  // ... use Image.file(File(imagePath)) instead of Image.asset
-}
-```
-
-- Important: ensure you `import 'dart:io';` for `File` when using `Image.file`.
-
-## Branch & Build Notes
-- Current working branch: `feature` (verify with `git status` / `git branch`).
-- If you modify `pubspec.yaml` assets or add image files, run:
-```powershell
-flutter clean
-flutter pub get
-flutter run
-```
-This is required to re-bundle assets into the app.
-
-## Running Tests / Static Checks
-- This repo includes basic widget tests. Run analyzer and tests with:
-```powershell
-flutter analyze
-flutter test
-```
-
-## Contact / Owner
-- Repository owner: `Joseph78888` (see repo metadata). Open issues or PRs in this repository for questions or contributions.
+## 📄 License
+MIT
