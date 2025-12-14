@@ -50,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "appTitle": MessageLookupByLibrary.simpleMessage("crop care"),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
+    "askMeAnything": MessageLookupByLibrary.simpleMessage(
+      "Ask me anything about your crops!",
+    ),
     "backToHome": MessageLookupByLibrary.simpleMessage("Back to Home"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "captureImage": MessageLookupByLibrary.simpleMessage("Capture Image"),

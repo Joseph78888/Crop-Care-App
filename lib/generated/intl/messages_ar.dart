@@ -46,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "appTitle": MessageLookupByLibrary.simpleMessage("عناية المحاصيل"),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
+    "askMeAnything": MessageLookupByLibrary.simpleMessage(
+      "اسألني أي شيء عن محاصيلك!",
+    ),
     "backToHome": MessageLookupByLibrary.simpleMessage("العودة للرئيسية"),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "captureImage": MessageLookupByLibrary.simpleMessage("التقط صورة"),
