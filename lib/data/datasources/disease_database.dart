@@ -236,7 +236,7 @@ class DiseaseDatabase {
         'Practice strict crop rotation',
       ],
     ),
-    'Soy_Healthy': DiseaseInfo(
+    'Soy_Healthy': DiseaseInfo(         
       name: 'Soy_Healthy',
       displayName: 'Healthy Soybean',
       description: 'Your soybean plant is healthy.',

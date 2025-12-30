@@ -1,8 +1,8 @@
 import 'dart:developer';
 
+import 'package:crop_care_app/app_entry.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '/main.dart' show firebaseInitialized;
 
 // --- Configuration ---
 const String _kTopicName = 'global_notifications';

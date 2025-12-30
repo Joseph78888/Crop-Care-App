@@ -1,3 +1,4 @@
+import 'package:crop_care_app/app_entry.dart';
 import 'package:crop_care_app/core/utils/responsive_helper.dart';
 import 'package:crop_care_app/presentation/providers/history_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import '/presentation/widgets/about_app.dart';
 import '/core/theme/app_colors.dart';
 import '/presentation/widgets/settings_section.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
-import '/main.dart' show firebaseInitialized;
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
