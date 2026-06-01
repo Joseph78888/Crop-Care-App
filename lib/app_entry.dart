@@ -64,7 +64,7 @@ Future<void> _initializeApp(
 
   log('Splash completed in ${stopwatch.elapsedMilliseconds}ms. App ready.');
 
-  // 4. Unblock UI in 6 seconds
+  // 4. Unblock UI in 4 seconds
   await Future.delayed(const Duration(seconds: 4));
   ref.read(initializationProvider.notifier).state = true;
 }
@@ -144,7 +144,9 @@ class _MyAppState extends ConsumerState<MyApp> {
       title: 'Crop Care',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(),
+        textTheme: locale.languageCode == 'ar'
+            ? GoogleFonts.ibmPlexSansArabicTextTheme()
+            : GoogleFonts.montserratTextTheme(),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF22C55E),
           primary: const Color(0xFF22C55E),
@@ -164,7 +166,11 @@ class _MyAppState extends ConsumerState<MyApp> {
           margin: const EdgeInsets.all(8),
         ),
       ),
-      darkTheme: AppTheme.darkTheme,
+      darkTheme: AppTheme.darkTheme.copyWith(
+        textTheme: locale.languageCode == 'ar'
+            ? GoogleFonts.ibmPlexSansArabicTextTheme(AppTheme.darkTheme.textTheme)
+            : GoogleFonts.montserratTextTheme(AppTheme.darkTheme.textTheme),
+      ),
       themeMode: ThemeMode.light,
       home: SplashScreen(
         isInitialized: isInitialized,

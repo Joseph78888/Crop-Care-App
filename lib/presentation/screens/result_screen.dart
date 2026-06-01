@@ -40,9 +40,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           final current = ref.read(currentResultProvider);
           DiseaseInfo? info;
           if (current != null) {
-            info = DiseaseDatabase.getDiseaseInfoByDisplayName(
-              current.diseaseName,
-            );
+            info = DiseaseDatabase.getDiseaseInfo(
+                  current.diseaseName,
+                ) ??
+                DiseaseDatabase.getDiseaseInfoByDisplayName(
+                  current.diseaseName,
+                );
           }
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -254,9 +257,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     // Get disease info to determine if healthy
     DiseaseInfo? diseaseInfo;
     if (current != null) {
-      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(
-        current.diseaseName,
-      );
+      diseaseInfo = DiseaseDatabase.getDiseaseInfo(
+            current.diseaseName,
+          ) ??
+          DiseaseDatabase.getDiseaseInfoByDisplayName(
+            current.diseaseName,
+          );
     }
 
     final isHealthy = diseaseInfo?.isHealthy ?? false;
@@ -295,7 +301,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     Builder(
                       builder: (context) {
                         return Text(
-                          current?.diseaseName ?? S.of(context).unknown,
+                          diseaseInfo?.getLocalizedName(context) ?? S.of(context).unknown,
                           style: TextStyle(
                             color: statusColor,
                             fontSize: context.responsive.textXL,
@@ -338,9 +344,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   Widget _buildAnalysisDetails(DetectionResult? current) {
     DiseaseInfo? diseaseInfo;
     if (current != null) {
-      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(
-        current.diseaseName,
-      );
+      diseaseInfo = DiseaseDatabase.getDiseaseInfo(
+            current.diseaseName,
+          ) ??
+          DiseaseDatabase.getDiseaseInfoByDisplayName(
+            current.diseaseName,
+          );
     }
 
     return Container(
@@ -368,7 +377,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           Builder(
             builder: (context) {
               return Text(
-                diseaseInfo?.description ??
+                diseaseInfo?.getLocalizedDescription(context) ??
                     S.of(context).noDescriptionAvailable,
                 style: TextStyle(
                   color: const Color.fromARGB(255, 48, 48, 48),
@@ -377,7 +386,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               );
             },
           ),
-          if (diseaseInfo != null && diseaseInfo.symptoms.isNotEmpty) ...[
+          if (diseaseInfo != null && diseaseInfo.getLocalizedSymptoms(context).isNotEmpty) ...[
             SizedBox(height: context.responsive.md),
             Builder(
               builder: (context) {
@@ -392,7 +401,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               },
             ),
             SizedBox(height: context.responsive.sm),
-            ...diseaseInfo.symptoms.map(
+            ...diseaseInfo.getLocalizedSymptoms(context).map(
               (symptom) => Padding(
                 padding: EdgeInsets.only(bottom: context.responsive.xs),
                 child: _recomendatons(context, symptom),
@@ -407,12 +416,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   Widget _buildRecommendations(BuildContext context, DetectionResult? current) {
     DiseaseInfo? diseaseInfo;
     if (current != null) {
-      diseaseInfo = DiseaseDatabase.getDiseaseInfoByDisplayName(
-        current.diseaseName,
-      );
+      diseaseInfo = DiseaseDatabase.getDiseaseInfo(
+            current.diseaseName,
+          ) ??
+          DiseaseDatabase.getDiseaseInfoByDisplayName(
+            current.diseaseName,
+          );
     }
 
-    final recommendations = diseaseInfo?.recommendations ?? [];
+    final recommendations = diseaseInfo?.getLocalizedRecommendations(context) ?? [];
 
     return Container(
       padding: EdgeInsets.all(context.responsive.md),

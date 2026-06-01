@@ -1,300 +1,287 @@
 import '../models/disease_info_model.dart';
 
 /// Static database containing detailed information for all tomato diseases
+/// recognised by the MobileNetV2 classifier (10 classes).
 class DiseaseDatabase {
   static const Map<String, DiseaseInfo> _diseases = {
-    'Tomato Healthy': DiseaseInfo(
-      name: 'Tomato Healthy',
-      displayName: 'Healthy Tomato',
-      description: 'Your tomato plant appears healthy with no signs of disease or pest damage. Continue with regular care and monitoring.',
-      symptoms: [
-        'Vibrant green leaves',
-        'No spots or discoloration',
-        'Strong, upright growth',
-        'Normal fruit development',
-      ],
-      recommendations: [
-        'Continue regular watering schedule',
-        'Maintain balanced fertilization',
-        'Monitor plants regularly',
-        'Ensure good air circulation',
-      ],
-      isHealthy: true,
-    ),
-    'Tomato Septoria Leaf Spot': DiseaseInfo(
-      name: 'Tomato Septoria Leaf Spot',
-      displayName: 'Septoria Leaf Spot',
-      description: 'Septoria leaf spot is caused by the fungus Septoria lycopersici. It typically appears after fruit set and affects lower leaves first.',
-      symptoms: [
-        'Small circular spots with dark borders',
-        'Gray or tan centers with tiny black dots',
-        'Starts on lower leaves and moves upward',
-        'Severe defoliation possible',
-      ],
-      recommendations: [
-        'Remove and destroy infected leaves',
-        'Apply fungicide treatments',
-        'Mulch around plants',
-        'Avoid overhead watering',
-        'Stake plants for better air flow',
-      ],
-    ),
-    'Tomato Bacterial Spot': DiseaseInfo(
-      name: 'Tomato Bacterial Spot',
+    // ── Bacterial ──────────────────────────────────────────────
+    'Tomato___Bacterial_spot': DiseaseInfo(
+      name: 'Tomato___Bacterial_spot',
       displayName: 'Bacterial Spot',
-      description: 'Bacterial spot is caused by Xanthomonas bacteria. It affects leaves, stems, and fruit, causing dark spots and lesions.',
+      description:
+          'Bacterial spot is caused by Xanthomonas bacteria. '
+          'It affects leaves, stems, and fruit, causing dark spots '
+          'and lesions that reduce yield and fruit quality.',
       symptoms: [
-        'Small dark brown spots on leaves',
+        'Small dark brown to black spots on leaves',
         'Yellow halos around spots',
         'Leaf drop in severe cases',
-        'Fruit lesions with raised centers',
+        'Raised, scab-like lesions on fruit',
       ],
       recommendations: [
         'Remove and destroy infected plant parts',
         'Apply copper-based bactericides',
         'Avoid overhead watering',
         'Ensure good air circulation',
+        'Use disease-free seeds and transplants',
       ],
     ),
-    'Tomato Blight': DiseaseInfo(
-      name: 'Tomato Blight',
-      displayName: 'Tomato Blight',
-      description: 'Blight is a serious fungal disease that can affect leaves, stems, and fruit. It includes Early Blight and Late Blight.',
+
+    // ── Fungal ─────────────────────────────────────────────────
+    'Tomato___Early_blight': DiseaseInfo(
+      name: 'Tomato___Early_blight',
+      displayName: 'Early Blight',
+      description:
+          'Early blight is caused by the fungus Alternaria solani. '
+          'It typically affects older, lower leaves first and can '
+          'cause significant defoliation and reduced fruit quality.',
       symptoms: [
-        'Dark brown spots with concentric rings (Early Blight)',
-        'Large brown blotches with white fuzz (Late Blight)',
+        'Dark brown spots with concentric rings (target pattern)',
         'Yellowing tissue around spots',
-        'Rapid plant collapse in severe cases',
+        'Starts on lower leaves and moves upward',
+        'Premature leaf drop',
       ],
       recommendations: [
         'Remove affected leaves immediately',
         'Apply fungicide spray regularly',
-        'Improve air circulation',
-        'Avoid overhead watering',
-        'Rotate crops annually',
+        'Improve air circulation by spacing plants',
+        'Mulch around plants to prevent soil splash',
+        'Rotate crops every 2-3 years',
       ],
     ),
-    'Cabbage Healthy': DiseaseInfo(
-      name: 'Cabbage Healthy',
-      displayName: 'Healthy Cabbage',
-      description: 'Your cabbage plant is healthy and developing well.',
+
+    'Tomato___Late_blight': DiseaseInfo(
+      name: 'Tomato___Late_blight',
+      displayName: 'Late Blight',
+      description:
+          'Late blight is caused by the oomycete Phytophthora '
+          'infestans. It spreads rapidly in cool, wet weather and '
+          'can devastate an entire crop within days.',
       symptoms: [
-        'Firm, green heads',
-        'No discoloration or holes',
-        'Vigorous growth',
+        'Large, irregular water-soaked patches on leaves',
+        'White fuzzy growth on the underside of leaves',
+        'Dark brown blotches on stems',
+        'Rapid plant collapse in humid conditions',
       ],
       recommendations: [
-        'Maintain consistent moisture',
-        'Monitor for pests like cabbage worms',
-        'Fertilize appropriately',
-      ],
-      isHealthy: true,
-    ),
-    'Tomato Spider Mite': DiseaseInfo(
-      name: 'Tomato Spider Mite',
-      displayName: 'Spider Mites',
-      description: 'Spider mites are tiny arachnids that feed on plant sap, causing stippling and yellowing.',
-      symptoms: [
-        'Tiny yellow or white spots (stippling)',
-        'Fine webbing on leaves',
-        'Leaves turn bronze or yellow',
-        'Leaf drop',
-      ],
-      recommendations: [
-        'Spray with strong water jet',
-        'Apply insecticidal soap or neem oil',
-        'Increase humidity',
-        'Remove heavily infested leaves',
+        'Remove and destroy all infected plants immediately',
+        'Apply preventive fungicides before wet weather',
+        'Do not compost infected material',
+        'Avoid overhead irrigation',
+        'Plant resistant varieties when possible',
       ],
     ),
-    'Tomato Leaf Mold': DiseaseInfo(
-      name: 'Tomato Leaf Mold',
+
+    'Tomato___Leaf_Mold': DiseaseInfo(
+      name: 'Tomato___Leaf_Mold',
       displayName: 'Leaf Mold',
-      description: 'Leaf mold is a fungal disease that thrives in humid conditions, causing yellow spots on upper leaf surfaces.',
+      description:
+          'Leaf mold is caused by the fungus Passalora fulva '
+          '(Cladosporium fulvum). It thrives in warm, humid '
+          'greenhouse conditions and can reduce photosynthesis.',
       symptoms: [
-        'Pale green/yellow spots on upper leaves',
-        'Olive-green fuzzy growth on undersides',
-        'Leaves curl and wither',
+        'Pale green to yellow spots on upper leaf surfaces',
+        'Olive-green to grayish-purple fuzzy growth on undersides',
+        'Leaves curl, wither, and drop prematurely',
+        'Most common in high-humidity environments',
       ],
       recommendations: [
-        'Increase ventilation',
-        'Reduce humidity',
-        'Remove infected leaves',
-        'Apply fungicides if needed',
+        'Increase ventilation in greenhouses',
+        'Reduce humidity below 85 %',
+        'Remove infected leaves promptly',
+        'Apply fungicides if the outbreak is severe',
+        'Use resistant tomato varieties',
       ],
     ),
-    'Tomato_Yellow Leaf Curl Virus': DiseaseInfo(
-      name: 'Tomato_Yellow Leaf Curl Virus',
+
+    'Tomato___Septoria_leaf_spot': DiseaseInfo(
+      name: 'Tomato___Septoria_leaf_spot',
+      displayName: 'Septoria Leaf Spot',
+      description:
+          'Septoria leaf spot is caused by the fungus Septoria '
+          'lycopersici. It typically appears after fruit set and '
+          'can cause extensive defoliation.',
+      symptoms: [
+        'Small circular spots with dark brown borders',
+        'Gray or tan centers with tiny black dots (pycnidia)',
+        'Starts on lower leaves and moves upward',
+        'Severe defoliation if untreated',
+      ],
+      recommendations: [
+        'Remove and destroy infected leaves',
+        'Apply fungicide treatments regularly',
+        'Mulch around plants to prevent soil splash',
+        'Avoid overhead watering',
+        'Stake or cage plants for better airflow',
+      ],
+    ),
+
+    'Tomato___Target_Spot': DiseaseInfo(
+      name: 'Tomato___Target_Spot',
+      displayName: 'Target Spot',
+      description:
+          'Target spot is caused by the fungus Corynespora '
+          'cassiicola. It affects leaves, stems, and fruit, '
+          'causing circular lesions with concentric rings.',
+      symptoms: [
+        'Small brown spots that enlarge into target-like rings',
+        'Lesions may merge, causing large necrotic areas',
+        'Premature defoliation of lower canopy',
+        'Fruit lesions with sunken, dark spots',
+      ],
+      recommendations: [
+        'Remove and destroy infected plant debris',
+        'Apply appropriate fungicides preventively',
+        'Improve air circulation between plants',
+        'Practice crop rotation with non-solanaceous crops',
+        'Avoid excessive nitrogen fertilisation',
+      ],
+    ),
+
+    // ── Pests ──────────────────────────────────────────────────
+    'Tomato___Spider_mites Two-spotted_spider_mite': DiseaseInfo(
+      name: 'Tomato___Spider_mites Two-spotted_spider_mite',
+      displayName: 'Spider Mites (Two-Spotted)',
+      description:
+          'Two-spotted spider mites (Tetranychus urticae) are tiny '
+          'arachnids that feed on plant sap, causing stippling, '
+          'yellowing, and reduced vigour. They thrive in hot, dry '
+          'conditions.',
+      symptoms: [
+        'Tiny yellow or white stippling on leaves',
+        'Fine silken webbing on leaf undersides',
+        'Leaves turn bronze or yellow and become brittle',
+        'Severe infestations cause leaf drop and plant stress',
+      ],
+      recommendations: [
+        'Spray plants with a strong jet of water',
+        'Apply insecticidal soap or neem oil',
+        'Increase ambient humidity around plants',
+        'Remove heavily infested leaves and destroy them',
+        'Introduce beneficial predatory mites',
+      ],
+    ),
+
+    // ── Viral ──────────────────────────────────────────────────
+    'Tomato___Tomato_Yellow_Leaf_Curl_Virus': DiseaseInfo(
+      name: 'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
       displayName: 'Yellow Leaf Curl Virus',
-      description: 'TYLCV is a viral disease transmitted by whiteflies, causing severe stunting and leaf curling.',
+      description:
+          'Tomato Yellow Leaf Curl Virus (TYLCV) is transmitted by '
+          'whiteflies (Bemisia tabaci). It causes severe stunting, '
+          'leaf curling, and dramatic yield loss.',
       symptoms: [
         'Upward curling of leaf margins',
-        'Yellowing between veins',
-        'Stunted growth',
-        'Small, distorted leaves',
+        'Yellowing (chlorosis) between leaf veins',
+        'Severely stunted plant growth',
+        'Small, distorted, cupped leaves',
       ],
       recommendations: [
-        'Control whiteflies',
-        'Remove infected plants',
-        'Use resistant varieties',
-        'Use reflective mulches',
+        'Control whitefly populations with yellow sticky traps',
+        'Apply appropriate insecticides against whiteflies',
+        'Remove and destroy infected plants early',
+        'Use TYLCV-resistant tomato varieties',
+        'Use reflective mulches to deter whiteflies',
       ],
     ),
-    'Soy_Frogeye_Leaf_Spot': DiseaseInfo(
-      name: 'Soy_Frogeye_Leaf_Spot',
-      displayName: 'Frogeye Leaf Spot',
-      description: 'Frogeye leaf spot is a fungal disease of soybeans caused by Cercospora sojina.',
+
+    'Tomato___Tomato_mosaic_virus': DiseaseInfo(
+      name: 'Tomato___Tomato_mosaic_virus',
+      displayName: 'Tomato Mosaic Virus',
+      description:
+          'Tomato Mosaic Virus (ToMV) is a highly stable virus '
+          'spread through contaminated tools, hands, and seeds. '
+          'It causes mottled leaves and can persist in soil debris '
+          'for years.',
       symptoms: [
-        'Circular to angular spots on leaves',
-        'Reddish-brown borders with gray centers',
-        'Minute dark spots in the center',
+        'Light and dark green mosaic patterns on leaves',
+        'Leaf curling and distortion',
+        'Stunted plant growth',
+        'Reduced and uneven fruit ripening',
       ],
       recommendations: [
-        'Use resistant varieties',
-        'Rotate crops',
-        'Apply fungicides if severe',
-        'Manage crop residue',
+        'Remove and destroy infected plants immediately',
+        'Disinfect tools and hands with milk or bleach solution',
+        'Use certified virus-free seeds and transplants',
+        'Avoid tobacco use near plants (cross-contamination)',
+        'Plant ToMV-resistant varieties',
       ],
     ),
-    'Soy_Downy_Mildew': DiseaseInfo(
-      name: 'Soy_Downy_Mildew',
-      displayName: 'Downy Mildew',
-      description: 'Downy mildew is a common fungal disease affecting soybeans, especially in cool, wet conditions.',
+
+    // ── Healthy ────────────────────────────────────────────────
+    'Tomato___healthy': DiseaseInfo(
+      name: 'Tomato___healthy',
+      displayName: 'Healthy Tomato',
+      description:
+          'Your tomato plant appears healthy with no visible signs '
+          'of disease or pest damage. Continue with regular care '
+          'and monitoring to maintain plant health.',
       symptoms: [
-        'Pale green to light yellow spots on upper leaves',
-        'Grayish tufts of fungal growth on undersides',
-        'Leaves may turn yellow and drop',
+        'Vibrant green leaves with no spots',
+        'Strong, upright stem growth',
+        'No discoloration or wilting',
+        'Normal fruit development',
       ],
       recommendations: [
-        'Plant resistant varieties',
-        'Rotate with non-host crops',
-        'Ensure good drainage',
-        'Fungicides are rarely needed',
-      ],
-    ),
-    'Maize_Ravi_Corn_Rust': DiseaseInfo(
-      name: 'Maize_Ravi_Corn_Rust',
-      displayName: 'Corn Rust',
-      description: 'Corn rust is a fungal disease causing pustules on leaves, which can reduce photosynthesis and yield.',
-      symptoms: [
-        'Small, circular to elongate brown pustules',
-        'Pustules appear on both leaf surfaces',
-        'Leaves may turn yellow and die',
-      ],
-      recommendations: [
-        'Plant resistant hybrids',
-        'Apply fungicides early if needed',
-        'Monitor fields regularly',
-      ],
-    ),
-    'Maize_Healthy': DiseaseInfo(
-      name: 'Maize_Healthy',
-      displayName: 'Healthy Maize',
-      description: 'Your maize (corn) plant is healthy and growing vigorously.',
-      symptoms: [
-        'Dark green leaves',
-        'Strong stalks',
-        'No lesions or discoloration',
-      ],
-      recommendations: [
-        'Maintain adequate nitrogen',
-        'Water regularly during pollination',
-        'Control weeds',
+        'Continue regular watering schedule',
+        'Maintain balanced fertilisation',
+        'Monitor plants weekly for early signs of trouble',
+        'Ensure good air circulation between plants',
+        'Practice crop rotation each season',
       ],
       isHealthy: true,
     ),
-    'Maize_Grey_Leaf_Spot': DiseaseInfo(
-      name: 'Maize_Grey_Leaf_Spot',
-      displayName: 'Grey Leaf Spot',
-      description: 'Grey leaf spot is a significant fungal disease of corn, causing rectangular lesions.',
-      symptoms: [
-        'Rectangular, gray to tan lesions',
-        'Lesions run parallel to leaf veins',
-        'Entire leaves may blight and die',
-      ],
-      recommendations: [
-        'Use resistant hybrids',
-        'Practice crop rotation',
-        'Manage crop residue',
-        'Apply fungicides if economic threshold reached',
-      ],
-    ),
-    'Maize_Lethal_Necrosis': DiseaseInfo(
-      name: 'Maize_Lethal_Necrosis',
-      displayName: 'Lethal Necrosis',
-      description: 'Maize Lethal Necrosis (MLN) is a serious viral disease caused by co-infection of two viruses.',
-      symptoms: [
-        'Chlorotic mottling of leaves',
-        'Necrosis (death) of leaf margins',
-        'Stunted growth',
-        'Dead heart symptoms',
-      ],
-      recommendations: [
-        'Use certified disease-free seeds',
-        'Control vector insects (thrips, beetles)',
-        'Remove infected plants',
-        'Practice strict crop rotation',
-      ],
-    ),
-    'Soy_Healthy': DiseaseInfo(         
-      name: 'Soy_Healthy',
-      displayName: 'Healthy Soybean',
-      description: 'Your soybean plant is healthy.',
-      symptoms: [
-        'Green, trifoliate leaves',
-        'No spots or yellowing',
-        'Normal growth habit',
-      ],
-      recommendations: [
-        'Monitor for pests',
-        'Ensure adequate soil moisture',
-        'Keep field weed-free',
-      ],
-      isHealthy: true,
-    ),
+
+    // ── Fallback ───────────────────────────────────────────────
     'Unknown': DiseaseInfo(
       name: 'Unknown',
       displayName: 'Unknown Condition',
-      description: 'The model could not confidently identify a specific disease (Confidence < 75%). Please ensure the image is clear, well-lit, and contains a plant leaf.',
+      description:
+          'The model could not confidently identify a specific '
+          'disease. Please ensure the image is clear, well-lit, '
+          'and contains a tomato plant leaf.',
       symptoms: [
-        'Unclear image',
-        'Not a plant leaf',
-        'Low confidence prediction',
+        'Unclear or blurry image',
+        'Image may not contain a tomato leaf',
+        'Low-confidence prediction from the model',
       ],
       recommendations: [
-        'Take a clearer photo',
-        'Ensure the leaf is centered',
-        'Avoid shadows and glare',
-        'Consult an expert if symptoms persist',
+        'Take a clearer, well-lit photo',
+        'Ensure the leaf fills most of the frame',
+        'Avoid shadows and glare on the leaf surface',
+        'Consult an agricultural expert if symptoms persist',
       ],
     ),
   };
 
-  /// Get disease information by name
+  /// Get disease information by name.
   static DiseaseInfo? getDiseaseInfo(String diseaseName) {
     return _diseases[diseaseName];
   }
 
-  /// Get disease information by display name (case-insensitive)
+  /// Get disease information by display name (case-insensitive).
   static DiseaseInfo? getDiseaseInfoByDisplayName(String displayName) {
     final normalizedName = displayName.toLowerCase().trim();
-    return _diseases.values.firstWhere(
-      (disease) => disease.displayName.toLowerCase() == normalizedName,
-      orElse: () => _diseases.values.first,
-    );
+    try {
+      return _diseases.values.firstWhere(
+        (disease) => disease.displayName.toLowerCase() == normalizedName,
+      );
+    } catch (_) {
+      return null;
+    }
   }
 
-  /// Get all disease names
+  /// Get all disease names.
   static List<String> getAllDiseaseNames() {
     return _diseases.keys.toList();
   }
 
-  /// Get all diseases
+  /// Get all diseases.
   static List<DiseaseInfo> getAllDiseases() {
     return _diseases.values.toList();
   }
 
-  /// Check if a disease name exists
+  /// Check if a disease name exists.
   static bool containsDisease(String diseaseName) {
     return _diseases.containsKey(diseaseName);
   }

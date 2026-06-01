@@ -8,6 +8,8 @@ import '/presentation/widgets/total_healthy_deasise_filter.dart';
 import '/presentation/widgets/gradient_scaffold.dart';
 import '/presentation/widgets/history_card.dart';
 import '/presentation/providers/history_provider.dart';
+import '/data/datasources/disease_database.dart';
+import '/data/models/disease_info_model.dart';
 import '/core/utils/responsive_helper.dart';
 
 class HistoryScreen extends ConsumerStatefulWidget {
@@ -121,9 +123,13 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         ? statusFiltered
                         : statusFiltered
                               .where(
-                                (e) => e.diseaseName.toLowerCase().contains(
-                                  _searchQuery,
-                                ),
+                              (e) {
+                                final diseaseInfo = DiseaseDatabase.getDiseaseInfo(e.diseaseName) ?? 
+                                                  DiseaseDatabase.getDiseaseInfoByDisplayName(e.diseaseName);
+                                final displayName = diseaseInfo?.getLocalizedName(context) ?? e.diseaseName;
+                                return displayName.toLowerCase().contains(_searchQuery) || 
+                                       e.diseaseName.toLowerCase().contains(_searchQuery);
+                              }
                               )
                               .toList();
 

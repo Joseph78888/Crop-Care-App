@@ -983,6 +983,446 @@ class S {
       args: [],
     );
   }
+
+  /// `Bacterial Spot`
+  String get disease_Bacterial_spot_name {
+    return Intl.message(
+      'Bacterial Spot',
+      name: 'disease_Bacterial_spot_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bacterial spot is caused by Xanthomonas bacteria. It affects leaves, stems, and fruit, causing dark spots and lesions that reduce yield and fruit quality.`
+  String get disease_Bacterial_spot_description {
+    return Intl.message(
+      'Bacterial spot is caused by Xanthomonas bacteria. It affects leaves, stems, and fruit, causing dark spots and lesions that reduce yield and fruit quality.',
+      name: 'disease_Bacterial_spot_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Small dark brown to black spots on leaves\nYellow halos around spots\nLeaf drop in severe cases\nRaised, scab-like lesions on fruit`
+  String get disease_Bacterial_spot_symptoms {
+    return Intl.message(
+      'Small dark brown to black spots on leaves\nYellow halos around spots\nLeaf drop in severe cases\nRaised, scab-like lesions on fruit',
+      name: 'disease_Bacterial_spot_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove and destroy infected plant parts\nApply copper-based bactericides\nAvoid overhead watering\nEnsure good air circulation\nUse disease-free seeds and transplants`
+  String get disease_Bacterial_spot_recommendations {
+    return Intl.message(
+      'Remove and destroy infected plant parts\nApply copper-based bactericides\nAvoid overhead watering\nEnsure good air circulation\nUse disease-free seeds and transplants',
+      name: 'disease_Bacterial_spot_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Early Blight`
+  String get disease_Early_blight_name {
+    return Intl.message(
+      'Early Blight',
+      name: 'disease_Early_blight_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Early blight is caused by the fungus Alternaria solani. It typically affects older, lower leaves first and can cause significant defoliation and reduced fruit quality.`
+  String get disease_Early_blight_description {
+    return Intl.message(
+      'Early blight is caused by the fungus Alternaria solani. It typically affects older, lower leaves first and can cause significant defoliation and reduced fruit quality.',
+      name: 'disease_Early_blight_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark brown spots with concentric rings (target pattern)\nYellowing tissue around spots\nStarts on lower leaves and moves upward\nPremature leaf drop`
+  String get disease_Early_blight_symptoms {
+    return Intl.message(
+      'Dark brown spots with concentric rings (target pattern)\nYellowing tissue around spots\nStarts on lower leaves and moves upward\nPremature leaf drop',
+      name: 'disease_Early_blight_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove affected leaves immediately\nApply fungicide spray regularly\nImprove air circulation by spacing plants\nMulch around plants to prevent soil splash\nRotate crops every 2-3 years`
+  String get disease_Early_blight_recommendations {
+    return Intl.message(
+      'Remove affected leaves immediately\nApply fungicide spray regularly\nImprove air circulation by spacing plants\nMulch around plants to prevent soil splash\nRotate crops every 2-3 years',
+      name: 'disease_Early_blight_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Late Blight`
+  String get disease_Late_blight_name {
+    return Intl.message(
+      'Late Blight',
+      name: 'disease_Late_blight_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Late blight is caused by the oomycete Phytophthora infestans. It spreads rapidly in cool, wet weather and can devastate an entire crop within days.`
+  String get disease_Late_blight_description {
+    return Intl.message(
+      'Late blight is caused by the oomycete Phytophthora infestans. It spreads rapidly in cool, wet weather and can devastate an entire crop within days.',
+      name: 'disease_Late_blight_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Large, irregular water-soaked patches on leaves\nWhite fuzzy growth on the underside of leaves\nDark brown blotches on stems\nRapid plant collapse in humid conditions`
+  String get disease_Late_blight_symptoms {
+    return Intl.message(
+      'Large, irregular water-soaked patches on leaves\nWhite fuzzy growth on the underside of leaves\nDark brown blotches on stems\nRapid plant collapse in humid conditions',
+      name: 'disease_Late_blight_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove and destroy all infected plants immediately\nApply preventive fungicides before wet weather\nDo not compost infected material\nAvoid overhead irrigation\nPlant resistant varieties when possible`
+  String get disease_Late_blight_recommendations {
+    return Intl.message(
+      'Remove and destroy all infected plants immediately\nApply preventive fungicides before wet weather\nDo not compost infected material\nAvoid overhead irrigation\nPlant resistant varieties when possible',
+      name: 'disease_Late_blight_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leaf Mold`
+  String get disease_Leaf_Mold_name {
+    return Intl.message(
+      'Leaf Mold',
+      name: 'disease_Leaf_Mold_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leaf mold is caused by the fungus Passalora fulva (Cladosporium fulvum). It thrives in warm, humid greenhouse conditions and can reduce photosynthesis.`
+  String get disease_Leaf_Mold_description {
+    return Intl.message(
+      'Leaf mold is caused by the fungus Passalora fulva (Cladosporium fulvum). It thrives in warm, humid greenhouse conditions and can reduce photosynthesis.',
+      name: 'disease_Leaf_Mold_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pale green to yellow spots on upper leaf surfaces\nOlive-green to grayish-purple fuzzy growth on undersides\nLeaves curl, wither, and drop prematurely\nMost common in high-humidity environments`
+  String get disease_Leaf_Mold_symptoms {
+    return Intl.message(
+      'Pale green to yellow spots on upper leaf surfaces\nOlive-green to grayish-purple fuzzy growth on undersides\nLeaves curl, wither, and drop prematurely\nMost common in high-humidity environments',
+      name: 'disease_Leaf_Mold_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Increase ventilation in greenhouses\nReduce humidity below 85%\nRemove infected leaves promptly\nApply fungicides if the outbreak is severe\nUse resistant tomato varieties`
+  String get disease_Leaf_Mold_recommendations {
+    return Intl.message(
+      'Increase ventilation in greenhouses\nReduce humidity below 85%\nRemove infected leaves promptly\nApply fungicides if the outbreak is severe\nUse resistant tomato varieties',
+      name: 'disease_Leaf_Mold_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Septoria Leaf Spot`
+  String get disease_Septoria_leaf_spot_name {
+    return Intl.message(
+      'Septoria Leaf Spot',
+      name: 'disease_Septoria_leaf_spot_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Septoria leaf spot is caused by the fungus Septoria lycopersici. It typically appears after fruit set and can cause extensive defoliation.`
+  String get disease_Septoria_leaf_spot_description {
+    return Intl.message(
+      'Septoria leaf spot is caused by the fungus Septoria lycopersici. It typically appears after fruit set and can cause extensive defoliation.',
+      name: 'disease_Septoria_leaf_spot_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Small circular spots with dark brown borders\nGray or tan centers with tiny black dots (pycnidia)\nStarts on lower leaves and moves upward\nSevere defoliation if untreated`
+  String get disease_Septoria_leaf_spot_symptoms {
+    return Intl.message(
+      'Small circular spots with dark brown borders\nGray or tan centers with tiny black dots (pycnidia)\nStarts on lower leaves and moves upward\nSevere defoliation if untreated',
+      name: 'disease_Septoria_leaf_spot_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove and destroy infected leaves\nApply fungicide treatments regularly\nMulch around plants to prevent soil splash\nAvoid overhead watering\nStake or cage plants for better airflow`
+  String get disease_Septoria_leaf_spot_recommendations {
+    return Intl.message(
+      'Remove and destroy infected leaves\nApply fungicide treatments regularly\nMulch around plants to prevent soil splash\nAvoid overhead watering\nStake or cage plants for better airflow',
+      name: 'disease_Septoria_leaf_spot_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Target Spot`
+  String get disease_Target_Spot_name {
+    return Intl.message(
+      'Target Spot',
+      name: 'disease_Target_Spot_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Target spot is caused by the fungus Corynespora cassiicola. It affects leaves, stems, and fruit, causing circular lesions with concentric rings.`
+  String get disease_Target_Spot_description {
+    return Intl.message(
+      'Target spot is caused by the fungus Corynespora cassiicola. It affects leaves, stems, and fruit, causing circular lesions with concentric rings.',
+      name: 'disease_Target_Spot_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Small brown spots that enlarge into target-like rings\nLesions may merge, causing large necrotic areas\nPremature defoliation of lower canopy\nFruit lesions with sunken, dark spots`
+  String get disease_Target_Spot_symptoms {
+    return Intl.message(
+      'Small brown spots that enlarge into target-like rings\nLesions may merge, causing large necrotic areas\nPremature defoliation of lower canopy\nFruit lesions with sunken, dark spots',
+      name: 'disease_Target_Spot_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove and destroy infected plant debris\nApply appropriate fungicides preventively\nImprove air circulation between plants\nPractice crop rotation with non-solanaceous crops\nAvoid excessive nitrogen fertilisation`
+  String get disease_Target_Spot_recommendations {
+    return Intl.message(
+      'Remove and destroy infected plant debris\nApply appropriate fungicides preventively\nImprove air circulation between plants\nPractice crop rotation with non-solanaceous crops\nAvoid excessive nitrogen fertilisation',
+      name: 'disease_Target_Spot_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spider Mites (Two-Spotted)`
+  String get disease_Spider_mites_name {
+    return Intl.message(
+      'Spider Mites (Two-Spotted)',
+      name: 'disease_Spider_mites_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Two-spotted spider mites (Tetranychus urticae) are tiny arachnids that feed on plant sap, causing stippling, yellowing, and reduced vigour. They thrive in hot, dry conditions.`
+  String get disease_Spider_mites_description {
+    return Intl.message(
+      'Two-spotted spider mites (Tetranychus urticae) are tiny arachnids that feed on plant sap, causing stippling, yellowing, and reduced vigour. They thrive in hot, dry conditions.',
+      name: 'disease_Spider_mites_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tiny yellow or white stippling on leaves\nFine silken webbing on leaf undersides\nLeaves turn bronze or yellow and become brittle\nSevere infestations cause leaf drop and plant stress`
+  String get disease_Spider_mites_symptoms {
+    return Intl.message(
+      'Tiny yellow or white stippling on leaves\nFine silken webbing on leaf undersides\nLeaves turn bronze or yellow and become brittle\nSevere infestations cause leaf drop and plant stress',
+      name: 'disease_Spider_mites_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spray plants with a strong jet of water\nApply insecticidal soap or neem oil\nIncrease ambient humidity around plants\nRemove heavily infested leaves and destroy them\nIntroduce beneficial predatory mites`
+  String get disease_Spider_mites_recommendations {
+    return Intl.message(
+      'Spray plants with a strong jet of water\nApply insecticidal soap or neem oil\nIncrease ambient humidity around plants\nRemove heavily infested leaves and destroy them\nIntroduce beneficial predatory mites',
+      name: 'disease_Spider_mites_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yellow Leaf Curl Virus`
+  String get disease_Yellow_Leaf_Curl_Virus_name {
+    return Intl.message(
+      'Yellow Leaf Curl Virus',
+      name: 'disease_Yellow_Leaf_Curl_Virus_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tomato Yellow Leaf Curl Virus (TYLCV) is transmitted by whiteflies (Bemisia tabaci). It causes severe stunting, leaf curling, and dramatic yield loss.`
+  String get disease_Yellow_Leaf_Curl_Virus_description {
+    return Intl.message(
+      'Tomato Yellow Leaf Curl Virus (TYLCV) is transmitted by whiteflies (Bemisia tabaci). It causes severe stunting, leaf curling, and dramatic yield loss.',
+      name: 'disease_Yellow_Leaf_Curl_Virus_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upward curling of leaf margins\nYellowing (chlorosis) between leaf veins\nSeverely stunted plant growth\nSmall, distorted, cupped leaves`
+  String get disease_Yellow_Leaf_Curl_Virus_symptoms {
+    return Intl.message(
+      'Upward curling of leaf margins\nYellowing (chlorosis) between leaf veins\nSeverely stunted plant growth\nSmall, distorted, cupped leaves',
+      name: 'disease_Yellow_Leaf_Curl_Virus_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Control whitefly populations with yellow sticky traps\nApply appropriate insecticides against whiteflies\nRemove and destroy infected plants early\nUse TYLCV-resistant tomato varieties\nUse reflective mulches to deter whiteflies`
+  String get disease_Yellow_Leaf_Curl_Virus_recommendations {
+    return Intl.message(
+      'Control whitefly populations with yellow sticky traps\nApply appropriate insecticides against whiteflies\nRemove and destroy infected plants early\nUse TYLCV-resistant tomato varieties\nUse reflective mulches to deter whiteflies',
+      name: 'disease_Yellow_Leaf_Curl_Virus_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tomato Mosaic Virus`
+  String get disease_Tomato_mosaic_virus_name {
+    return Intl.message(
+      'Tomato Mosaic Virus',
+      name: 'disease_Tomato_mosaic_virus_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tomato Mosaic Virus (ToMV) is a highly stable virus spread through contaminated tools, hands, and seeds. It causes mottled leaves and can persist in soil debris for years.`
+  String get disease_Tomato_mosaic_virus_description {
+    return Intl.message(
+      'Tomato Mosaic Virus (ToMV) is a highly stable virus spread through contaminated tools, hands, and seeds. It causes mottled leaves and can persist in soil debris for years.',
+      name: 'disease_Tomato_mosaic_virus_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light and dark green mosaic patterns on leaves\nLeaf curling and distortion\nStunted plant growth\nReduced and uneven fruit ripening`
+  String get disease_Tomato_mosaic_virus_symptoms {
+    return Intl.message(
+      'Light and dark green mosaic patterns on leaves\nLeaf curling and distortion\nStunted plant growth\nReduced and uneven fruit ripening',
+      name: 'disease_Tomato_mosaic_virus_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove and destroy infected plants immediately\nDisinfect tools and hands with milk or bleach solution\nUse certified virus-free seeds and transplants\nAvoid tobacco use near plants (cross-contamination)\nPlant ToMV-resistant varieties`
+  String get disease_Tomato_mosaic_virus_recommendations {
+    return Intl.message(
+      'Remove and destroy infected plants immediately\nDisinfect tools and hands with milk or bleach solution\nUse certified virus-free seeds and transplants\nAvoid tobacco use near plants (cross-contamination)\nPlant ToMV-resistant varieties',
+      name: 'disease_Tomato_mosaic_virus_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthy Tomato`
+  String get disease_healthy_name {
+    return Intl.message(
+      'Healthy Tomato',
+      name: 'disease_healthy_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your tomato plant appears healthy with no visible signs of disease or pest damage. Continue with regular care and monitoring to maintain plant health.`
+  String get disease_healthy_description {
+    return Intl.message(
+      'Your tomato plant appears healthy with no visible signs of disease or pest damage. Continue with regular care and monitoring to maintain plant health.',
+      name: 'disease_healthy_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vibrant green leaves with no spots\nStrong, upright stem growth\nNo discoloration or wilting\nNormal fruit development`
+  String get disease_healthy_symptoms {
+    return Intl.message(
+      'Vibrant green leaves with no spots\nStrong, upright stem growth\nNo discoloration or wilting\nNormal fruit development',
+      name: 'disease_healthy_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue regular watering schedule\nMaintain balanced fertilisation\nMonitor plants weekly for early signs of trouble\nEnsure good air circulation between plants\nPractice crop rotation each season`
+  String get disease_healthy_recommendations {
+    return Intl.message(
+      'Continue regular watering schedule\nMaintain balanced fertilisation\nMonitor plants weekly for early signs of trouble\nEnsure good air circulation between plants\nPractice crop rotation each season',
+      name: 'disease_healthy_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown Condition`
+  String get disease_Unknown_name {
+    return Intl.message(
+      'Unknown Condition',
+      name: 'disease_Unknown_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The model could not confidently identify a specific disease. Please ensure the image is clear, well-lit, and contains a tomato plant leaf.`
+  String get disease_Unknown_description {
+    return Intl.message(
+      'The model could not confidently identify a specific disease. Please ensure the image is clear, well-lit, and contains a tomato plant leaf.',
+      name: 'disease_Unknown_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unclear or blurry image\nImage may not contain a tomato leaf\nLow-confidence prediction from the model`
+  String get disease_Unknown_symptoms {
+    return Intl.message(
+      'Unclear or blurry image\nImage may not contain a tomato leaf\nLow-confidence prediction from the model',
+      name: 'disease_Unknown_symptoms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a clearer, well-lit photo\nEnsure the leaf fills most of the frame\nAvoid shadows and glare on the leaf surface\nConsult an agricultural expert if symptoms persist`
+  String get disease_Unknown_recommendations {
+    return Intl.message(
+      'Take a clearer, well-lit photo\nEnsure the leaf fills most of the frame\nAvoid shadows and glare on the leaf surface\nConsult an agricultural expert if symptoms persist',
+      name: 'disease_Unknown_recommendations',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

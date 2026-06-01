@@ -256,8 +256,8 @@ class ImagePreviewScreen extends ConsumerWidget {
       confidence: confidence,
     );
 
-    // Save to history ONLY if it is NOT "Unknown Condition"
-    if (diseaseName != 'Unknown Condition') {
+    // Save to history ONLY if it is NOT "Unknown"
+    if (diseaseName != 'Unknown') {
       await ref.read(historyProvider.notifier).addResult(detectionResult);
     }
 

@@ -90,6 +90,140 @@ class MessageLookup extends MessageLookupByLibrary {
       "البيانات والخصوصية",
     ),
     "developmentTeam": MessageLookupByLibrary.simpleMessage("فريق التطوير"),
+    "disease_Bacterial_spot_description": MessageLookupByLibrary.simpleMessage(
+      "التبقع البكتيري ناتج عن بكتيريا زانثوموناس. يصيب الأوراق والسيقان والثمار، مما يسبب بقعاً داكنة وتقرحات تقلل من المحصول وجودة الثمار.",
+    ),
+    "disease_Bacterial_spot_name": MessageLookupByLibrary.simpleMessage(
+      "التبقع البكتيري",
+    ),
+    "disease_Bacterial_spot_recommendations": MessageLookupByLibrary.simpleMessage(
+      "إزالة وتدمير أجزاء النبات المصابة\nاستخدام مبيدات بكتيرية تحتوي على النحاس\nتجنب الري بالرش\nضمان تهوية جيدة\nاستخدام بذور وشتلات خالية من الأمراض",
+    ),
+    "disease_Bacterial_spot_symptoms": MessageLookupByLibrary.simpleMessage(
+      "بقع صغيرة بنية داكنة إلى سوداء على الأوراق\nهالات صفراء حول البقع\nتساقط الأوراق في الحالات الشديدة\nتقرحات بارزة تشبه الجرب على الثمار",
+    ),
+    "disease_Early_blight_description": MessageLookupByLibrary.simpleMessage(
+      "اللفحة المبكرة ناتجة عن فطر التيرناريا سولاني. تصيب عادةً الأوراق السفلية القديمة أولاً ويمكن أن تسبب تساقطاً كبيراً للأوراق وانخفاضاً في جودة الثمار.",
+    ),
+    "disease_Early_blight_name": MessageLookupByLibrary.simpleMessage(
+      "اللفحة المبكرة",
+    ),
+    "disease_Early_blight_recommendations": MessageLookupByLibrary.simpleMessage(
+      "إزالة الأوراق المصابة فوراً\nرش المبيدات الفطرية بانتظام\nتحسين التهوية بترك مسافات بين النباتات\nوضع نشارة حول النباتات لمنع تطاير التربة\nتطبيق الدورة الزراعية كل 2-3 سنوات",
+    ),
+    "disease_Early_blight_symptoms": MessageLookupByLibrary.simpleMessage(
+      "بقع بنية داكنة ذات حلقات متداخلة (تشبه الهدف)\nاصفرار الأنسجة حول البقع\nتبدأ في الأوراق السفلية وتتجه للأعلى\nتساقط مبكر للأوراق",
+    ),
+    "disease_Late_blight_description": MessageLookupByLibrary.simpleMessage(
+      "اللفحة المتأخرة ناتجة عن الفطر البيضي فيتوفثورا إنفستانس. تنتشر بسرعة في الطقس البارد والرطب ويمكن أن تدمر المحصول بأكمله في غضون أيام.",
+    ),
+    "disease_Late_blight_name": MessageLookupByLibrary.simpleMessage(
+      "اللفحة المتأخرة",
+    ),
+    "disease_Late_blight_recommendations": MessageLookupByLibrary.simpleMessage(
+      "إزالة وتدمير جميع النباتات المصابة فوراً\nرش مبيدات فطرية وقائية قبل الطقس الرطب\nعدم استخدام المواد المصابة في السماد العضوي\nتجنب الري بالرش\nزراعة أصناف مقاومة إن أمكن",
+    ),
+    "disease_Late_blight_symptoms": MessageLookupByLibrary.simpleMessage(
+      "بقع كبيرة مائية غير منتظمة على الأوراق\nنمو زغبي أبيض على الجانب السفلي للأوراق\nبقع بنية داكنة على السيقان\nانهيار سريع للنبات في الظروف الرطبة",
+    ),
+    "disease_Leaf_Mold_description": MessageLookupByLibrary.simpleMessage(
+      "عفن الأوراق ناتج عن فطر باسالورا فولفا (كلادوسبوريوم فولفوم). ينمو في ظروف الدفيئة الدافئة والرطبة ويمكن أن يقلل من عملية البناء الضوئي.",
+    ),
+    "disease_Leaf_Mold_name": MessageLookupByLibrary.simpleMessage(
+      "عفن الأوراق",
+    ),
+    "disease_Leaf_Mold_recommendations": MessageLookupByLibrary.simpleMessage(
+      "زيادة التهوية في البيوت المحمية\nتقليل الرطوبة إلى أقل من 85%\nإزالة الأوراق المصابة بسرعة\nاستخدام المبيدات الفطرية إذا كان الانتشار شديداً\nاستخدام أصناف طماطم مقاومة",
+    ),
+    "disease_Leaf_Mold_symptoms": MessageLookupByLibrary.simpleMessage(
+      "بقع خضراء باهتة إلى صفراء على الأسطح العلوية للأوراق\nنمو زغبي أخضر زيتوني إلى أرجواني رمادي على الجوانب السفلية\nتتجعد الأوراق وتذبل وتتساقط مبكراً\nأكثر شيوعاً في البيئات عالية الرطوبة",
+    ),
+    "disease_Septoria_leaf_spot_description": MessageLookupByLibrary.simpleMessage(
+      "تبقع الأوراق السبتوري ناتج عن فطر سبتوريا ليكوبرسيسي. يظهر عادةً بعد عقد الثمار ويمكن أن يسبب تساقطاً كثيفاً للأوراق.",
+    ),
+    "disease_Septoria_leaf_spot_name": MessageLookupByLibrary.simpleMessage(
+      "تبقع الأوراق السبتوري",
+    ),
+    "disease_Septoria_leaf_spot_recommendations":
+        MessageLookupByLibrary.simpleMessage(
+          "إزالة وتدمير الأوراق المصابة\nتطبيق علاجات بالمبيدات الفطرية بانتظام\nوضع نشارة حول النباتات لمنع تطاير التربة\nتجنب الري بالرش\nدعْم النباتات أو تقفيصها لتحسين تدفق الهواء",
+        ),
+    "disease_Septoria_leaf_spot_symptoms": MessageLookupByLibrary.simpleMessage(
+      "بقع دائرية صغيرة ذات حواف بنية داكنة\nمراكز رمادية أو بنية فاتحة مع نقاط سوداء صغيرة (بكنيديا)\nتبدأ في الأوراق السفلية وتتجه للأعلى\nتساقط شديد للأوراق إذا لم تُعالج",
+    ),
+    "disease_Spider_mites_description": MessageLookupByLibrary.simpleMessage(
+      "سوس العنكبوت ذو البقعتين هو عناكب صغيرة تتغذى على عصارة النبات، مسببة تنقيطاً، اصفراراً، وانخفاضاً في حيوية النبات. تنمو في الظروف الحارة والجافة.",
+    ),
+    "disease_Spider_mites_name": MessageLookupByLibrary.simpleMessage(
+      "سوس العنكبوت ذو البقعتين",
+    ),
+    "disease_Spider_mites_recommendations": MessageLookupByLibrary.simpleMessage(
+      "رش النباتات بتيار ماء قوي\nاستخدام الصابون المبيد للحشرات أو زيت النيم\nزيادة الرطوبة المحيطة حول النباتات\nإزالة وتدمير الأوراق المصابة بشدة\nإدخال العث المفترس النافع",
+    ),
+    "disease_Spider_mites_symptoms": MessageLookupByLibrary.simpleMessage(
+      "تنقيط أصفر أو أبيض صغير جدًا على الأوراق\nنسيج حريري دقيق على الجوانب السفلية للأوراق\nتتحول الأوراق إلى اللون البرونزي أو الأصفر وتصبح هشة\nالإصابات الشديدة تسبب تساقط الأوراق وإجهاد النبات",
+    ),
+    "disease_Target_Spot_description": MessageLookupByLibrary.simpleMessage(
+      "البقعة المستهدفة ناتجة عن فطر كورينسبورا كاسييكولا. تصيب الأوراق والسيقان والثمار، مما يسبب تقرحات دائرية بحلقات متداخلة.",
+    ),
+    "disease_Target_Spot_name": MessageLookupByLibrary.simpleMessage(
+      "البقعة المستهدفة",
+    ),
+    "disease_Target_Spot_recommendations": MessageLookupByLibrary.simpleMessage(
+      "إزالة وتدمير بقايا النباتات المصابة\nاستخدام المبيدات الفطرية المناسبة بشكل وقائي\nتحسين التهوية بين النباتات\nاتباع الدورة الزراعية مع محاصيل من غير العائلة الباذنجانية\nتجنب الإفراط في التسميد النيتروجيني",
+    ),
+    "disease_Target_Spot_symptoms": MessageLookupByLibrary.simpleMessage(
+      "بقع بنية صغيرة تتسع إلى حلقات تشبه الهدف\nقد تندمج التقرحات، مسببة مناطق ميتة كبيرة\nتساقط مبكر لأوراق المظلة السفلية\nتقرحات غائرة وداكنة على الثمار",
+    ),
+    "disease_Tomato_mosaic_virus_description": MessageLookupByLibrary.simpleMessage(
+      "فيروس فسيفساء الطماطم (ToMV) هو فيروس مستقر للغاية ينتشر عبر الأدوات والأيدي والبذور الملوثة. يسبب تبقعاً في الأوراق ويمكن أن يبقى في بقايا التربة لسنوات.",
+    ),
+    "disease_Tomato_mosaic_virus_name": MessageLookupByLibrary.simpleMessage(
+      "فيروس فسيفساء الطماطم",
+    ),
+    "disease_Tomato_mosaic_virus_recommendations":
+        MessageLookupByLibrary.simpleMessage(
+          "إزالة وتدمير النباتات المصابة فوراً\nتطهير الأدوات والأيدي بمحلول حليب أو مبيض\nاستخدام بذور وشتلات معتمدة خالية من الفيروس\nتجنب استخدام التبغ بالقرب من النباتات (التلوث المتبادل)\nزراعة أصناف مقاومة للفيروس",
+        ),
+    "disease_Tomato_mosaic_virus_symptoms": MessageLookupByLibrary.simpleMessage(
+      "أنماط فسيفسائية خضراء فاتحة وداكنة على الأوراق\nتجعد وتشوه الأوراق\nتقزم نمو النبات\nنضج ثمار غير مكتمل أو غير متساوٍ",
+    ),
+    "disease_Unknown_description": MessageLookupByLibrary.simpleMessage(
+      "لم يتمكن النموذج من تحديد مرض معين بثقة. يرجى التأكد من أن الصورة واضحة، مضاءة جيداً، وتحتوي على ورقة نبات الطماطم.",
+    ),
+    "disease_Unknown_name": MessageLookupByLibrary.simpleMessage(
+      "حالة غير معروفة",
+    ),
+    "disease_Unknown_recommendations": MessageLookupByLibrary.simpleMessage(
+      "التقط صورة أوضح ومضاءة جيداً\nتأكد من أن الورقة تملأ معظم الإطار\nتجنب الظلال والوهج على سطح الورقة\nاستشر خبيراً زراعياً إذا استمرت الأعراض",
+    ),
+    "disease_Unknown_symptoms": MessageLookupByLibrary.simpleMessage(
+      "صورة غير واضحة أو ضبابية\nقد لا تحتوي الصورة على ورقة طماطم\nتوقع منخفض الثقة من النموذج",
+    ),
+    "disease_Yellow_Leaf_Curl_Virus_description":
+        MessageLookupByLibrary.simpleMessage(
+          "فيروس تجعد واصفرار أوراق الطماطم (TYLCV) ينتقل عن طريق الذبابة البيضاء. يسبب تقزماً شديداً، تجعداً في الأوراق، وفقداناً كبيراً في المحصول.",
+        ),
+    "disease_Yellow_Leaf_Curl_Virus_name": MessageLookupByLibrary.simpleMessage(
+      "فيروس تجعد واصفرار أوراق الطماطم",
+    ),
+    "disease_Yellow_Leaf_Curl_Virus_recommendations":
+        MessageLookupByLibrary.simpleMessage(
+          "مكافحة تجمعات الذبابة البيضاء باستخدام الفخاخ اللاصقة الصفراء\nاستخدام المبيدات الحشرية المناسبة ضد الذبابة البيضاء\nإزالة وتدمير النباتات المصابة مبكراً\nاستخدام أصناف طماطم مقاومة للفيروس\nاستخدام النشارة العاكسة لردع الذبابة البيضاء",
+        ),
+    "disease_Yellow_Leaf_Curl_Virus_symptoms": MessageLookupByLibrary.simpleMessage(
+      "التفاف حواف الأوراق لأعلى\nاصفرار (كلوروسيس) بين عروق الأوراق\nتقزم شديد في نمو النبات\nأوراق صغيرة مشوهة ومقوسة",
+    ),
+    "disease_healthy_description": MessageLookupByLibrary.simpleMessage(
+      "نبتة الطماطم تبدو سليمة ولا تظهر عليها أي علامات واضحة للمرض أو الإصابة بالآفات. استمر في العناية المعتادة والمراقبة للحفاظ على صحة النبات.",
+    ),
+    "disease_healthy_name": MessageLookupByLibrary.simpleMessage("طماطم سليمة"),
+    "disease_healthy_recommendations": MessageLookupByLibrary.simpleMessage(
+      "الاستمرار في جدول الري المعتاد\nالحفاظ على تسميد متوازن\nمراقبة النباتات أسبوعياً للعلامات المبكرة للمشاكل\nضمان تهوية جيدة بين النباتات\nتطبيق الدورة الزراعية كل موسم",
+    ),
+    "disease_healthy_symptoms": MessageLookupByLibrary.simpleMessage(
+      "أوراق خضراء زاهية بدون بقع\nنمو سيقان قوي ومستقيم\nلا يوجد تغير في اللون أو ذبول\nنمو طبيعي للثمار",
+    ),
     "diseased": MessageLookupByLibrary.simpleMessage("مريضه"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
     "error": MessageLookupByLibrary.simpleMessage("خطأ"),

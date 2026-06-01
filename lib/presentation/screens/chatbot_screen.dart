@@ -46,9 +46,9 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
               S.of(context).chatbotAppBar,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            if (widget.detectionResult != null)
-              Text(
-                "Discussing: ${widget.detectionResult!.diseaseName}",
+              if (widget.detectionResult != null)
+                Text(
+                  "Discussing: ${widget.diseaseInfo?.getLocalizedName(context) ?? widget.detectionResult!.diseaseName}",
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,

@@ -33,7 +33,7 @@ class CropDiseaseRepository {
       }
 
       return {
-        'diseaseName': diseaseInfo.displayName,
+        'diseaseName': predictedLabel,
         'diseaseLabel': predictedLabel,
         'confidence': confidence,
         'diseaseInfo': diseaseInfo,

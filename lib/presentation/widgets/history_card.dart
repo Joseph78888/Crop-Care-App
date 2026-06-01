@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:crop_care_app/generated/l10n.dart';
 import '../../data/models/detection_result.dart';
 import '../../presentation/providers/history_provider.dart';
+import '../../data/datasources/disease_database.dart';
+import '../../data/models/disease_info_model.dart';
 import '../../presentation/screens/result_screen.dart';
 import '../../core/utils/responsive_helper.dart';
 
@@ -50,12 +52,24 @@ class HistoryCard extends ConsumerWidget {
               ),
             ),
           ),
-          title: Text(
-            result.diseaseName,
-            style: TextStyle(
-              fontSize: context.responsive.sp(16),
-              fontWeight: FontWeight.w600,
-            ),
+          title: Builder(
+            builder: (context) {
+              final diseaseInfo =
+                  DiseaseDatabase.getDiseaseInfo(result.diseaseName) ??
+                  DiseaseDatabase.getDiseaseInfoByDisplayName(
+                    result.diseaseName,
+                  );
+              final displayName =
+                  diseaseInfo?.getLocalizedName(context) ?? result.diseaseName;
+
+              return Text(
+                displayName,
+                style: TextStyle(
+                  fontSize: context.responsive.sp(16),
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            },
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

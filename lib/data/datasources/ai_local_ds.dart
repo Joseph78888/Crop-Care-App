@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:flutter/services.dart';
@@ -12,9 +13,9 @@ class TFLiteService {
   List<String>? _labels;
   bool _isInitialized = false;
 
-  static const String _modelPath = 'assets/models/tomato_model.tflite';
+  static const String _modelPath = 'assets/models/plant_disease_classifier.tflite';
   static const String _labelsPath = 'assets/models/labels.txt';
-  static const int _inputSize = 300; // Updated to match model input shape
+  static const int _inputSize = 224; // Updated to match model input shape
   static const int _numChannels = 3; // RGB
 
   static const double _confidenceThreshold = 0.79; // 79% threshold
@@ -74,8 +75,8 @@ class TFLiteService {
         height: _inputSize,
       );
 
-      // Convert image to input tensor format [1, 224, 224, 3] as Uint8
-      var input = _imageToByteListUint8(resizedImage);
+      // Convert image to input tensor format [1, 224, 224, 3] as float32
+      var input = _imageToFloat32List(resizedImage);
 
       // Reshape input to 4D tensor
       var inputReshaped = input.reshape([
@@ -120,8 +121,8 @@ class TFLiteService {
       // If the output is [1, 10, 10], it effectively contains 100 numbers.
 
       // We will use a flattened list for the output to make it easier to process
-      // Model output is uint8, so use Uint8List
-      var outputBuffer = Uint8List(totalElements).reshape(outputShape);
+      // Model output is float32, so use Float32List
+      var outputBuffer = Float32List(totalElements).reshape(outputShape);
 
       // Run inference
       _interpreter!.run(inputReshaped, outputBuffer);
@@ -136,8 +137,8 @@ class TFLiteService {
             flatten(item);
           }
         } else if (list is num) {
-          // Convert uint8 (0-255) to probability (0.0-1.0)
-          predictions.add(list.toDouble() / 255.0);
+          // Model output is float32 probabilities (0.0-1.0)
+          predictions.add(list.toDouble());
         }
       }
 
@@ -216,19 +217,19 @@ class TFLiteService {
     }
   }
 
-  /// Convert image to Uint8 byte list for model input (0-255 range)
-  Uint8List _imageToByteListUint8(img.Image image) {
-    var convertedBytes = Uint8List(1 * _inputSize * _inputSize * _numChannels);
+  /// Convert image to Float32 byte list for model input (0-255 range)
+  Float32List _imageToFloat32List(img.Image image) {
+    var convertedBytes = Float32List(1 * _inputSize * _inputSize * _numChannels);
     int pixelIndex = 0;
 
     for (int y = 0; y < _inputSize; y++) {
       for (int x = 0; x < _inputSize; x++) {
         final pixel = image.getPixel(x, y);
 
-        // Keep pixel values in [0, 255] range as uint8
-        convertedBytes[pixelIndex++] = pixel.r.toInt();
-        convertedBytes[pixelIndex++] = pixel.g.toInt();
-        convertedBytes[pixelIndex++] = pixel.b.toInt();
+        // Keep pixel values in [0, 255] range as float32
+        convertedBytes[pixelIndex++] = pixel.r.toDouble();
+        convertedBytes[pixelIndex++] = pixel.g.toDouble();
+        convertedBytes[pixelIndex++] = pixel.b.toDouble();
       }
     }
 
