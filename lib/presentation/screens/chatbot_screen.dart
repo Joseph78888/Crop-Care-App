@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../generated/l10n.dart';
+import '../../data/models/chat_session_model.dart';
 import '../../data/models/detection_result.dart';
 import '../../data/models/disease_info_model.dart';
 import '../../presentation/providers/chat_provider.dart';
+import '../../presentation/screens/chat_history_screen.dart';
 import '../../presentation/widgets/chat_message.dart';
 import '../../presentation/widgets/gradient_scaffold.dart';
 import '../../presentation/widgets/new_message.dart';
@@ -22,14 +25,28 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize context if available
     if (widget.detectionResult != null) {
-      // Defer the setContext call to after the first frame
       Future.delayed(Duration.zero, () {
         ref
             .read(chatProvider.notifier)
             .setContext(widget.detectionResult!, widget.diseaseInfo);
       });
+    }
+  }
+
+  Future<void> _openHistory() async {
+    final result = await Navigator.of(context).push<ChatSessionModel?>(
+      MaterialPageRoute(builder: (_) => const ChatHistoryScreen()),
+    );
+
+    if (!mounted) return;
+
+    if (result == null) {
+      // User tapped "New Chat" — start a fresh session.
+      ref.read(chatProvider.notifier).startNewSession();
+    } else {
+      // User selected a saved session — resume it.
+      ref.read(chatProvider.notifier).loadSession(result);
     }
   }
 
@@ -44,12 +61,12 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
           children: [
             Text(
               S.of(context).chatbotAppBar,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-              if (widget.detectionResult != null)
-                Text(
-                  "Discussing: ${widget.diseaseInfo?.getLocalizedName(context) ?? widget.detectionResult!.diseaseName}",
-                style: TextStyle(
+            if (widget.detectionResult != null)
+              Text(
+                'Discussing: ${widget.diseaseInfo?.getLocalizedName(context) ?? widget.detectionResult!.diseaseName}',
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
                   color: Colors.black54,
@@ -60,18 +77,9 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete_outline_rounded),
-            tooltip: 'Clear Chat',
-            onPressed: () {
-              ref.invalidate(chatProvider);
-              if (widget.detectionResult != null) {
-                Future.delayed(Duration.zero, () {
-                  ref
-                      .read(chatProvider.notifier)
-                      .setContext(widget.detectionResult!, widget.diseaseInfo);
-                });
-              }
-            },
+            icon: const Icon(Icons.history_rounded),
+            tooltip: 'Chat History',
+            onPressed: _openHistory,
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -82,53 +90,14 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
           children: [
             Expanded(
               child: chatState.messages.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.eco_rounded,
-                            size: 64,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.5),
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            S
-                                .of(context)
-                                .chatbotAppBar, // Uses "AI Assistant" usually
-                            style: Theme.of(context).textTheme.titleLarge
-                                ?.copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant,
-                                ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            S.of(context).askMeAnything,
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant
-                                      .withValues(alpha: 0.7),
-                                ),
-                          ),
-                        ],
-                      ),
-                    )
+                  ? _EmptyState(context: context)
                   : ListView.builder(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      reverse:
-                          false, // Standard chat is usually bottom-up, but ListView defaults top-down.
-                      // We want new messages at the bottom.
-                      // Usually we reverse list and sort by date desc, or scroll to bottom.
-                      // Simpler: Use regular ListView and scroll to bottom, or reverse and list.reversed.
                       itemCount: chatState.messages.length,
                       itemBuilder: (context, index) {
-                        return ChatMessage(message: chatState.messages[index]);
+                        return ChatMessage(
+                          message: chatState.messages[index],
+                        );
                       },
                     ),
             ),
@@ -154,6 +123,43 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
             const NewMessage(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  final BuildContext context;
+
+  const _EmptyState({required this.context});
+
+  @override
+  Widget build(BuildContext buildContext) {
+    final theme = Theme.of(context);
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.eco_rounded,
+            size: 64,
+            color: theme.colorScheme.primary.withValues(alpha: 0.5),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            S.of(context).chatbotAppBar,
+            style: theme.textTheme.titleLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            S.of(context).askMeAnything,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            ),
+          ),
+        ],
       ),
     );
   }
